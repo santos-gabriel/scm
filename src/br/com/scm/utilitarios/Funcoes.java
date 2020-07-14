@@ -13,12 +13,12 @@ import java.util.Properties;
  */
 public abstract class Funcoes {
    
-//MÉTODO QUE CRIPTGRAFA UMA STRING
+// MÉTODO QUE CRIPTGRAFA UMA STRING
    public static String getEncrypt (String pTexto){
         try{
-            //hash armazena senha encriptada com instancia MD5
+            // hash armazena senha encriptada com instancia MD5
             BigInteger hash = new BigInteger (1, MessageDigest.getInstance("MD5").digest(pTexto.getBytes()));
-            return hash.toString(16); //retorna senha encriptada em forma de string
+            return hash.toString(16); // retorna senha encriptada em forma de string
         }catch(Exception e){
             e.printStackTrace();
             return null;
@@ -26,13 +26,13 @@ public abstract class Funcoes {
    } 
    
    
-//MÉTODO PARA PEGAR OS VALORES DE UM ARQUIVO DE CONFIGURÇÕES  
-   public static Properties getPropertie(String path){
+// MÉTODO PARA PEGAR OS VALORES DE UM ARQUIVO DE CONFIGURÇÕES  
+   public static Properties getProperties(String path){
         Properties props = new Properties();
-        //instancia um objeto properties
+        // instancia um objeto properties
         try {
-            props.load(new FileInputStream(path)); //lê o arquivo de configurações
-            return props;                          //retorna as propriedades do arquivo de configurações
+            props.load(new FileInputStream(path)); // lê o arquivo de configurações
+            return props;                          // retorna as propriedades do arquivo de configurações
         } catch (Exception e) {
             e.printStackTrace();
             return null;
