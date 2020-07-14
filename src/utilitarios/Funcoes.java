@@ -1,7 +1,7 @@
 /**
  * FUNÇÕES ÚTEIS, GENÉRICAS E ABSTRATAS
  */
-package br.com.scm.utilitarios;
+package utilitarios;
 
 import java.io.FileInputStream;
 import java.math.BigInteger;

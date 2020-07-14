@@ -1,8 +1,8 @@
 /**
  * CLASSE RESPONSÁVEL POR REALIZAR A CONEXÃO COM O BANCO DE DADOS MYSQL
  */
-package br.com.scm.conexao;
-import br.com.scm.utilitarios.Funcoes;
+package conexao;
+import utilitarios.Funcoes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
