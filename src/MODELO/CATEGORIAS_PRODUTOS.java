@@ -9,14 +9,14 @@ package MODELO;
  *
  * @author Guilherme
  */
-public class CATEGOTIAS_PRODUTOS {
+public class CATEGORIAS_PRODUTOS {
     private int Cod_Categoria;
     private String Desc_Categoria;
 
-    public CATEGOTIAS_PRODUTOS() {
+    public CATEGORIAS_PRODUTOS() {
     }
 
-    public CATEGOTIAS_PRODUTOS(int Cod_Categoria, String Desc_Categoria) {
+    public CATEGORIAS_PRODUTOS(int Cod_Categoria, String Desc_Categoria) {
         this.Cod_Categoria = Cod_Categoria;
         this.Desc_Categoria = Desc_Categoria;
     }
