@@ -1,7 +1,9 @@
-/**
- * CLASSE RESPONSÁVEL POR REALIZAR A CONEXÃO COM O BANCO DE DADOS MYSQL
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package conexao;
+package CONEXAO;
 import utilitarios.Funcoes;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +14,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Gabriel
  */
-public abstract class ConexaoMySql {
+public abstract class CONEXAO {
     
     public static Connection conectar (){
         try{
