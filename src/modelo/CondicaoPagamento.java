@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class CODICAO_PAGAMENTO {
+public class CondicaoPagamento {
     private int    cod_condicao_pagamento;      //Chave primária
     private String desc_condicao_pagamento;     //Nome para a condição de pagamento
     private int    quantidade_parcelas;         //Quantidade de vezes que essa condição terá
     private int    dias_prazo_primeira_parcela; //Quando a parcela irá vencer
     private int    dias_prazo_entre_parcelas;   //Quando a segunda e as demais parcelas irá vencer
 
-    public CODICAO_PAGAMENTO() {
+    public CondicaoPagamento() {
     }
 
-    public CODICAO_PAGAMENTO(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas, int dias_prazo_primeira_parcela, int dias_prazo_entre_parcelas) {
+    public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas, int dias_prazo_primeira_parcela, int dias_prazo_entre_parcelas) {
         this.cod_condicao_pagamento = cod_condicao_pagamento;
         this.desc_condicao_pagamento = desc_condicao_pagamento;
         this.quantidade_parcelas = quantidade_parcelas;

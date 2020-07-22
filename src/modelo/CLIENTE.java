@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class CLIENTE {
+public class Cliente {
     private int Cod_Cliente;
     private String Nome_Cliente;
     private String Data_Nascimento_Cliente;
@@ -20,10 +20,10 @@ public class CLIENTE {
     private String Telefone_Cliente;
     private String Endereco_Cliente;
 
-    public CLIENTE() {
+    public Cliente() {
     }
 
-    public CLIENTE(int Cod_Cliente, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, String Endereco_Cliente) {
+    public Cliente(int Cod_Cliente, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, String Endereco_Cliente) {
         this.Cod_Cliente = Cod_Cliente;
         this.Nome_Cliente = Nome_Cliente;
         this.Data_Nascimento_Cliente = Data_Nascimento_Cliente;

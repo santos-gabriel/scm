@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class PRODUTO {
+public class Produto {
     private int Cod_Produto;
     private String Desc_Produto; 
     private Double Valor_Custo;
     private Double Valor_Venda;
     private int Cod_Categoria_Produto;
 
-    public PRODUTO() {
+    public Produto() {
     }
 
-    public PRODUTO(int Cod_Produto, String Desc_Produto, Double Valor_Custo, Double Valor_Venda, int Cod_Categoria_Produto) {
+    public Produto(int Cod_Produto, String Desc_Produto, Double Valor_Custo, Double Valor_Venda, int Cod_Categoria_Produto) {
         this.Cod_Produto = Cod_Produto;
         this.Desc_Produto = Desc_Produto;
         this.Valor_Custo = Valor_Custo;

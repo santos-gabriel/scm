@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class TIPO_PAGAMENTO {
+public class TipoPagamento {
     private int    cod_pagamento;
     private String desc_pagamento;
 
-    public TIPO_PAGAMENTO() {
+    public TipoPagamento() {
     }
 
-    public TIPO_PAGAMENTO(int cod_pagamento, String desc_pagamento) {
+    public TipoPagamento(int cod_pagamento, String desc_pagamento) {
         this.cod_pagamento = cod_pagamento;
         this.desc_pagamento = desc_pagamento;
     }

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class FUNCIONARIO {
+public class Funcionario {
     private int Cod_Funcionario;
     private String Nome_Funcionario;
     private String Data_Nascimento;
@@ -18,10 +18,10 @@ public class FUNCIONARIO {
     private String WhatsApp_Funcionario;
     private String Endereco_Funcionario;
 
-    public FUNCIONARIO() {
+    public Funcionario() {
     }
 
-    public FUNCIONARIO(int Cod_Funcionario, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, String Endereco_Funcionario) {
+    public Funcionario(int Cod_Funcionario, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, String Endereco_Funcionario) {
         this.Cod_Funcionario = Cod_Funcionario;
         this.Nome_Funcionario = Nome_Funcionario;
         this.Data_Nascimento = Data_Nascimento;

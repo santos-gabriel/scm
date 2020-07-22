@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class COMISSOES {
+public class Comissoes {
     private int      cod_comissao;         //Chave primária da tabela comissão
     private String   desc_comissao;        //Usuario irá dar um nome para a comissão
     private double   valor_comisssao;      //Valor da comissão
@@ -20,10 +20,10 @@ public class COMISSOES {
     private int      cod_usuario;          //Usuario que inseriu a comissao
     
 
-    public COMISSOES() {
+    public Comissoes() {
     }
 
-    public COMISSOES(int cod_comissao, String desc_comissao, double valor_comisssao, int cod_categoria, String data_inicio_comissão, String data_final_comissão, Boolean status_comissao, int cod_usuario) {
+    public Comissoes(int cod_comissao, String desc_comissao, double valor_comisssao, int cod_categoria, String data_inicio_comissão, String data_final_comissão, Boolean status_comissao, int cod_usuario) {
         this.cod_comissao = cod_comissao;
         this.desc_comissao = desc_comissao;
         this.valor_comisssao = valor_comisssao;

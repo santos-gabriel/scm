@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class MOVIMENTACAO_USUARIO {
+public class MovimentacaoUsuario {
     private int Cod_movimentacao;
     private String Tipo_movimentacao;
     private String Tabela_alterada;
@@ -17,10 +17,10 @@ public class MOVIMENTACAO_USUARIO {
     private String Data_Hora_movimentacao;
     private int Cod_usuario;
 
-    public MOVIMENTACAO_USUARIO() {
+    public MovimentacaoUsuario() {
     }
 
-    public MOVIMENTACAO_USUARIO(int Cod_movimentacao, String Tipo_movimentacao, String Tabela_alterada, int Cod_registro_alterado, String Data_Hora_movimentacao, int Cod_usuario) {
+    public MovimentacaoUsuario(int Cod_movimentacao, String Tipo_movimentacao, String Tabela_alterada, int Cod_registro_alterado, String Data_Hora_movimentacao, int Cod_usuario) {
         this.Cod_movimentacao = Cod_movimentacao;
         this.Tipo_movimentacao = Tipo_movimentacao;
         this.Tabela_alterada = Tabela_alterada;

@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class LOGIN_SESSAO {
+public class LoginSessao {
     private int Cod_sessao;
     private int Cod_usuario;
     private String Data_hora;
     private String Ip_da_maquina;
 
-    public LOGIN_SESSAO() {
+    public LoginSessao() {
     }
 
-    public LOGIN_SESSAO(int Cod_sessao, int Cod_usuario, String Data_hora, String Ip_da_maquina) {
+    public LoginSessao(int Cod_sessao, int Cod_usuario, String Data_hora, String Ip_da_maquina) {
         this.Cod_sessao = Cod_sessao;
         this.Cod_usuario = Cod_usuario;
         this.Data_hora = Data_hora;

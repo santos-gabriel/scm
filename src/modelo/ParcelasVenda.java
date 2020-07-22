@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class PARCELAS_VENDA {
+public class ParcelasVenda {
     private int     Cod_Parcela;              //Chave primária da tabela Parcelas Venda
     private int     Cod_Venda;                //Chave Estrangeira da tabela venda
     private double  valor_parcela;            //Valor que será divido pelo o software
@@ -17,10 +17,10 @@ public class PARCELAS_VENDA {
     private boolean status_pagamento;         //Se está pago ou não pago
     private String  data_pagamento;           //Data que efetuaram o pagamento
 
-    public PARCELAS_VENDA() {
+    public ParcelasVenda() {
     }
 
-    public PARCELAS_VENDA(int cod_parcela, int cod_venda, double valor_parcela, String data_vencimento_parcela, boolean status_pagamento, String desc_status_pagamento, String data_pagamento) {
+    public ParcelasVenda(int cod_parcela, int cod_venda, double valor_parcela, String data_vencimento_parcela, boolean status_pagamento, String desc_status_pagamento, String data_pagamento) {
         this.Cod_Parcela = cod_parcela;
         this.Cod_Venda = cod_venda;
         this.valor_parcela = valor_parcela;

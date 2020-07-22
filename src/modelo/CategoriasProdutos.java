@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class CATEGORIAS_PRODUTOS {
+public class CategoriasProdutos {
     private int Cod_Categoria;
     private String Desc_Categoria;
 
-    public CATEGORIAS_PRODUTOS() {
+    public CategoriasProdutos() {
     }
 
-    public CATEGORIAS_PRODUTOS(int Cod_Categoria, String Desc_Categoria) {
+    public CategoriasProdutos(int Cod_Categoria, String Desc_Categoria) {
         this.Cod_Categoria = Cod_Categoria;
         this.Desc_Categoria = Desc_Categoria;
     }

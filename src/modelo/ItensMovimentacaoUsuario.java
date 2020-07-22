@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class ITENS_MOVIMENTACAO_USUARIO {
+public class ItensMovimentacaoUsuario {
     private int Cod_movimentacao;
     private String Valor_antigo;
     private String Valor_novo;
     private String Nome_coluna;
-    public ITENS_MOVIMENTACAO_USUARIO() {
+    public ItensMovimentacaoUsuario() {
     }
 
-    public ITENS_MOVIMENTACAO_USUARIO(int Cod_movimentacao, String Valor_antigo, String Valor_novo, String Nome_coluna) {
+    public ItensMovimentacaoUsuario(int Cod_movimentacao, String Valor_antigo, String Valor_novo, String Nome_coluna) {
         this.Cod_movimentacao = Cod_movimentacao;
         this.Valor_antigo = Valor_antigo;
         this.Valor_novo = Valor_novo;

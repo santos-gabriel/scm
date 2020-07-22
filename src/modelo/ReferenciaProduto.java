@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODELO;
+package modelo;
 
 /**
  *
  * @author Guilherme
  */
-public class REFERENCIA_PRODUTO {
+public class ReferenciaProduto {
     private int     cod_rastreio_produto;     //Código gerado para cada produto cadastrado na loja
     private int     cod_produto;              //Chave Estrangeira da tabela produto
     private String  desc_produto_complementar;//Estilo do produto para melhor localização
@@ -20,10 +20,10 @@ public class REFERENCIA_PRODUTO {
     private String  data_insercao_produto;    //Data que foi inserido no ESTOQUE
     private String  cod_usuario;              //Usuario que inseriu o porduto
 
-    public REFERENCIA_PRODUTO() {
+    public ReferenciaProduto() {
     }
 
-    public REFERENCIA_PRODUTO(int cod_rastreio_produto, int cod_produto, String desc_produto_complementar, double valor_custo_produto, double valor_venda_produto, boolean status_produto, String desc_status_produto, String data_insercao_produto, String cod_usuario) {
+    public ReferenciaProduto(int cod_rastreio_produto, int cod_produto, String desc_produto_complementar, double valor_custo_produto, double valor_venda_produto, boolean status_produto, String desc_status_produto, String data_insercao_produto, String cod_usuario) {
         this.cod_rastreio_produto = cod_rastreio_produto;
         this.cod_produto = cod_produto;
         this.desc_produto_complementar = desc_produto_complementar;
