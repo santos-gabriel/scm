@@ -24,7 +24,7 @@ public abstract class CargoDao {
         
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(0, prCargo.getDesc_Cargo());
+            stmt.setString(1, prCargo.getDesc_Cargo());
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Falha ao salvar cargo, entre em contato com o suporte do sistema ");

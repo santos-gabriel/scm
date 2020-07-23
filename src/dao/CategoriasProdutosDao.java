@@ -22,7 +22,7 @@ public abstract class CategoriasProdutosDao {
         PreparedStatement stmt = null;
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(0, prCategoria.getDesc_Categoria());
+            stmt.setString(1, prCategoria.getDesc_Categoria());
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Falha ao salvar categoria, entre em contato com o suporte do sistema ");
