@@ -1,18 +1,16 @@
-/**
- * CLASSE RESPONSÁVEL POR REALIZAR A CONEXÃO COM O BANCO DE DADOS MYSQL
- */
 package conexao;
+import excecoes.ExcecaoDB;
 import utilitarios.Funcoes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
-import javax.swing.JOptionPane;
+
 /**
  * @author Gabriel
  */
-public abstract class ConexaoMySql {
+public abstract class Conexao {
     
     public static Connection conectar (){
         try{
@@ -20,9 +18,7 @@ public abstract class ConexaoMySql {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(props.getProperty("dburl"), props.getProperty("user"), props.getProperty("password"));            
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Falha ao estabelecer conexão com banco de dados, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao estabeleceer conexão com banco de dados, entre em contato com o suporte do sistema");
         }
     }
     
@@ -31,8 +27,7 @@ public abstract class ConexaoMySql {
             try {
                 con.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");            
-                e.printStackTrace();
+                throw new ExcecaoDB(e, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");
             }
         }
     }
@@ -43,8 +38,7 @@ public abstract class ConexaoMySql {
             try {
                 stmt.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");            
-                e.printStackTrace();
+                throw new ExcecaoDB(e, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");
             }
         }
     }
@@ -55,8 +49,7 @@ public abstract class ConexaoMySql {
             try {
                 rs.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");            
-                e.printStackTrace();
+                throw new ExcecaoDB(e, "Falha ao fechar conexão com banco de dados, entre em contato com o suporte do sistema");
             }
         }
     }
