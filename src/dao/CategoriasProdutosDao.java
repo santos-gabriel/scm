@@ -1,13 +1,13 @@
 package dao;
 
 import conexao.Conexao;
+import excecoes.ExcecaoDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import modelo.CategoriasProdutos;
 
 /**
@@ -25,8 +25,7 @@ public abstract class CategoriasProdutosDao {
             stmt.setString(1, prCategoria.getDesc_Categoria());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao salvar categoria, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao salvar categoria, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -42,8 +41,7 @@ public abstract class CategoriasProdutosDao {
             stmt.setInt(2, prCategoria.getCod_Categoria());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao atualizar categoria, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao atualizar categoria, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -58,8 +56,7 @@ public abstract class CategoriasProdutosDao {
             stmt.setInt(1, prCodigoCategoria);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao excluir categoria, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao excluir categoria, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -79,9 +76,7 @@ public abstract class CategoriasProdutosDao {
             else
                 return null;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar categoria pelo código, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pelo código, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -102,9 +97,7 @@ public abstract class CategoriasProdutosDao {
             }
             return lista;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -126,9 +119,7 @@ public abstract class CategoriasProdutosDao {
             }
             return lista;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }

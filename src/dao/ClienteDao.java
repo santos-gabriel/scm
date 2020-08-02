@@ -1,33 +1,20 @@
 package dao;
 
 import conexao.Conexao;
+import excecoes.ExcecaoDB;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import modelo.Cliente;
 
 /**
  * @author Gabriel
  */
 public abstract class ClienteDao {
-    private static Connection conexao = null;
-    
-//     private int Cod_Cliente;
-//    private String Nome_Cliente;
-//    private String Data_Nascimento_Cliente;
-//    private String RG_Cliente;
-//    private String CPF_Cliente;
-//    private String CNPJ_Cliente;
-//    private String WhatsApp_Cliente;
-//    private String Telefone_Cliente;
-//    private String Endereco_Cliente;
-    
+    private static Connection conexao = null;    
     
     public static void SalvarTodosCampos (Cliente prCliente){
         CriarConexoes();
@@ -46,8 +33,7 @@ public abstract class ClienteDao {
             stmt.setString(8, prCliente.getEndereco_Cliente());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao salvar cliente, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao salvar cliente, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -69,8 +55,7 @@ public abstract class ClienteDao {
             stmt.setString(7, prCliente.getTelefone_Cliente());
             stmt.setString(8, prCliente.getEndereco_Cliente());
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao atualizar cliente, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao atualizar cliente, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -85,8 +70,7 @@ public abstract class ClienteDao {
             stmt.setInt(1, prCodigoCliente);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao excluir cliente, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
+            throw new ExcecaoDB(e, "Falha ao excluir cliente, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -114,9 +98,7 @@ public abstract class ClienteDao {
             else
                 return null;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar cliente pelo código, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar cliente pelo código, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -145,9 +127,7 @@ public abstract class ClienteDao {
             }
             return lista;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -176,9 +156,7 @@ public abstract class ClienteDao {
             }
             return lista;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
-            e.printStackTrace();
-            return null;
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
