@@ -1,10 +1,13 @@
 package controllers;
 
 import dao.UsuarioDao;
+import java.util.List;
 import modelo.Usuario;
 
 /**
  * @author Gabriel
+ * @version %I%, %G%
+ * @since v1.0
  */
 public class CtrlUsuario {
     
@@ -23,5 +26,17 @@ public class CtrlUsuario {
     public static Usuario PesquisarViaCodigo(Usuario prUsuario){
         return UsuarioDao.PesquisarViaCodigo(prUsuario.getCod_Usuario());
     }
+    
+    public static Usuario PesquisarViaLoginSenha(Usuario prUsuario){
+        return UsuarioDao.PesquisarViaLoginSenha(prUsuario);
+    }
+    
+    public static List<Usuario> PesquisarViaLoginInicia(Usuario prUsuario){
+        return UsuarioDao.PesquisarViaLoginInicia(prUsuario);
+    }
+    
+    public static Usuario PesquisarViaLogin(Usuario prUsuario){
+        return UsuarioDao.PesquisarViaLogin(prUsuario);
+    }    
     
 }

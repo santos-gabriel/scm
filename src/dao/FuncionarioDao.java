@@ -20,7 +20,7 @@ public class FuncionarioDao {
     
     public static void SalvarTodosCampos (Funcionario prFuncionario){
         CriarConexoes();
-        String sql = "";
+        String sql = "INSERT INTO funcionarios() VALUES () ";
         PreparedStatement stmt = null;
         
         try {

@@ -26,7 +26,6 @@ public class ComissoesDao {
        try {
            stmt = conexao.prepareStatement(sql);
            stmt.setDouble(1, prComissoes.getValor_comisssao());
-           stmt.setString(2, prComissoes.getDesc_comissao());
            stmt.executeUpdate();
        } catch (SQLException e) {
            throw new ExcecaoDB(e, "Falha ao salvar comissao, entre em contato com o suporte do sistema ");
@@ -43,7 +42,6 @@ public class ComissoesDao {
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, prComissoes.getValor_comisssao());
-            stmt.setString(2, prComissoes.getDesc_comissao());
             stmt.setInt(3, prComissoes.getCod_comissao());
             stmt.executeUpdate();
         } catch (SQLException e) {

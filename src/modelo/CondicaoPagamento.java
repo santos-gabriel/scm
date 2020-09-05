@@ -13,18 +13,24 @@ public class CondicaoPagamento {
     private int    cod_condicao_pagamento;      //Chave primária
     private String desc_condicao_pagamento;     //Nome para a condição de pagamento
     private int    quantidade_parcelas;         //Quantidade de vezes que essa condição terá
-    private int    dias_prazo_primeira_parcela; //Quando a parcela irá vencer
-    private int    dias_prazo_entre_parcelas;   //Quando a segunda e as demais parcelas irá vencer
-
+    private boolean ativo;
+    
     public CondicaoPagamento() {
     }
 
-    public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas, int dias_prazo_primeira_parcela, int dias_prazo_entre_parcelas) {
+    public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas, boolean ativo) {
         this.cod_condicao_pagamento = cod_condicao_pagamento;
         this.desc_condicao_pagamento = desc_condicao_pagamento;
         this.quantidade_parcelas = quantidade_parcelas;
-        this.dias_prazo_primeira_parcela = dias_prazo_primeira_parcela;
-        this.dias_prazo_entre_parcelas = dias_prazo_entre_parcelas;
+        this.ativo = ativo;
+    }
+
+    
+    
+    public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas) {
+        this.cod_condicao_pagamento = cod_condicao_pagamento;
+        this.desc_condicao_pagamento = desc_condicao_pagamento;
+        this.quantidade_parcelas = quantidade_parcelas;
     }
 
     public int getCod_condicao_pagamento() {
@@ -51,20 +57,12 @@ public class CondicaoPagamento {
         this.quantidade_parcelas = quantidade_parcelas;
     }
 
-    public int getDias_prazo_primeira_parcela() {
-        return dias_prazo_primeira_parcela;
+    public boolean isAtivo() {
+        return ativo;
     }
 
-    public void setDias_prazo_primeira_parcela(int dias_prazo_primeira_parcela) {
-        this.dias_prazo_primeira_parcela = dias_prazo_primeira_parcela;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
-    public int getDias_prazo_entre_parcelas() {
-        return dias_prazo_entre_parcelas;
-    }
-
-    public void setDias_prazo_entre_parcelas(int dias_prazo_entre_parcelas) {
-        this.dias_prazo_entre_parcelas = dias_prazo_entre_parcelas;
-    }
-    
 }

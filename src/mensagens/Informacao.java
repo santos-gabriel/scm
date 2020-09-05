@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public abstract class Informacao {
     
     public static void show(String pMensagem){
-        JOptionPane.showMessageDialog(null, pMensagem, "Informação", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, pMensagem, "Informação", 1);
     }
     
 }

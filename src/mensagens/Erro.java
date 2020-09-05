@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
  */
 public abstract class Erro {
     
-    public static void show(String pMensagem){
-        JOptionPane.showMessageDialog(null, pMensagem, "Erro", JOptionPane.ERROR);
+    public static void show(String pMensagem){        
+        JOptionPane.showMessageDialog(null, pMensagem, "Erro", 0);
     }
     
 }

@@ -86,15 +86,7 @@ public abstract class ClienteDao {
             stmt.setInt(1, prCodigoCliente);
             rs = stmt.executeQuery();
             if (rs.next())
-                return new Cliente(rs.getInt("CODIGO"), 
-                                   rs.getString("DESCRICAO"),
-                                   rs.getString("DATA_NASCIMENTO"),
-                                   rs.getString("RG"),
-                                   rs.getString("CPF"),
-                                   rs.getString("CPNJ"),
-                                   rs.getString("WHATSAPP"),
-                                   rs.getString("TELEFONE"),
-                                   rs.getString("ENDERECO"));
+                return new Cliente();
             else
                 return null;
         } catch (SQLException e) {
@@ -115,15 +107,7 @@ public abstract class ClienteDao {
             rs = stmt.executeQuery();
             List <Cliente> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Cliente(rs.getInt("CODIGO"), 
-                                      rs.getString("DESCRICAO"),
-                                      rs.getString("DATA_NASCIMENTO"),
-                                      rs.getString("RG"),
-                                      rs.getString("CPF"),
-                                      rs.getString("CPNJ"),
-                                      rs.getString("WHATSAPP"),
-                                      rs.getString("TELEFONE"),
-                                      rs.getString("ENDERECO")));
+                lista.add(new Cliente());
             }
             return lista;
         } catch (SQLException e) {
@@ -144,15 +128,7 @@ public abstract class ClienteDao {
             rs = stmt.executeQuery();
             List <Cliente> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Cliente(rs.getInt("CODIGO"), 
-                                      rs.getString("DESCRICAO"),
-                                      rs.getString("DATA_NASCIMENTO"),
-                                      rs.getString("RG"),
-                                      rs.getString("CPF"),
-                                      rs.getString("CPNJ"),
-                                      rs.getString("WHATSAPP"),
-                                      rs.getString("TELEFONE"),
-                                      rs.getString("ENDERECO")));
+                lista.add(new Cliente());
             }
             return lista;
         } catch (SQLException e) {
