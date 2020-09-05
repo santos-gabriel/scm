@@ -12,10 +12,19 @@ package modelo;
 public class CategoriasProdutos {
     private int Cod_Categoria;
     private String Desc_Categoria;
+    private boolean ativo;
 
     public CategoriasProdutos() {
     }
 
+    public CategoriasProdutos(int Cod_Categoria, String Desc_Categoria, boolean ativo) {
+        this.Cod_Categoria = Cod_Categoria;
+        this.Desc_Categoria = Desc_Categoria;
+        this.ativo = ativo;
+    }
+
+    
+    
     public CategoriasProdutos(int Cod_Categoria, String Desc_Categoria) {
         this.Cod_Categoria = Cod_Categoria;
         this.Desc_Categoria = Desc_Categoria;
@@ -36,5 +45,15 @@ public class CategoriasProdutos {
     public void setDesc_Categoria(String Desc_Categoria) {
         this.Desc_Categoria = Desc_Categoria;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
+    
     
 }

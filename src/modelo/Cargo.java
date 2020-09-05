@@ -12,8 +12,15 @@ package modelo;
 public class Cargo {
     private int Cod_Cargo;
     private String Desc_Cargo;
+    private boolean ativo;
 
     public Cargo() {
+    }
+
+    public Cargo(int Cod_Cargo, String Desc_Cargo, boolean ativo) {
+        this.Cod_Cargo = Cod_Cargo;
+        this.Desc_Cargo = Desc_Cargo;
+        this.ativo = ativo;
     }
 
     public Cargo(int Cod_Cargo, String Desc_Cargo) {
@@ -35,6 +42,14 @@ public class Cargo {
 
     public void setDesc_Cargo(String Desc_Cargo) {
         this.Desc_Cargo = Desc_Cargo;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
     
 }

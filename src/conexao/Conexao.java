@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
+import javax.swing.JOptionPane;
 
 /**
  * @author Gabriel
@@ -14,7 +15,8 @@ public abstract class Conexao {
     
     public static Connection conectar (){
         try{
-            Properties props = Funcoes.getProperties("src\\br\\com\\scm\\properties\\db.properties");        
+            // JOptionPane.showMessageDialog(null, System.getProperty("user.dir")+"\\src\\propriedades\\db.properties");
+            Properties props = Funcoes.getProperties(System.getProperty("user.dir")+"\\src\\propriedades\\db.properties");        
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(props.getProperty("dburl"), props.getProperty("user"), props.getProperty("password"));            
         }catch(Exception e){

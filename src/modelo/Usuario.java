@@ -14,10 +14,28 @@ public class Usuario {
     private int Cod_Funcionario;
     private String Login;
     private String Senha;
+    private boolean ativo;
+    
 
     public Usuario() {
     }
 
+    public Usuario(int Cod_Usuario, int Cod_Funcionario, String Login, String Senha, boolean ativo) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Cod_Funcionario = Cod_Funcionario;
+        this.Login = Login;
+        this.Senha = Senha;
+        this.ativo = ativo;
+    }
+
+    
+    
+    public Usuario(int Cod_Usuario, String Login, String Senha) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Login = Login;
+        this.Senha = Senha;
+    }
+    
     public Usuario(int Cod_Usuario, int Cod_Funcionario, String Login, String Senha) {
         this.Cod_Usuario = Cod_Usuario;
         this.Cod_Funcionario = Cod_Funcionario;
@@ -56,5 +74,15 @@ public class Usuario {
     public void setSenha(String Senha) {
         this.Senha = Senha;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
+    
     
 }

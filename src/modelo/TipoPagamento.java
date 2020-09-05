@@ -12,10 +12,20 @@ package modelo;
 public class TipoPagamento {
     private int    cod_pagamento;
     private String desc_pagamento;
+    private boolean ativo;
+    
 
     public TipoPagamento() {
     }
 
+    public TipoPagamento(int cod_pagamento, String desc_pagamento, boolean ativo) {
+        this.cod_pagamento = cod_pagamento;
+        this.desc_pagamento = desc_pagamento;
+        this.ativo = ativo;
+    }
+
+    
+    
     public TipoPagamento(int cod_pagamento, String desc_pagamento) {
         this.cod_pagamento = cod_pagamento;
         this.desc_pagamento = desc_pagamento;
@@ -36,6 +46,13 @@ public class TipoPagamento {
     public void setDesc_pagamento(String desc_pagamento) {
         this.desc_pagamento = desc_pagamento;
     }
-    
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
     
 }
