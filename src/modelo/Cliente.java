@@ -11,9 +11,6 @@ package modelo;
  */
 public class Cliente {
     private int Cod_Cliente;
-    private int Cod_Usuario;
-    private int Cod_Estado;
-    private int Cod_Cidade;
     private String Nome_Cliente;
     private String Data_Nascimento_Cliente;
     private String RG_Cliente;
@@ -28,11 +25,8 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int Cod_Cliente, int Cod_Usuario, int Cod_Estado, int Cod_Cidade, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, String Endereco_Cliente, boolean ativo) {
+    public Cliente(int Cod_Cliente, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, String Endereco_Cliente, boolean ativo) {
         this.Cod_Cliente = Cod_Cliente;
-        this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Estado = Cod_Estado;
-        this.Cod_Cidade = Cod_Cidade;
         this.Nome_Cliente = Nome_Cliente;
         this.Data_Nascimento_Cliente = Data_Nascimento_Cliente;
         this.RG_Cliente = RG_Cliente;
@@ -42,23 +36,6 @@ public class Cliente {
         this.Telefone_Cliente = Telefone_Cliente;
         this.Endereco_Cliente = Endereco_Cliente;
         this.ativo = ativo;
-    }
-    
-    
-    
-    public Cliente(int Cod_Cliente, int Cod_Usuario, int Cod_Estado, int Cod_Cidade, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, String Endereco_Cliente) {
-        this.Cod_Cliente = Cod_Cliente;
-        this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Estado = Cod_Estado;
-        this.Cod_Cidade = Cod_Cidade;
-        this.Nome_Cliente = Nome_Cliente;
-        this.Data_Nascimento_Cliente = Data_Nascimento_Cliente;
-        this.RG_Cliente = RG_Cliente;
-        this.CPF_Cliente = CPF_Cliente;
-        this.CNPJ_Cliente = CNPJ_Cliente;
-        this.WhatsApp_Cliente = WhatsApp_Cliente;
-        this.Telefone_Cliente = Telefone_Cliente;
-        this.Endereco_Cliente = Endereco_Cliente;
     }
 
     public int getCod_Cliente() {
@@ -133,30 +110,6 @@ public class Cliente {
         this.Endereco_Cliente = Endereco_Cliente;
     }
 
-    public int getCod_Usuario() {
-        return Cod_Usuario;
-    }
-
-    public void setCod_Usuario(int Cod_Usuario) {
-        this.Cod_Usuario = Cod_Usuario;
-    }
-
-    public int getCod_Estado() {
-        return Cod_Estado;
-    }
-
-    public void setCod_Estado(int Cod_Estado) {
-        this.Cod_Estado = Cod_Estado;
-    }
-
-    public int getCod_Cidade() {
-        return Cod_Cidade;
-    }
-
-    public void setCod_Cidade(int Cod_Cidade) {
-        this.Cod_Cidade = Cod_Cidade;
-    }
-
     public boolean isAtivo() {
         return ativo;
     }
@@ -164,5 +117,6 @@ public class Cliente {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
+        
 }
