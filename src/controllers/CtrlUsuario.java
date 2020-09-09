@@ -39,4 +39,8 @@ public class CtrlUsuario {
         return UsuarioDao.PesquisarViaLogin(prUsuario);
     }    
     
+    public static List<String> PesquisaPermissoesUsuarioModulo (String prDescricaoModulo, int prCodUsuario){
+        return UsuarioDao.PesquisaPermissoesUsuarioModulo(prDescricaoModulo, prCodUsuario);
+    }
+    
 }
