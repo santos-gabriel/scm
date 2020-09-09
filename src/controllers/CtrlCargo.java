@@ -9,8 +9,8 @@ import modelo.Cargo;
  */
 public class CtrlCargo {
     
-    public static void SalvarTodosCampos (Cargo prCargo){
-        CargoDao.SalvarTodosCampos(prCargo);
+    public static Integer SalvarTodosCampos (Cargo prCargo){
+        return CargoDao.SalvarTodosCampos(prCargo);
     }
     
     public static void AtualizarTodosCampos(Cargo prCargo){

@@ -6,11 +6,11 @@
 package visao;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import modelo.Usuario;
+import mensagens.Erro;
 import utilitarios.UsuariosUtil;
 
 /**
@@ -20,6 +20,7 @@ import utilitarios.UsuariosUtil;
 public class FrmPrincipal extends javax.swing.JFrame {
     
     private FrmCadUsuario FRM_CAD_USUARIO;
+    private FrmCadCargo   FRM_CAD_CARGO;
     
     private Timer TIMER;
     
@@ -29,20 +30,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        TIMER = new Timer();
-        TimerTask tk = new TimerTask() {
-            @Override
-            public void run() {
-                lblTime.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
-            }
-        };
-        TIMER.schedule(tk, 0, 1000);
-    }
-    
-    public FrmPrincipal(Usuario usuario) {
-        initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        UsuariosUtil.setUsuario(usuario);
         lblUsuario.setText(UsuariosUtil.getUsuario().getLogin());
         TIMER = new Timer();
         TimerTask tk = new TimerTask() {
@@ -53,6 +40,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         };
         TIMER.schedule(tk, 0, 1000);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,6 +62,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuSuperior = new javax.swing.JMenuBar();
         menuCadastros = new javax.swing.JMenu();
         subMenuCadastroUsuarios = new javax.swing.JMenuItem();
+        subMenuCadastroCargos = new javax.swing.JMenuItem();
         menuMovimentacoes = new javax.swing.JMenu();
         subMenuEntradas = new javax.swing.JMenuItem();
         subMenuSaidas = new javax.swing.JMenuItem();
@@ -176,6 +165,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         menuCadastros.add(subMenuCadastroUsuarios);
 
+        subMenuCadastroCargos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard.png"))); // NOI18N
+        subMenuCadastroCargos.setText("Cargos");
+        subMenuCadastroCargos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroCargosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroCargos);
+
         menuSuperior.add(menuCadastros);
 
         menuMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket.png"))); // NOI18N
@@ -224,14 +222,66 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void subMenuCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroUsuariosActionPerformed
-        if (FRM_CAD_USUARIO == null)
-            FRM_CAD_USUARIO = new FrmCadUsuario();
-        FRM_CAD_USUARIO.setVisible(true);
+        List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_USUARIOS");
+        if (permissoes.isEmpty()){
+            Erro.show("Você não tem permissão para acessar este módulo");
+            return;
+        }else{
+            if (FRM_CAD_USUARIO == null)
+                FRM_CAD_USUARIO = new FrmCadUsuario();
+            for (String permissao : permissoes){
+                switch(permissao){
+                    case "INSERIR":
+                        FRM_CAD_USUARIO.setINSERIR(true);
+                        break;
+                    case "ATUALIZAR":
+                        FRM_CAD_USUARIO.setATUALIZAR(true);
+                        break;
+                    case "INATIVAR":
+                        FRM_CAD_USUARIO.setINATIVAR(true);
+                        break;
+                    case "CONSULTAR":
+                        FRM_CAD_USUARIO.setCONSULTAR(true);
+                        break;
+                }
+            }
+            FRM_CAD_USUARIO.carregarPermissoes();
+            FRM_CAD_USUARIO.setVisible(true);
+        }
     }//GEN-LAST:event_subMenuCadastroUsuariosActionPerformed
 
     private void lblCadastroUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroUsuariosMouseClicked
         subMenuCadastroUsuariosActionPerformed(null);
     }//GEN-LAST:event_lblCadastroUsuariosMouseClicked
+
+    private void subMenuCadastroCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCargosActionPerformed
+        List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_CARGOS");
+        if (permissoes.isEmpty()){
+            Erro.show("Você não tem permissão para acessar este módulo");
+            return;
+        }else{
+            if (FRM_CAD_CARGO == null)
+                FRM_CAD_CARGO = new FrmCadCargo();
+            for (String permissao : permissoes){
+                switch(permissao){
+                    case "INSERIR":
+                        FRM_CAD_CARGO.setINSERIR(true);
+                        break;
+                    case "ATUALIZAR":
+                        FRM_CAD_CARGO.setATUALIZAR(true);
+                        break;
+                    case "INATIVAR":
+                        FRM_CAD_CARGO.setINATIVAR(true);
+                        break;
+                    case "CONSULTAR":
+                        FRM_CAD_CARGO.setCONSULTAR(true);
+                        break;
+                }
+            }
+            FRM_CAD_CARGO.carregarPermissoes();
+            FRM_CAD_CARGO.setVisible(true);
+        }
+    }//GEN-LAST:event_subMenuCadastroCargosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,6 +331,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelFooter;
     private javax.swing.JPanel panelHeader;
+    private javax.swing.JMenuItem subMenuCadastroCargos;
     private javax.swing.JMenuItem subMenuCadastroUsuarios;
     private javax.swing.JMenuItem subMenuEntradas;
     private javax.swing.JMenuItem subMenuSaidas;

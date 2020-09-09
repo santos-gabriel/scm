@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,15 +19,20 @@ public abstract class CargoDao {
     
     private static Connection conexao = null;
     
-    public static void SalvarTodosCampos (Cargo prCargo){
+    public static Integer SalvarTodosCampos (Cargo prCargo){
         CriarConexoes();
-        String sql = "INSERT INTO CARGO(DESCRICAO) VALUES(?)";
+        String sql = "INSERT INTO cargos(cod_cargo, desc_cargo, ativo) VALUES(null, ?, true)";
         PreparedStatement stmt = null;
         
         try {
-            stmt = conexao.prepareStatement(sql);
+            stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, prCargo.getDesc_Cargo());
             stmt.executeUpdate();
+            ResultSet rsKeys = stmt.getGeneratedKeys();
+            if (rsKeys.next())
+                return rsKeys.getInt(1);
+            else
+                return null;
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao salvar cargo, entre em contato com o suporte do sistema ");
         }finally{
@@ -37,7 +43,7 @@ public abstract class CargoDao {
     public static void AtualizarTodosCampos(Cargo prCargo){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "UPDATE CARGO SET DESCRICAO = ? WHERE CODIGO = ?";
+        String sql = "UPDATE cargos SET desc_cargo = ? WHERE cod_cargo = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prCargo.getDesc_Cargo());
@@ -53,7 +59,7 @@ public abstract class CargoDao {
     public static void Excluir(Integer prCodigoCargo){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "DELETE FROM CARGO WHERE CODIGO = ?";
+        String sql = "UPDATE cargos SET ativo = false WHERE cod_cargo = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCargo);
@@ -69,13 +75,13 @@ public abstract class CargoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CARGO C WHERE C.CODIGO = ?";
+        String sql = "SELECT c.cod_cargo, c.desc_cargo FROM cargos c WHERE c.cod_cargo = ? AND c.ativo = true";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCargo);
             rs = stmt.executeQuery();
             if (rs.next())
-                return new Cargo(rs.getInt("CODIGO"), rs.getString("DESCRICAO"));
+                return new Cargo(rs.getInt("cod_cargo"), rs.getString("desc_cargo"));
             else
                 return null;
         } catch (SQLException e) {
@@ -89,14 +95,14 @@ public abstract class CargoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CARGO C WHERE UPPER(C.DESCRICAO) = UPPER(?) ORDER BY C.DESCRICAO ASC";
+        String sql = "SELECT c.cod_cargo, c.desc_cargo FROM cargos c WHERE UPPER(c.desc_cargo) = UPPER(?) AND c.ativo = true ORDER BY c.desc_cargo ASC ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricaoCargo);
             rs = stmt.executeQuery();
             List <Cargo> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Cargo(rs.getInt("CODIGO"), rs.getString("DESCRICAO")));
+                lista.add(new Cargo(rs.getInt("cod_cargo"), rs.getString("desc_cargo")));
             }
             return lista;
         } catch (SQLException e) {
@@ -111,14 +117,14 @@ public abstract class CargoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CARGO C WHERE UPPER(C.DESCRICAO) LIKE UPPER(?%) ORDER BY C.DESCRICAO ASC";
+        String sql = "SELECT c.cod_cargo, c.desc_cargo FROM cargos c WHERE UPPER(c.desc_cargo) LIKE UPPER(?) AND c.ativo = true ORDER BY c.desc_cargo ASC ";
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, prDescricaoCargo);
+            stmt.setString(1, prDescricaoCargo+"%");
             rs = stmt.executeQuery();
             List <Cargo> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Cargo(rs.getInt("CODIGO"), rs.getString("DESCRICAO")));
+                lista.add(new Cargo(rs.getInt("cod_cargo"), rs.getString("desc_cargo")));
             }
             return lista;
         } catch (SQLException e) {
