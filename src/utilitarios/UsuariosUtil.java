@@ -1,5 +1,7 @@
 package utilitarios;
 
+import controllers.CtrlUsuario;
+import java.util.List;
 import modelo.Usuario;
 
 /**Classe de gerenciamento e utilitarios do usuário atual da sessão
@@ -12,14 +14,13 @@ public abstract class UsuariosUtil {
     private static Usuario usuario;
 
     
-    /**Método para verificar a permissão de um usuário ao módulo
-     * @param pPermissao permissão a ser verificada
-     * @param pModulo módulo a ser verificado
-     * @return boolean permissão do usuário ao módulo, sendo true para permissão concedida e false para permissão negada
+    /**Método para verificar a permissões de um usuário ao módulo
+     * @param prDescricaoModulo modulo a ser verificada
+     * @return List permissões do usuário ao módulo
      * @since v1.0
      */
-    public static boolean getPermissao(int pPermissao, int pModulo){
-        return true;
+    public static List<String> getPermissao(String prDescricaoModulo){
+        return CtrlUsuario.PesquisaPermissoesUsuarioModulo(prDescricaoModulo, usuario.getCod_Usuario());
     }
     
     public static Usuario getUsuario() {
@@ -29,5 +30,6 @@ public abstract class UsuariosUtil {
     public static void setUsuario(Usuario usuario) {
         UsuariosUtil.usuario = usuario;
     }
+    
     
 }

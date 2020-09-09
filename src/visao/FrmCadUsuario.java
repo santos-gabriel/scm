@@ -23,14 +23,25 @@ import mensagens.Informacao;
 public class FrmCadUsuario extends javax.swing.JFrame {
 
     FrmSelecionaRegistro FRM_SELECIONA_REGISTRO = null;
-    private static Usuario USUARIO             = null;
+    private Usuario      USUARIO                = null;
+    private boolean      INSERIR                = false;
+    private boolean      ATUALIZAR              = false;
+    private boolean      INATIVAR               = false;
+    private boolean      CONSULTAR              = false;
+    
     /**
      * Creates new form FrmCadUsuario
      */
     public FrmCadUsuario() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        
+        carregarPermissoes();
+    }
+    
+    public FrmCadUsuario(String prInserir, String prAtualizar, String prInativar, String prConsultar) {
+        initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        carregarPermissoes();
     }
 
     /**
@@ -58,12 +69,13 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         txtFuncionario = new javax.swing.JTextField();
         btnBuscarFuncionario = new javax.swing.JButton();
         pnlOpcoes = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnInativar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro | Usuários");
+        setResizable(false);
 
         txtBuscarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -167,30 +179,30 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
         pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_add.png"))); // NOI18N
-        jButton1.setText("Novo");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_add.png"))); // NOI18N
+        btnInserir.setText("Novo");
+        btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_edit.png"))); // NOI18N
-        jButton2.setText("Salvar");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_edit.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_delete.png"))); // NOI18N
-        jButton3.setText("Inativar");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_delete.png"))); // NOI18N
+        btnInativar.setText("Inativar");
+        btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInativar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnInativarActionPerformed(evt);
             }
         });
 
@@ -201,20 +213,20 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             .addGroup(pnlOpcoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInativar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlOpcoesLayout.setVerticalGroup(
             pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOpcoesLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInativar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -323,9 +335,6 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private void btnBuscarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncionarioActionPerformed
         if (txtFuncionario.getText().equals("") || txtFuncionario.getText() == null)
             return;
-        
-        
-        
     }//GEN-LAST:event_btnBuscarFuncionarioActionPerformed
 
     private void btnExibirSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirSenhaActionPerformed
@@ -335,11 +344,11 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             txtSenhaUsuario.setEchoChar('*');
     }//GEN-LAST:event_btnExibirSenhaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         limparEntradasDeDados();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnInserirActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
         if (txtLoginUsuario.getText().equals("") || txtLoginUsuario.getText() == null){
             Erro.show("Informe uma senha por favor");
@@ -355,7 +364,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         
         USUARIO.setLogin(txtLoginUsuario.getText());
         USUARIO.setSenha(Funcoes.getEncrypt(new String(txtSenhaUsuario.getPassword())));
-        if (txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null){
+        if (txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null || txtCodUsuario.getText().isEmpty()){
             if (CtrlUsuario.PesquisarViaLogin(USUARIO) != null){
                 Erro.show("Login indisponível, por favor tente outro");
                 return;
@@ -365,14 +374,18 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             txtCodUsuario.setText(Integer.toString(USUARIO.getCod_Usuario()));
             Informacao.show("Usuário salvo com sucesso");
         } else{
+            if (!isATUALIZAR()){
+                Erro.show("Você não tem permissão para atualizar");
+                return;
+            }
             USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
             CtrlUsuario.AtualizarTodosCampos(USUARIO);
             Informacao.show("Usuário atualizado com sucesso");
         }
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null)){ 
             if (USUARIO == null)
                 USUARIO = new Usuario();
@@ -381,7 +394,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             Informacao.show("Usuário inativado com sucesso");
             limparEntradasDeDados();
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnInativarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -422,9 +435,9 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarFuncionario;
     private javax.swing.JButton btnBuscarUsuario;
     private javax.swing.JButton btnExibirSenha;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnInativar;
+    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -447,4 +460,44 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         txtSenhaUsuario.setText("");
         USUARIO = null;
     }
+    
+    public void carregarPermissoes (){
+        btnInserir.setEnabled(isINSERIR());
+        btnInativar.setEnabled(isINATIVAR());
+        btnBuscarUsuario.setEnabled(isCONSULTAR());
+        btnSalvar.setEnabled(isINSERIR() && isATUALIZAR());
+    }
+
+    public boolean isINSERIR() {
+        return INSERIR;
+    }
+
+    public void setINSERIR(boolean INSERIR) {
+        this.INSERIR = INSERIR;
+    }
+
+    public boolean isATUALIZAR() {
+        return ATUALIZAR;
+    }
+
+    public void setATUALIZAR(boolean ATUALIZAR) {
+        this.ATUALIZAR = ATUALIZAR;
+    }
+
+    public boolean isINATIVAR() {
+        return INATIVAR;
+    }
+
+    public void setINATIVAR(boolean INATIVAR) {
+        this.INATIVAR = INATIVAR;
+    }
+
+    public boolean isCONSULTAR() {
+        return CONSULTAR;
+    }
+
+    public void setCONSULTAR(boolean CONSULTAR) {
+        this.CONSULTAR = CONSULTAR;
+    }
+    
 }
