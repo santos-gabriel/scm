@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import mensagens.Erro;
 import modelo.Usuario;
 import utilitarios.Funcoes;
+import utilitarios.UsuariosUtil;
 
 /**
  *
@@ -162,9 +163,9 @@ public class FrmLogin extends javax.swing.JFrame {
         Usuario user = new Usuario();
         user.setLogin(txtLogin.getText());
         user.setSenha(senha);
-        
-        if (CtrlUsuario.PesquisarViaLoginSenha(user) != null){
-            FrmPrincipal principal = new FrmPrincipal(user);
+        UsuariosUtil.setUsuario(CtrlUsuario.PesquisarViaLoginSenha(user));
+        if (UsuariosUtil.getUsuario() != null){
+            FrmPrincipal principal = new FrmPrincipal();
             principal.setExtendedState(MAXIMIZED_BOTH);
             principal.setVisible(true);
             this.dispose();

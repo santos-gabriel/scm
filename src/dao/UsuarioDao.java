@@ -122,7 +122,7 @@ public class UsuarioDao {
             stmt.setString(2, prUsuario.getSenha());
             rs = stmt.executeQuery();
             if (rs.next())
-                return new Usuario(rs.getInt("cod_usuario"), rs.getString("login"), rs.getString("senha"));
+                return new Usuario(rs.getInt("cod_usuario"), rs.getInt("cod_funcionario"), rs.getString("login"), rs.getString("senha"), rs.getBoolean("ativo"));
             else
                 return null;
         } catch (Exception e) {
@@ -177,7 +177,40 @@ public class UsuarioDao {
         }
     }
     
-    
+    public static List<String> PesquisaPermissoesUsuarioModulo(String prDescricaoModulo, int prCodUsuario){
+        CriarConexoes();
+        List<String> permissoes = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT usr.cod_usuario, usr.login, mdl.descricao as modulo, prs.descricao as permissao "
+                   + "FROM       usuarios          usr                                                       "
+                   + "INNER JOIN permissao_usuario pru  ON                                                   "
+                   + "      pru.cod_usuario = usr.cod_usuario                                                "
+                   + "INNER JOIN permissoes        prs  ON                                                   "
+                   + "      prs.cod_permissao = pru.cod_permissao                                            "
+                   + "INNER JOIN modulos           mdl  ON                                                   "
+                   + "      mdl.cod_modulo = pru.cod_modulo                                                  "
+                   + "WHERE usr.ativo = true                                                                 "
+                   + "AND   usr.cod_usuario = ?                                                              "
+                   + "AND   UPPER(mdl.descricao) LIKE UPPER(?)                                               ";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, prCodUsuario);
+            stmt.setString(2, prDescricaoModulo);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                permissoes.add(rs.getString("permissao"));
+            }
+            
+            return permissoes;
+            
+        } catch (Exception e) {
+            throw new ExcecaoDB(e, "Falha ao localizar permissão do usuário ao módulo ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
     
     
     private static void CriarConexoes(){
