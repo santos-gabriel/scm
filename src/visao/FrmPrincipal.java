@@ -17,11 +17,12 @@ import utilitarios.UsuariosUtil;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
     
-    private FrmCadUsuario     FRM_CAD_USUARIO   = null;
-    private FrmCadCargo       FRM_CAD_CARGO     = null;
-    private FrmCadCategoria   FRM_CAD_CATEGORIA = null;
+    private FrmCadUsuario     FRM_CAD_USUARIO     = null;
+    private FrmCadCargo       FRM_CAD_CARGO       = null;
+    private FrmCadCategoria   FRM_CAD_CATEGORIA   = null;
     private FrmCadFuncionario FRM_CAD_FUNCIONARIO = null;
     private FrmCadCliente     FRM_CAD_CLIENTE     = null;
+    private FrmCadCidades     FRM_CAD_CIDADE      = null;
     
     private Timer TIMER;
     
@@ -64,6 +65,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuCadastros = new javax.swing.JMenu();
         subMenuCadastroClientes = new javax.swing.JMenuItem();
         subMenuCadastroUsuarios = new javax.swing.JMenuItem();
+        subMenuCadastroCidades = new javax.swing.JMenuItem();
         menuFuncionarios = new javax.swing.JMenu();
         subMenuCadastroCargos = new javax.swing.JMenuItem();
         subMenuCadastroFuncionarios = new javax.swing.JMenuItem();
@@ -179,6 +181,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         menuCadastros.add(subMenuCadastroUsuarios);
+
+        subMenuCadastroCidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building.png"))); // NOI18N
+        subMenuCadastroCidades.setText("Cidades");
+        subMenuCadastroCidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroCidadesActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroCidades);
 
         menuSuperior.add(menuCadastros);
 
@@ -364,6 +375,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAD_FUNCIONARIO.setVisible(true);
     }//GEN-LAST:event_subMenuCadastroFuncionariosActionPerformed
 
+    private void subMenuCadastroCidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCidadesActionPerformed
+        if (FRM_CAD_CIDADE == null)
+            FRM_CAD_CIDADE = new FrmCadCidades();
+        FRM_CAD_CIDADE.setVisible(true);
+    }//GEN-LAST:event_subMenuCadastroCidadesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,6 +432,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelFooter;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JMenuItem subMenuCadastroCargos;
+    private javax.swing.JMenuItem subMenuCadastroCidades;
     private javax.swing.JMenuItem subMenuCadastroClientes;
     private javax.swing.JMenuItem subMenuCadastroFuncionarios;
     private javax.swing.JMenuItem subMenuCadastroUsuarios;
