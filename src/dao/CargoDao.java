@@ -91,6 +91,26 @@ public abstract class CargoDao {
         }
     }
     
+    public static List<Cargo> PesquisarTodos(){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT c.cod_cargo, c.desc_cargo FROM cargos c WHERE c.ativo = true ORDER BY c.desc_cargo ASC ";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            List <Cargo> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new Cargo(rs.getInt("cod_cargo"), rs.getString("desc_cargo")));
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new ExcecaoDB(e, "Falha ao localizar cargo pela descrção, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
     public static List<Cargo> PesquisarViaDescricaoExata(String prDescricaoCargo){
         CriarConexoes();
         PreparedStatement stmt = null;

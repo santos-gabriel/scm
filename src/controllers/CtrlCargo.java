@@ -33,4 +33,8 @@ public class CtrlCargo {
         return CargoDao.PesquisarViaDescricaoInicia(prCargo.getDesc_Cargo());
     }
     
+    public static List<Cargo> PesquisarTodos(){
+        return CargoDao.PesquisarTodos();
+    }
+    
 }
