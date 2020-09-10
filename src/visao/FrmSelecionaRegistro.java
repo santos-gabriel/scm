@@ -62,6 +62,11 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
             }
         ));
         tbRegistros.getTableHeader().setReorderingAllowed(false);
+        tbRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRegistrosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbRegistros);
 
         javax.swing.GroupLayout pnlRegistrosLayout = new javax.swing.GroupLayout(pnlRegistros);
@@ -145,6 +150,12 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
         setDadosSelecao();
         this.dispose();
     }//GEN-LAST:event_btnSelecionarActionPerformed
+
+    private void tbRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRegistrosMouseClicked
+        if (evt.getClickCount() >= 2){
+            btnSelecionarActionPerformed(null);
+        }
+    }//GEN-LAST:event_tbRegistrosMouseClicked
 
     /**
      * @param args the command line arguments
