@@ -36,12 +36,14 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
         carregarPermissoes();
+        carregarRegistros();
     }
     
     public FrmCadUsuario(String prInserir, String prAtualizar, String prInativar, String prConsultar) {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
         carregarPermissoes();
+        carregarRegistros();
     }
 
     /**
@@ -72,6 +74,9 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         btnInserir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnInativar = new javax.swing.JButton();
+        pnlRegistros = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro | Usuários");
@@ -95,6 +100,8 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         jLabel1.setText("Buscar usuário");
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        txtCodUsuario.setEditable(false);
 
         jLabel2.setText("Código");
 
@@ -179,7 +186,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
         pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_add.png"))); // NOI18N
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/add.png"))); // NOI18N
         btnInserir.setText("Novo");
         btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +195,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             }
         });
 
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_edit.png"))); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/disk.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,7 +204,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             }
         });
 
-        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_delete.png"))); // NOI18N
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/delete.png"))); // NOI18N
         btnInativar.setText("Inativar");
         btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInativar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +234,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnInativar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlGeralLayout = new javax.swing.GroupLayout(pnlGeral);
@@ -252,15 +259,52 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         pnlGeralLayout.setVerticalGroup(
             pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGeralLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarUsuario)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
-            .addComponent(pnlOpcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGeralLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarUsuario)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Login", "Funcionário"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblUsuarios.getTableHeader().setReorderingAllowed(false);
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblUsuarios);
+
+        javax.swing.GroupLayout pnlRegistrosLayout = new javax.swing.GroupLayout(pnlRegistros);
+        pnlRegistros.setLayout(pnlRegistrosLayout);
+        pnlRegistrosLayout.setHorizontalGroup(
+            pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        pnlRegistrosLayout.setVerticalGroup(
+            pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -268,10 +312,15 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlRegistros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -382,7 +431,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             CtrlUsuario.AtualizarTodosCampos(USUARIO);
             Informacao.show("Usuário atualizado com sucesso");
         }
-        
+        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
@@ -393,8 +442,21 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             CtrlUsuario.Excluir(USUARIO);
             Informacao.show("Usuário inativado com sucesso");
             limparEntradasDeDados();
+            carregarRegistros();
         }
     }//GEN-LAST:event_btnInativarActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        if (evt.getClickCount() >= 2){
+            txtCodUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 0)));
+            txtLoginUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 1)));
+            
+            if (tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2) == null)
+                txtFuncionario.setText("");
+            else
+                txtFuncionario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2)));
+        }
+    }//GEN-LAST:event_tblUsuariosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -443,9 +505,12 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlDadosCadastrais;
     private javax.swing.JPanel pnlGeral;
     private javax.swing.JPanel pnlOpcoes;
+    private javax.swing.JPanel pnlRegistros;
+    private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtBuscarUsuario;
     private javax.swing.JTextField txtCodUsuario;
     private javax.swing.JTextField txtFuncionario;
@@ -498,6 +563,18 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
     public void setCONSULTAR(boolean CONSULTAR) {
         this.CONSULTAR = CONSULTAR;
+    }
+    
+    public void carregarRegistros(){
+        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        modelo.setNumRows(0);
+        CtrlUsuario.PesquisarTodos().forEach((u) -> {
+            modelo.addRow(new Object []{
+                u.getCod_Usuario(),
+                u.getLogin(),
+                u.getFuncionario().getNome_Funcionario()
+            });
+        });
     }
     
 }

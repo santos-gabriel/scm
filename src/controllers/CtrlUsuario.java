@@ -11,8 +11,8 @@ import modelo.Usuario;
  */
 public class CtrlUsuario {
     
-    public static void SalvarTodosCampos (Usuario prUsuario){
-        UsuarioDao.SalvarTodosCampos(prUsuario);
+    public static Integer SalvarTodosCampos (Usuario prUsuario){
+        return UsuarioDao.SalvarTodosCampos(prUsuario);
     }
     
     public static void AtualizarTodosCampos(Usuario prUsuario){
@@ -43,4 +43,7 @@ public class CtrlUsuario {
         return UsuarioDao.PesquisaPermissoesUsuarioModulo(prDescricaoModulo, prCodUsuario);
     }
     
+    public static List<Usuario> PesquisarTodos(){
+        return UsuarioDao.PesquisarTodos();
+    }
 }
