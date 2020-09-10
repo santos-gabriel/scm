@@ -343,7 +343,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
-        if (!(txtCodCargo.getText().isEmpty())){
+        if (!(txtCodCargo.getText() == null || txtCodCargo.getText().isEmpty())){
             if (CARGO == null)
                 CARGO = new Cargo();
             CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));

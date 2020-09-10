@@ -7,7 +7,7 @@ import modelo.Cargo;
 /**
  * @author Gabriel
  */
-public class CtrlCargo {
+public abstract class CtrlCargo {
     
     public static Integer SalvarTodosCampos (Cargo prCargo){
         return CargoDao.SalvarTodosCampos(prCargo);
