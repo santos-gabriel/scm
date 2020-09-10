@@ -292,7 +292,7 @@ public class FrmCadCategoria extends javax.swing.JFrame {
         if (FRM_SELECIONA_REGISTRO == null)
             FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
         FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Cargos | Seleção ");
+        FRM_SELECIONA_REGISTRO.setTitle("Categorias | Seleção ");
         
         FRM_SELECIONA_REGISTRO.setVisible(true);
         

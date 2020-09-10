@@ -7,7 +7,7 @@ import modelo.CategoriasProdutos;
 /**
  * @author Gabriel
  */
-public class CtrlCategoriasProdutos {
+public abstract class CtrlCategoriasProdutos {
     
     public static Integer SalvarTodosCampos (CategoriasProdutos prCategoriasProdutos){
         return CategoriasProdutosDao.SalvarTodosCampos(prCategoriasProdutos);
