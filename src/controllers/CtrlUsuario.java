@@ -9,7 +9,7 @@ import modelo.Usuario;
  * @version %I%, %G%
  * @since v1.0
  */
-public class CtrlUsuario {
+public abstract class CtrlUsuario {
     
     public static Integer SalvarTodosCampos (Usuario prUsuario){
         return UsuarioDao.SalvarTodosCampos(prUsuario);

@@ -17,7 +17,7 @@ import modelo.Usuario;
  * @version %I%, %G%
  * @since v1.0
  */
-public class UsuarioDao {
+public abstract class UsuarioDao {
     
     private static Connection conexao = null;
     
