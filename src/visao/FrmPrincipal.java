@@ -7,10 +7,8 @@ package visao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import mensagens.Erro;
 import utilitarios.UsuariosUtil;
 
 /**
@@ -19,8 +17,11 @@ import utilitarios.UsuariosUtil;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
     
-    private FrmCadUsuario FRM_CAD_USUARIO;
-    private FrmCadCargo   FRM_CAD_CARGO;
+    private FrmCadUsuario     FRM_CAD_USUARIO   = null;
+    private FrmCadCargo       FRM_CAD_CARGO     = null;
+    private FrmCadCategoria   FRM_CAD_CATEGORIA = null;
+    private FrmCadFuncionario FRM_CAD_FUNCIONARIO = null;
+    private FrmCadCliente     FRM_CAD_CLIENTE     = null;
     
     private Timer TIMER;
     
@@ -61,8 +62,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblTime = new javax.swing.JLabel();
         menuSuperior = new javax.swing.JMenuBar();
         menuCadastros = new javax.swing.JMenu();
+        subMenuCadastroClientes = new javax.swing.JMenuItem();
         subMenuCadastroUsuarios = new javax.swing.JMenuItem();
+        menuFuncionarios = new javax.swing.JMenu();
         subMenuCadastroCargos = new javax.swing.JMenuItem();
+        subMenuCadastroFuncionarios = new javax.swing.JMenuItem();
+        menuProdutos = new javax.swing.JMenu();
+        subMenuCategorias = new javax.swing.JMenuItem();
         menuMovimentacoes = new javax.swing.JMenu();
         subMenuEntradas = new javax.swing.JMenuItem();
         subMenuSaidas = new javax.swing.JMenuItem();
@@ -102,7 +108,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelHeaderLayout.setVerticalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblCadastroUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+            .addComponent(lblCadastroUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
         );
 
         panelBody.setBackground(new java.awt.Color(102, 153, 255));
@@ -155,6 +161,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/application_add.png"))); // NOI18N
         menuCadastros.setText("Cadastros");
 
+        subMenuCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
+        subMenuCadastroClientes.setText("Clientes");
+        subMenuCadastroClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroClientesActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroClientes);
+
         subMenuCadastroUsuarios.setBackground(new java.awt.Color(255, 255, 255));
         subMenuCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_orange.png"))); // NOI18N
         subMenuCadastroUsuarios.setText("Usuários");
@@ -165,6 +180,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         menuCadastros.add(subMenuCadastroUsuarios);
 
+        menuSuperior.add(menuCadastros);
+
+        menuFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
+        menuFuncionarios.setText("Funcionários");
+
         subMenuCadastroCargos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard.png"))); // NOI18N
         subMenuCadastroCargos.setText("Cargos");
         subMenuCadastroCargos.addActionListener(new java.awt.event.ActionListener() {
@@ -172,9 +192,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 subMenuCadastroCargosActionPerformed(evt);
             }
         });
-        menuCadastros.add(subMenuCadastroCargos);
+        menuFuncionarios.add(subMenuCadastroCargos);
 
-        menuSuperior.add(menuCadastros);
+        subMenuCadastroFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
+        subMenuCadastroFuncionarios.setText("Funcionários");
+        subMenuCadastroFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroFuncionariosActionPerformed(evt);
+            }
+        });
+        menuFuncionarios.add(subMenuCadastroFuncionarios);
+
+        menuSuperior.add(menuFuncionarios);
+
+        menuProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
+        menuProdutos.setText("Produtos");
+
+        subMenuCategorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/layers.png"))); // NOI18N
+        subMenuCategorias.setText("Categorias");
+        subMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCategoriasActionPerformed(evt);
+            }
+        });
+        menuProdutos.add(subMenuCategorias);
+
+        menuSuperior.add(menuProdutos);
 
         menuMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket.png"))); // NOI18N
         menuMovimentacoes.setText("Movimentações");
@@ -222,6 +265,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void subMenuCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroUsuariosActionPerformed
+        if (FRM_CAD_USUARIO == null)
+            FRM_CAD_USUARIO = new FrmCadUsuario();
+        FRM_CAD_USUARIO.setINSERIR(true);
+        FRM_CAD_USUARIO.setATUALIZAR(true);
+        FRM_CAD_USUARIO.setINATIVAR(true);
+        FRM_CAD_USUARIO.setCONSULTAR(true);
+        FRM_CAD_USUARIO.carregarPermissoes();
+        FRM_CAD_USUARIO.setVisible(true);
+        /*
         List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_USUARIOS");
         if (permissoes.isEmpty()){
             Erro.show("Você não tem permissão para acessar este módulo");
@@ -248,6 +300,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             FRM_CAD_USUARIO.carregarPermissoes();
             FRM_CAD_USUARIO.setVisible(true);
         }
+        */
     }//GEN-LAST:event_subMenuCadastroUsuariosActionPerformed
 
     private void lblCadastroUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroUsuariosMouseClicked
@@ -255,6 +308,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastroUsuariosMouseClicked
 
     private void subMenuCadastroCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCargosActionPerformed
+        if (FRM_CAD_CARGO == null)
+            FRM_CAD_CARGO = new FrmCadCargo();
+        FRM_CAD_CARGO.setINSERIR(true);
+        FRM_CAD_CARGO.setATUALIZAR(true);
+        FRM_CAD_CARGO.setINATIVAR(true);
+        FRM_CAD_CARGO.setCONSULTAR(true);
+        FRM_CAD_CARGO.carregarPermissoes();
+        FRM_CAD_CARGO.setVisible(true);
+        /*
         List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_CARGOS");
         if (permissoes.isEmpty()){
             Erro.show("Você não tem permissão para acessar este módulo");
@@ -281,7 +343,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
             FRM_CAD_CARGO.carregarPermissoes();
             FRM_CAD_CARGO.setVisible(true);
         }
+        */
     }//GEN-LAST:event_subMenuCadastroCargosActionPerformed
+
+    private void subMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCategoriasActionPerformed
+        if (FRM_CAD_CATEGORIA == null)
+            FRM_CAD_CATEGORIA = new FrmCadCategoria();
+        FRM_CAD_CATEGORIA.setVisible(true);
+    }//GEN-LAST:event_subMenuCategoriasActionPerformed
+
+    private void subMenuCadastroClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroClientesActionPerformed
+        if (FRM_CAD_CLIENTE == null)
+            FRM_CAD_CLIENTE = new FrmCadCliente();
+        FRM_CAD_CLIENTE.setVisible(true);
+    }//GEN-LAST:event_subMenuCadastroClientesActionPerformed
+
+    private void subMenuCadastroFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroFuncionariosActionPerformed
+        if (FRM_CAD_FUNCIONARIO == null)
+            FRM_CAD_FUNCIONARIO = new FrmCadFuncionario();
+        FRM_CAD_FUNCIONARIO.setVisible(true);
+    }//GEN-LAST:event_subMenuCadastroFuncionariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,14 +406,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenu menuFuncionarios;
     private javax.swing.JMenu menuMovimentacoes;
+    private javax.swing.JMenu menuProdutos;
     private javax.swing.JMenu menuSobre;
     private javax.swing.JMenuBar menuSuperior;
     private javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelFooter;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JMenuItem subMenuCadastroCargos;
+    private javax.swing.JMenuItem subMenuCadastroClientes;
+    private javax.swing.JMenuItem subMenuCadastroFuncionarios;
     private javax.swing.JMenuItem subMenuCadastroUsuarios;
+    private javax.swing.JMenuItem subMenuCategorias;
     private javax.swing.JMenuItem subMenuEntradas;
     private javax.swing.JMenuItem subMenuSaidas;
     // End of variables declaration//GEN-END:variables
