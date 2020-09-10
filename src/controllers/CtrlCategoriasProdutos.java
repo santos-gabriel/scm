@@ -9,8 +9,8 @@ import modelo.CategoriasProdutos;
  */
 public class CtrlCategoriasProdutos {
     
-    public static void SalvarTodosCampos (CategoriasProdutos prCategoriasProdutos){
-        CategoriasProdutosDao.SalvarTodosCampos(prCategoriasProdutos);
+    public static Integer SalvarTodosCampos (CategoriasProdutos prCategoriasProdutos){
+        return CategoriasProdutosDao.SalvarTodosCampos(prCategoriasProdutos);
     }
     
     public static void AtualizarTodosCampos(CategoriasProdutos prCategoriasProdutos){
@@ -31,6 +31,10 @@ public class CtrlCategoriasProdutos {
     
     public static List<CategoriasProdutos> PesquisarViaDescricaoInicia(CategoriasProdutos prCategoriasProdutos){
         return CategoriasProdutosDao.PesquisarViaDescricaoInicia(prCategoriasProdutos.getDesc_Categoria());
+    }
+    
+    public static List<CategoriasProdutos> PesquisarTodos(){
+        return CategoriasProdutosDao.PesquisarTodos();
     }
     
 }
