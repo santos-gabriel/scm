@@ -16,6 +16,13 @@ public class Usuario {
     private String Senha;
     private boolean ativo;
     
+    
+    
+    
+    
+    
+    
+    
 
     public Usuario() {
     }

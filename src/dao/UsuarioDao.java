@@ -148,12 +148,15 @@ public abstract class UsuarioDao {
                    + "  u.cod_funcionario = f.cod_funcionario                                             "
                    + "WHERE u.ativo = true;                                                               ";
         try {
+            
+            
             stmt = conexao.prepareStatement(sql);
             rs = stmt.executeQuery();
             List <Usuario> usuarios = new ArrayList<>();
             while(rs.next()){
                     usuarios.add(new Usuario(rs.getInt("codigo"), rs.getString("login"), new Funcionario(rs.getString("funcionario")))
                 );
+                    
             }
             return usuarios;
         } catch (Exception e) {
