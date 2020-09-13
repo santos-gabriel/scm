@@ -145,11 +145,37 @@ public abstract class CategoriasProdutosDao {
             }
             return lista;
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrição, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao localizar categorias, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
     }
+    
+    
+    
+     public static List<CategoriasProdutos> PesquisarTodosExeto(CategoriasProdutos categoriaProduto){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE ativo = true AND cod_categoria <> ? ORDER BY desc_categoria ASC";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, categoriaProduto.getCod_Categoria());
+            rs = stmt.executeQuery();
+            List<CategoriasProdutos> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria")));
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new ExcecaoDB(e, "Falha ao localizar categorias, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
+    
+    
     
     private static void CriarConexoes(){
         conexao = Conexao.conectar();

@@ -22,12 +22,12 @@ import modelo.Cargo;
 public class FrmCadCargo extends javax.swing.JFrame {
 
     
-    FrmSelecionaRegistro FRM_SELECIONA_REGISTRO = null;
-    private Cargo    CARGO                      = null;
-    private boolean  INSERIR                    = false;
-    private boolean  ATUALIZAR                  = false;
-    private boolean  INATIVAR                   = false;
-    private boolean  CONSULTAR                  = false;
+    FrmSelecionaRegistro FRM_SELECIONA_REGISTRO     = null;
+    private Cargo        CARGO                      = null;
+    private boolean      INSERIR                    = false;
+    private boolean      ATUALIZAR                  = false;
+    private boolean      INATIVAR                   = false;
+    private boolean      CONSULTAR                  = false;
     
     
     /**
@@ -211,7 +211,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
                             .addComponent(btnBuscarCargo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                         .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 211, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -277,15 +277,12 @@ public class FrmCadCargo extends javax.swing.JFrame {
     private void btnBuscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCargoActionPerformed
         JTable tabela = new JTable();
         List<String[]> dados = new ArrayList<>();
-        
         Cargo cargo = new Cargo();
         cargo.setDesc_Cargo(txtBuscarCargo.getText());
         List<Cargo> cargoPesquisa = CtrlCargo.PesquisarViaDescricaoInicia(cargo);
-        
         for (Cargo c : cargoPesquisa){
             dados.add(new String[]{String.valueOf(c.getCod_Cargo()), c.getDesc_Cargo()});
         }
-        
         tabela.setModel(new DefaultTableModel(
             dados.toArray(new String[dados.size()][]),
             new String [] {"CODIGO", "DESCRICAO"}){
@@ -296,14 +293,11 @@ public class FrmCadCargo extends javax.swing.JFrame {
                 }                
             });
         tabela.getTableHeader().setReorderingAllowed(false);
-        
         if (FRM_SELECIONA_REGISTRO == null)
             FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
         FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
         FRM_SELECIONA_REGISTRO.setTitle("Cargos | Seleção ");
-        
         FRM_SELECIONA_REGISTRO.setVisible(true);
-        
         String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
         if (registroSelecionado != null){
             txtCodCargo.setText(registroSelecionado[0]);
@@ -423,6 +417,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
     private void limparCampos(){
         txtCodCargo.setText("");
         txtDescCargo.setText("");
+        CARGO = null;
     }
     
     public void carregarPermissoes (){

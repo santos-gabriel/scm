@@ -23,6 +23,14 @@ public class Funcionario {
     public Funcionario() {
     }
 
+    public Funcionario(int Cod_Funcionario) {
+        this.Cod_Funcionario = Cod_Funcionario;
+    }
+    
+    public Funcionario(String nome) {
+        this.Nome_Funcionario = nome;
+    }
+    
     public Funcionario(int Cod_Funcionario, int Cod_Cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, String Endereco_Funcionario, boolean ativo) {
         this.Cod_Funcionario = Cod_Funcionario;
         this.Cod_Cargo = Cod_Cargo;

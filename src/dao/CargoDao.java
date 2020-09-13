@@ -105,7 +105,7 @@ public abstract class CargoDao {
             }
             return lista;
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar cargo pela descrção, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao localizar cargos, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }

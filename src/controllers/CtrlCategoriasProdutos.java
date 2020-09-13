@@ -37,4 +37,8 @@ public abstract class CtrlCategoriasProdutos {
         return CategoriasProdutosDao.PesquisarTodos();
     }
     
+    public static List<CategoriasProdutos> PesquisarTodosExecto(CategoriasProdutos categoriaProduto){
+        return CategoriasProdutosDao.PesquisarTodosExeto(categoriaProduto);
+    }
+    
 }

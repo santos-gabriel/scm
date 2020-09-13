@@ -20,6 +20,11 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(int Cod_Usuario, String Login) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Login = Login;
+    }
+    
     public Usuario(int Cod_Usuario, Funcionario funcionario, String Login, String Senha, boolean ativo) {
         this.Cod_Usuario = Cod_Usuario;
         this.Funcionario = funcionario;

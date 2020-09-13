@@ -23,6 +23,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmCadFuncionario FRM_CAD_FUNCIONARIO = null;
     private FrmCadCliente     FRM_CAD_CLIENTE     = null;
     private FrmCadCidades     FRM_CAD_CIDADE      = null;
+    private FrmCadEstado      FRM_CAD_ESTADO      = null;
+    private FrmCadProduto     FRM_CAD_PRODUTO     = null;
     
     private Timer TIMER;
     
@@ -55,7 +57,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         panelHeader = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
-        lblCadastroUsuarios = new javax.swing.JLabel();
+        btnCadastroUsuarios = new javax.swing.JButton();
         panelBody = new javax.swing.JPanel();
         imgPrincipalCenter = new javax.swing.JLabel();
         panelFooter = new javax.swing.JPanel();
@@ -66,11 +68,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuCadastroClientes = new javax.swing.JMenuItem();
         subMenuCadastroUsuarios = new javax.swing.JMenuItem();
         subMenuCadastroCidades = new javax.swing.JMenuItem();
+        subMenuCadastroEstados = new javax.swing.JMenuItem();
         menuFuncionarios = new javax.swing.JMenu();
         subMenuCadastroCargos = new javax.swing.JMenuItem();
         subMenuCadastroFuncionarios = new javax.swing.JMenuItem();
         menuProdutos = new javax.swing.JMenu();
         subMenuCategorias = new javax.swing.JMenuItem();
+        subMenuProdutos = new javax.swing.JMenuItem();
         menuMovimentacoes = new javax.swing.JMenu();
         subMenuEntradas = new javax.swing.JMenuItem();
         subMenuSaidas = new javax.swing.JMenuItem();
@@ -88,11 +92,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo-sistema-150-75.png"))); // NOI18N
 
-        lblCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuarios-90-90.png"))); // NOI18N
-        lblCadastroUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblCadastroUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblCadastroUsuariosMouseClicked(evt);
+        btnCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuarios-90-90.png"))); // NOI18N
+        btnCadastroUsuarios.setBorderPainted(false);
+        btnCadastroUsuarios.setContentAreaFilled(false);
+        btnCadastroUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastroUsuarios.setFocusPainted(false);
+        btnCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastroUsuariosActionPerformed(evt);
             }
         });
 
@@ -102,7 +109,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCadastroUsuarios)
+                .addComponent(btnCadastroUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(imgLogo)
                 .addContainerGap())
@@ -110,7 +117,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelHeaderLayout.setVerticalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblCadastroUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+            .addGroup(panelHeaderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCadastroUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         panelBody.setBackground(new java.awt.Color(102, 153, 255));
@@ -191,6 +201,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         menuCadastros.add(subMenuCadastroCidades);
 
+        subMenuCadastroEstados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building.png"))); // NOI18N
+        subMenuCadastroEstados.setText("Estados");
+        subMenuCadastroEstados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroEstadosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroEstados);
+
         menuSuperior.add(menuCadastros);
 
         menuFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
@@ -227,6 +246,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         menuProdutos.add(subMenuCategorias);
+
+        subMenuProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/package.png"))); // NOI18N
+        subMenuProdutos.setText("Produto");
+        subMenuProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuProdutosActionPerformed(evt);
+            }
+        });
+        menuProdutos.add(subMenuProdutos);
 
         menuSuperior.add(menuProdutos);
 
@@ -314,10 +342,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_subMenuCadastroUsuariosActionPerformed
 
-    private void lblCadastroUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroUsuariosMouseClicked
-        subMenuCadastroUsuariosActionPerformed(null);
-    }//GEN-LAST:event_lblCadastroUsuariosMouseClicked
-
     private void subMenuCadastroCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCargosActionPerformed
         if (FRM_CAD_CARGO == null)
             FRM_CAD_CARGO = new FrmCadCargo();
@@ -381,6 +405,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAD_CIDADE.setVisible(true);
     }//GEN-LAST:event_subMenuCadastroCidadesActionPerformed
 
+    private void btnCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroUsuariosActionPerformed
+        subMenuCadastroUsuariosActionPerformed(null);
+    }//GEN-LAST:event_btnCadastroUsuariosActionPerformed
+
+    private void subMenuCadastroEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroEstadosActionPerformed
+        if (FRM_CAD_ESTADO == null)
+            FRM_CAD_ESTADO = new FrmCadEstado();
+        FRM_CAD_ESTADO.setVisible(true);
+    }//GEN-LAST:event_subMenuCadastroEstadosActionPerformed
+
+    private void subMenuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuProdutosActionPerformed
+        if (FRM_CAD_PRODUTO == null)
+            FRM_CAD_PRODUTO = new FrmCadProduto();
+        FRM_CAD_PRODUTO.setVisible(true);
+    }//GEN-LAST:event_subMenuProdutosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -417,9 +457,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCadastroUsuarios;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel imgPrincipalCenter;
-    private javax.swing.JLabel lblCadastroUsuarios;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuCadastros;
@@ -434,10 +474,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subMenuCadastroCargos;
     private javax.swing.JMenuItem subMenuCadastroCidades;
     private javax.swing.JMenuItem subMenuCadastroClientes;
+    private javax.swing.JMenuItem subMenuCadastroEstados;
     private javax.swing.JMenuItem subMenuCadastroFuncionarios;
     private javax.swing.JMenuItem subMenuCadastroUsuarios;
     private javax.swing.JMenuItem subMenuCategorias;
     private javax.swing.JMenuItem subMenuEntradas;
+    private javax.swing.JMenuItem subMenuProdutos;
     private javax.swing.JMenuItem subMenuSaidas;
     // End of variables declaration//GEN-END:variables
 }

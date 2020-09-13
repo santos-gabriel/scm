@@ -30,6 +30,10 @@ public class CategoriasProdutos {
         this.Desc_Categoria = Desc_Categoria;
     }
 
+    public CategoriasProdutos(int Cod_Categoria) {
+        this.Cod_Categoria = Cod_Categoria;
+    }
+    
     public int getCod_Categoria() {
         return Cod_Categoria;
     }
