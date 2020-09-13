@@ -328,6 +328,7 @@ public class FrmCadCategoria extends javax.swing.JFrame {
             Informacao.show("Categoria atualizada com sucesso");
         }
         carregarRegistros();
+        limparCamposTextos();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed

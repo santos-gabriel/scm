@@ -139,8 +139,8 @@ public abstract class ProdutoDao {
                    + "  c.cod_categoria = p.cod_categoria                                             "
                    + "INNER JOIN usuarios u ON                                                        "
                    + "  u.cod_usuario = p.cod_usuario                                                 "
-                   + "WHERE p.ativo = true                                                            "
-                   + "AND   p.cod_produto = ?                                                         ";
+                   + "WHERE p.ativo = true                                                            ";
+                   
         try {
             stmt = conexao.prepareStatement(sql);
             rs = stmt.executeQuery();

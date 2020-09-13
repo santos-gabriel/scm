@@ -21,13 +21,8 @@ import modelo.Cargo;
  */
 public class FrmCadCargo extends javax.swing.JFrame {
 
-    
     FrmSelecionaRegistro FRM_SELECIONA_REGISTRO     = null;
     private Cargo        CARGO                      = null;
-    private boolean      INSERIR                    = false;
-    private boolean      ATUALIZAR                  = false;
-    private boolean      INATIVAR                   = false;
-    private boolean      CONSULTAR                  = false;
     
     
     /**
@@ -36,17 +31,9 @@ public class FrmCadCargo extends javax.swing.JFrame {
     public FrmCadCargo() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        carregarPermissoes();
         carregarRegistros();
     }
     
-    public FrmCadCargo(String prInserir, String prAtualizar, String prInativar, String prConsultar) {
-        initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        carregarPermissoes();
-        carregarRegistros();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -306,12 +293,10 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarCargoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
         if (txtDescCargo.getText().isEmpty()){
             Erro.show("Informe a descrição do cargo");
             return;
         }
-        
         if (CARGO == null)
             CARGO = new Cargo();
         CARGO.setDesc_Cargo(txtDescCargo.getText());
@@ -325,10 +310,6 @@ public class FrmCadCargo extends javax.swing.JFrame {
             }
             
         } else{
-            if (!isATUALIZAR()){
-                Erro.show("Você não tem permissão para atualizar");
-                return;
-            }
             CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
             CtrlCargo.AtualizarTodosCampos(CARGO);
             Informacao.show("Cargo atualizado com sucesso");
@@ -419,46 +400,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
         txtDescCargo.setText("");
         CARGO = null;
     }
-    
-    public void carregarPermissoes (){
-        btnInserir.setEnabled(isINSERIR());
-        btnInativar.setEnabled(isINATIVAR());
-        btnBuscarCargo.setEnabled(isCONSULTAR());
-        btnSalvar.setEnabled(isINSERIR() && isATUALIZAR());
-    }
-
-    public boolean isINSERIR() {
-        return INSERIR;
-    }
-
-    public void setINSERIR(boolean INSERIR) {
-        this.INSERIR = INSERIR;
-    }
-
-    public boolean isATUALIZAR() {
-        return ATUALIZAR;
-    }
-
-    public void setATUALIZAR(boolean ATUALIZAR) {
-        this.ATUALIZAR = ATUALIZAR;
-    }
-
-    public boolean isINATIVAR() {
-        return INATIVAR;
-    }
-
-    public void setINATIVAR(boolean INATIVAR) {
-        this.INATIVAR = INATIVAR;
-    }
-
-    public boolean isCONSULTAR() {
-        return CONSULTAR;
-    }
-
-    public void setCONSULTAR(boolean CONSULTAR) {
-        this.CONSULTAR = CONSULTAR;
-    }
-    
+        
     private void carregarRegistros(){
         DefaultTableModel modelo = (DefaultTableModel) tblCargos.getModel();
         modelo.setNumRows(0);
