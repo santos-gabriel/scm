@@ -422,7 +422,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
 
     private void cbxCategoriasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCategoriasItemStateChanged
         CATEGORIASELECIONADA = CATEGORIAS.get(cbxCategorias.getSelectedIndex());
-        txtCodCategoria.setText(Integer.parseInt(CATEGORIASELECIONADA.getCod_Categoria()));
+        txtCodCategoria.setText(Integer.toString(CATEGORIASELECIONADA.getCod_Categoria()));
     }//GEN-LAST:event_cbxCategoriasItemStateChanged
 
     /**
