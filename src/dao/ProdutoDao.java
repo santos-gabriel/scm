@@ -96,14 +96,15 @@ public abstract class ProdutoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT p.cod_produto, p.cod_categoria, c.descricao as categoria, p.cod_usuario, "
-                   + "       u.login as usuario, p.des_produto, p.valor_custo, p.valor_venda, p.ativo "
-                   + "INNER JOIN categorias c ON                                                      "
-                   + "  c.cod_categoria = p.cod_categoria                                             "
-                   + "INNER JOIN usuarios u ON                                                        "
-                   + "  u.cod_usuario = p.cod_usuario                                                 "
-                   + "WHERE p.ativo = true                                                            "
-                   + "AND   p.cod_produto = ?                                                         ";
+        String sql = "SELECT p.cod_produto, p.cod_categoria, c.desc_categoria as categoria, p.cod_usuario,  "
+                   + "       u.login as usuario, p.desc_produto, p.valor_custo, p.valor_venda, p.ativo      "
+                   + "FROM   produtos p                                                                     "
+                   + "INNER JOIN categorias c ON                                                            "
+                   + "  c.cod_categoria = p.cod_categoria                                                   "
+                   + "INNER JOIN usuarios u ON                                                              "
+                   + "  u.cod_usuario = p.cod_usuario                                                       "
+                   + "WHERE p.ativo = true                                                                  "
+                   + "AND   p.cod_produto = ?                                                               ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigo);
@@ -133,13 +134,14 @@ public abstract class ProdutoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT p.cod_produto, p.cod_categoria, c.descricao as categoria, p.cod_usuario, "
-                   + "       u.login as usuario, p.des_produto, p.valor_custo, p.valor_venda, p.ativo "
-                   + "INNER JOIN categorias c ON                                                      "
-                   + "  c.cod_categoria = p.cod_categoria                                             "
-                   + "INNER JOIN usuarios u ON                                                        "
-                   + "  u.cod_usuario = p.cod_usuario                                                 "
-                   + "WHERE p.ativo = true                                                            ";
+        String sql = "SELECT p.cod_produto, p.cod_categoria, c.desc_categoria as categoria, p.cod_usuario,  "
+                   + "       u.login as usuario, p.desc_produto, p.valor_custo, p.valor_venda, p.ativo      "
+                   + "FROM   produtos p                                                                     "
+                   + "INNER JOIN categorias c ON                                                            "
+                   + "  c.cod_categoria = p.cod_categoria                                                   "
+                   + "INNER JOIN usuarios u ON                                                              "
+                   + "  u.cod_usuario = p.cod_usuario                                                       "
+                   + "WHERE p.ativo = true                                                                  ";
                    
         try {
             stmt = conexao.prepareStatement(sql);
@@ -171,14 +173,15 @@ public abstract class ProdutoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT p.cod_produto, p.cod_categoria, c.descricao as categoria, p.cod_usuario, "
-                   + "       u.login as usuario, p.des_produto, p.valor_custo, p.valor_venda, p.ativo "
-                   + "INNER JOIN categorias c ON                                                      "
-                   + "  c.cod_categoria = p.cod_categoria                                             "
-                   + "INNER JOIN usuarios u ON                                                        "
-                   + "  u.cod_usuario = p.cod_usuario                                                 "
-                   + "WHERE p.ativo = true                                                            "
-                   + "AND   p.cod_produto = ?                                                         ";
+        String sql = "SELECT p.cod_produto, p.cod_categoria, c.desc_categoria as categoria, p.cod_usuario,  "
+                   + "       u.login as usuario, p.desc_produto, p.valor_custo, p.valor_venda, p.ativo      "
+                   + "FROM   produtos p                                                                     "
+                   + "INNER JOIN categorias c ON                                                            "
+                   + "  c.cod_categoria = p.cod_categoria                                                   "
+                   + "INNER JOIN usuarios u ON                                                              "
+                   + "  u.cod_usuario = p.cod_usuario                                                       "
+                   + "WHERE p.ativo = true                                                                  "
+                   + "AND   p.desc_produto = ?                                                              ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricao);
@@ -210,14 +213,15 @@ public abstract class ProdutoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT p.cod_produto, p.cod_categoria, c.descricao as categoria, p.cod_usuario, "
-                   + "       u.login as usuario, p.des_produto, p.valor_custo, p.valor_venda, p.ativo "
-                   + "INNER JOIN categorias c ON                                                      "
-                   + "  c.cod_categoria = p.cod_categoria                                             "
-                   + "INNER JOIN usuarios u ON                                                        "
-                   + "  u.cod_usuario = p.cod_usuario                                                 "
-                   + "WHERE p.ativo = true                                                            "
-                   + "AND   p.cod_produto = ?                                                         ";
+        String sql = "SELECT p.cod_produto, p.cod_categoria, c.desc_categoria as categoria, p.cod_usuario,  "
+                   + "       u.login as usuario, p.desc_produto, p.valor_custo, p.valor_venda, p.ativo      "
+                   + "FROM   produtos p                                                                     "
+                   + "INNER JOIN categorias c ON                                                            "
+                   + "  c.cod_categoria = p.cod_categoria                                                   "
+                   + "INNER JOIN usuarios u ON                                                              "
+                   + "  u.cod_usuario = p.cod_usuario                                                       "
+                   + "WHERE p.ativo = true                                                                  "
+                   + "AND   UPPER(p.desc_produto) LIKE UPPER(?)                                             ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricaoCargo+"%");

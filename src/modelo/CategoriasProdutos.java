@@ -57,7 +57,39 @@ public class CategoriasProdutos {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    @Override
+    public String toString() {
+        return this.Desc_Categoria;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CategoriasProdutos other = (CategoriasProdutos) obj;
+        if (this.Cod_Categoria != other.Cod_Categoria) {
+            return false;
+        }
+        return true;
+    }
     
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this.Cod_Categoria;
+        return hash;
+    }
+
     
     
 }
