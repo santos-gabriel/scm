@@ -5,6 +5,7 @@
  */
 package visao;
 
+import com.sun.glass.events.KeyEvent;
 import controllers.CtrlCategoriasProdutos;
 import controllers.CtrlProduto;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import utilitarios.UsuariosUtil;
 public class FrmCadProduto extends javax.swing.JFrame {
 
     private FrmSelecionaRegistro     FRM_SELECIONA_REGISTRO = null;
-    private List<CategoriasProdutos> CATEGORIAS             = null;
     private CategoriasProdutos       CATEGORIASELECIONADA   = null;
     private Produto                  PRODUTO                = null;
     
@@ -35,7 +35,6 @@ public class FrmCadProduto extends javax.swing.JFrame {
     public FrmCadProduto() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        carregarPermissoes();
         carregarRegistros();
         carregarCombobox();
     }
@@ -66,13 +65,12 @@ public class FrmCadProduto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        pnlOpcoes = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnInativar = new javax.swing.JButton();
         pnlRegistros = new javax.swing.JPanel();
-        tblProdutos = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scrollPane = new javax.swing.JScrollPane();
+        tblProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro | Produtos");
@@ -102,9 +100,9 @@ public class FrmCadProduto extends javax.swing.JFrame {
             }
         });
 
-        txtValorCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        txtValorCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
-        txtValorVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txtValorVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         javax.swing.GroupLayout pnlDadosCadastraisLayout = new javax.swing.GroupLayout(pnlDadosCadastrais);
         pnlDadosCadastrais.setLayout(pnlDadosCadastraisLayout);
@@ -164,11 +162,74 @@ public class FrmCadProduto extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar Produtos");
 
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+        });
+
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
+        btnNovo.setBorderPainted(false);
+        btnNovo.setContentAreaFilled(false);
+        btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNovo.setFocusPainted(false);
+        btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNovoMouseExited(evt);
+            }
+        });
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png"))); // NOI18N
+        btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvar.setFocusPainted(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseExited(evt);
+            }
+        });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png"))); // NOI18N
+        btnInativar.setBorderPainted(false);
+        btnInativar.setContentAreaFilled(false);
+        btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInativar.setFocusPainted(false);
+        btnInativar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInativarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInativarMouseExited(evt);
+            }
+        });
+        btnInativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInativarActionPerformed(evt);
             }
         });
 
@@ -180,78 +241,43 @@ public class FrmCadProduto extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlGeralLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGeralLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
                         .addComponent(btnBuscar)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInativar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         pnlGeralLayout.setVerticalGroup(
             pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGeralLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(27, 27, 27)
-                .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
-        pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
-
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/add.png"))); // NOI18N
-        btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
-            }
-        });
-
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/disk.png"))); // NOI18N
-        btnSalvar.setText("Salvar");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
-
-        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/delete.png"))); // NOI18N
-        btnInativar.setText("Inativar");
-        btnInativar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInativarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlOpcoesLayout = new javax.swing.GroupLayout(pnlOpcoes);
-        pnlOpcoes.setLayout(pnlOpcoesLayout);
-        pnlOpcoesLayout.setHorizontalGroup(
-            pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlOpcoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInativar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlOpcoesLayout.setVerticalGroup(
-            pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOpcoesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnInativar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlGeralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInativar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlGeralLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))))
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -267,44 +293,39 @@ public class FrmCadProduto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        tblProdutos.setViewportView(jTable1);
+        tblProdutos.getTableHeader().setReorderingAllowed(false);
+        tblProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProdutosMouseClicked(evt);
+            }
+        });
+        scrollPane.setViewportView(tblProdutos);
 
         javax.swing.GroupLayout pnlRegistrosLayout = new javax.swing.GroupLayout(pnlRegistros);
         pnlRegistros.setLayout(pnlRegistrosLayout);
         pnlRegistrosLayout.setHorizontalGroup(
             pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tblProdutos)
+            .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
         );
         pnlRegistrosLayout.setVerticalGroup(
             pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegistrosLayout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(tblProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlOpcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(pnlRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
+                .addComponent(pnlGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -315,7 +336,6 @@ public class FrmCadProduto extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         CATEGORIASELECIONADA = null;
-        CATEGORIAS           = null;
         PRODUTO              = null;
         
         limparCamposTextos();
@@ -329,6 +349,10 @@ public class FrmCadProduto extends javax.swing.JFrame {
         if (PRODUTO == null)
             PRODUTO = new Produto();
         PRODUTO.setCod_Produto(Integer.parseInt(txtCodProduto.getText()));
+        CtrlProduto.Excluir(PRODUTO);
+        Informacao.show("Produto inativado com sucesso");
+        limparCamposTextos();
+        carregarRegistros();
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -373,7 +397,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
                     txtCodProduto.setText(registroSelecionado[0]);
                     txtDescProduto.setText(registroSelecionado[1]);
                     txtCodCategoria.setText(registroSelecionado[2]);
-                    // registroSelecionado[3];
+                    cbxCategorias.setSelectedItem(new CategoriasProdutos(Integer.parseInt(txtCodCategoria.getText())));
                     txtValorCusto.setText(registroSelecionado[4]);
                     txtValorVenda.setText(registroSelecionado[5]);
                 }  
@@ -406,8 +430,8 @@ public class FrmCadProduto extends javax.swing.JFrame {
         PRODUTO.setCategoria_Produto(new  CategoriasProdutos(Integer.parseInt(txtCodCategoria.getText()), "tem que adicionar código ..."));
         PRODUTO.setDesc_Produto(txtDescProduto.getText());
         PRODUTO.setUsuario(UsuariosUtil.getUsuario());
-        PRODUTO.setValor_Custo(Double.parseDouble(txtValorCusto.getText()));
-        PRODUTO.setValor_Venda(Double.parseDouble(txtValorVenda.getText()));
+        PRODUTO.setValor_Custo(trataValor(txtValorCusto.getText()));
+        PRODUTO.setValor_Venda(trataValor(txtValorVenda.getText()));
         
         if (txtCodProduto.getText() == null || txtCodProduto.getText().isEmpty()){
             Integer codProdutoInserido = CtrlProduto.SalvarTodosCampos(PRODUTO);
@@ -418,13 +442,62 @@ public class FrmCadProduto extends javax.swing.JFrame {
             CtrlProduto.AtualizarTodosCampos(PRODUTO);
             Informacao.show("Produto atualizado com sucesso");
         }
+        limparCamposTextos();
         carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void cbxCategoriasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCategoriasItemStateChanged
-        CATEGORIASELECIONADA = CATEGORIAS.get(cbxCategorias.getSelectedIndex());
-        txtCodCategoria.setText(Integer.toString(CATEGORIASELECIONADA.getCod_Categoria()));
+        if (cbxCategorias.getSelectedIndex() > 0){
+            
+            if (CATEGORIASELECIONADA == null)
+                CATEGORIASELECIONADA = new CategoriasProdutos();
+        
+            CATEGORIASELECIONADA = (CategoriasProdutos) cbxCategorias.getSelectedItem();
+            txtCodCategoria.setText(Integer.toString(CATEGORIASELECIONADA.getCod_Categoria()));
+        } else
+            txtCodCategoria.setText("");
+        
     }//GEN-LAST:event_cbxCategoriasItemStateChanged
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            btnBuscarActionPerformed(null);
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void tblProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutosMouseClicked
+        if (evt.getClickCount() >= 2){
+            txtCodProduto.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 0)));
+            txtCodCategoria.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 1)));
+            cbxCategorias.setSelectedItem(new CategoriasProdutos(Integer.parseInt(txtCodCategoria.getText())));
+            txtDescProduto.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 3)));
+            txtValorCusto.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 4)));
+            txtValorVenda.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 5)));
+        }
+    }//GEN-LAST:event_tblProdutosMouseClicked
+
+    private void btnNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseEntered
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_btnNovoMouseEntered
+
+    private void btnNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseExited
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_btnNovoMouseExited
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar2.png")));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseExited
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png")));
+    }//GEN-LAST:event_btnSalvarMouseExited
+
+    private void btnInativarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseEntered
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar2.png")));
+    }//GEN-LAST:event_btnInativarMouseEntered
+
+    private void btnInativarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseExited
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png")));
+    }//GEN-LAST:event_btnInativarMouseExited
 
     /**
      * @param args the command line arguments
@@ -466,7 +539,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnInativar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cbxCategorias;
+    private javax.swing.JComboBox<CategoriasProdutos> cbxCategorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -474,12 +547,11 @@ public class FrmCadProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlDadosCadastrais;
     private javax.swing.JPanel pnlGeral;
-    private javax.swing.JPanel pnlOpcoes;
     private javax.swing.JPanel pnlRegistros;
-    private javax.swing.JScrollPane tblProdutos;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTable tblProdutos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodCategoria;
     private javax.swing.JTextField txtCodProduto;
@@ -488,18 +560,24 @@ public class FrmCadProduto extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtValorVenda;
     // End of variables declaration//GEN-END:variables
     
-    
-    
-    private void carregarPermissoes() {
-    
-    }
 
     private void carregarRegistros() {
-    
+        DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
+        modelo.setNumRows(0);
+        CtrlProduto.PesquisarTodos().forEach((p) -> {
+            modelo.addRow(new Object []{
+                p.getCod_Produto(),
+                p.getCategoria_Produto().getCod_Categoria(),
+                p.getCategoria_Produto().getDesc_Categoria(),
+                p.getDesc_Produto(),
+                p.getValor_Custo(),
+                p.getValor_Venda()
+                
+            });
+        });
     }
 
     private void limparCamposTextos() {
-        txtCodCategoria.setText("");
         txtCodProduto.setText("");
         txtDescProduto.setText("");
         txtValorCusto.setText("");
@@ -508,17 +586,19 @@ public class FrmCadProduto extends javax.swing.JFrame {
     
     private void carregarCombobox(){
         if (txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty()){
+            cbxCategorias.addItem(new CategoriasProdutos(0, "Selecione"));
             CtrlCategoriasProdutos.PesquisarTodos().forEach(categoria -> {
-                cbxCategorias.addItem(categoria.getDesc_Categoria());
+                cbxCategorias.addItem(categoria);
             });
-        } else {
-            if (CATEGORIASELECIONADA == null)
-                CATEGORIASELECIONADA = new CategoriasProdutos();
-            CATEGORIASELECIONADA = CtrlCategoriasProdutos.PesquisarViaCodigo(new CategoriasProdutos(Integer.parseInt(txtCodCategoria.getText())));
-            List<CategoriasProdutos> listaCategoriaProdutosExeto = CtrlCategoriasProdutos.PesquisarTodosExecto(CATEGORIASELECIONADA);
         }
     }
-    
-    
+
+    private Double trataValor(String prValor){
+        return Double.parseDouble(prValor.replaceAll(",", "."));
+    }
+
+    private String formataValor(Double prValor){
+        return Double.toString(prValor).replaceAll(".", ",");
+    }
     
 }
