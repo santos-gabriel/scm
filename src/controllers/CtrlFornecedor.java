@@ -21,6 +21,10 @@ public class CtrlFornecedor {
         FornecedorDao.Excluir(prFornecedor.getCod_Fornecedor());
     }
     
+    public static List<Fornecedor> PesquisarTodos(){
+        return FornecedorDao.PesquisarTodos();
+    }
+    
     public static Fornecedor PesquisarViaCodigo(Fornecedor prFornecedor){
         return FornecedorDao.PesquisarViaCodigo(prFornecedor.getCod_Fornecedor());
     }

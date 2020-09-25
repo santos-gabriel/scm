@@ -11,9 +11,9 @@ package modelo;
  */
 public class Fornecedor {
     private int Cod_Fornecedor;
-    private int Cod_Usuario;
-    private int Cod_Estado;
-    private int Cod_Cidade;
+    private Usuario usuario;
+    private Estados estado;
+    private Cidades cidade;
     private String Nome_Fornecedor;
     private String CNPJ_Fornecedor;
     private String Inscricao_Municipal;
@@ -24,11 +24,11 @@ public class Fornecedor {
     public Fornecedor() {
     }
     
-    public Fornecedor(int Cod_Fornecedor, int Cod_Usuario, int Cod_Estado, int Cod_Cidade, String Nome_Fornecedor, String CNPJ_Fornecedor, String Inscricao_Municipal, String Endereco_Fornecedor, String Telefone_Fornecedor) {
+    public Fornecedor(int Cod_Fornecedor, Usuario usuario, Estados estado, Cidades cidade, String Nome_Fornecedor, String CNPJ_Fornecedor, String Inscricao_Municipal, String Endereco_Fornecedor, String Telefone_Fornecedor) {
         this.Cod_Fornecedor = Cod_Fornecedor;
-        this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Estado = Cod_Estado;
-        this.Cod_Cidade = Cod_Cidade;
+        this.usuario = usuario;
+        this.estado = estado;
+        this.cidade = cidade;
         this.Nome_Fornecedor = Nome_Fornecedor;
         this.CNPJ_Fornecedor = CNPJ_Fornecedor;
         this.Inscricao_Municipal = Inscricao_Municipal;
@@ -36,11 +36,11 @@ public class Fornecedor {
         this.Telefone_Fornecedor = Telefone_Fornecedor;
     }
     
-    public Fornecedor(int Cod_Fornecedor, int Cod_Usuario, int Cod_Estado, int Cod_Cidade, String Nome_Fornecedor, String CNPJ_Fornecedor, String Inscricao_Municipal, String Endereco_Fornecedor, String Telefone_Fornecedor, boolean ativo) {
+    public Fornecedor(int Cod_Fornecedor,  Usuario usuario, Estados estado, Cidades cidade, String Nome_Fornecedor, String CNPJ_Fornecedor, String Inscricao_Municipal, String Endereco_Fornecedor, String Telefone_Fornecedor, boolean ativo) {
         this.Cod_Fornecedor = Cod_Fornecedor;
-        this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Estado = Cod_Estado;
-        this.Cod_Cidade = Cod_Cidade;
+        this.usuario = usuario;
+        this.estado = estado;
+        this.cidade = cidade;
         this.Nome_Fornecedor = Nome_Fornecedor;
         this.CNPJ_Fornecedor = CNPJ_Fornecedor;
         this.Inscricao_Municipal = Inscricao_Municipal;
@@ -97,28 +97,28 @@ public class Fornecedor {
         this.Telefone_Fornecedor = Telefone_Fornecedor;
     }
 
-    public int getCod_Usuario() {
-        return Cod_Usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCod_Usuario(int Cod_Usuario) {
-        this.Cod_Usuario = Cod_Usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public int getCod_Estado() {
-        return Cod_Estado;
+    public Estados getEstado() {
+        return estado;
     }
 
-    public void setCod_Estado(int Cod_Estado) {
-        this.Cod_Estado = Cod_Estado;
+    public void setEstado(Estados estado) {
+        this.estado = estado;
     }
 
-    public int getCod_Cidade() {
-        return Cod_Cidade;
+    public Cidades getCidade() {
+        return cidade;
     }
 
-    public void setCod_Cidade(int Cod_Cidade) {
-        this.Cod_Cidade = Cod_Cidade;
+    public void setCidade(Cidades cidade) {
+        this.cidade = cidade;
     }
 
     public boolean isAtivo() {
