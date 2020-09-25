@@ -17,21 +17,22 @@ public class Funcionario {
     private String Rg_Funcionario;
     private String CPF_Funcionario;
     private String WhatsApp_Funcionario;
+    private int Cod_Cidade;
+    private int Cod_Estado;
     private String Endereco_Funcionario;
     private boolean ativo;
 
     public Funcionario() {
     }
-
-    public Funcionario(int Cod_Funcionario) {
+    
+    public Funcionario(int Cod_Funcionario){
         this.Cod_Funcionario = Cod_Funcionario;
     }
     
-    public Funcionario(String nome) {
+    public Funcionario(String nome){
         this.Nome_Funcionario = nome;
     }
-    
-    public Funcionario(int Cod_Funcionario, int Cod_Cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, String Endereco_Funcionario, boolean ativo) {
+    public Funcionario(int Cod_Funcionario, int Cod_Cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, int Cod_Cidade, int Cod_Estado, String Endereco_Funcionario, boolean ativo) {
         this.Cod_Funcionario = Cod_Funcionario;
         this.Cod_Cargo = Cod_Cargo;
         this.Nome_Funcionario = Nome_Funcionario;
@@ -39,9 +40,12 @@ public class Funcionario {
         this.Rg_Funcionario = Rg_Funcionario;
         this.CPF_Funcionario = CPF_Funcionario;
         this.WhatsApp_Funcionario = WhatsApp_Funcionario;
+        this.Cod_Cidade = Cod_Cidade;
+        this.Cod_Estado = Cod_Estado;
         this.Endereco_Funcionario = Endereco_Funcionario;
         this.ativo = ativo;
     }
+
 
     public int getCod_Funcionario() {
         return Cod_Funcionario;
@@ -97,6 +101,22 @@ public class Funcionario {
 
     public void setWhatsApp_Funcionario(String WhatsApp_Funcionario) {
         this.WhatsApp_Funcionario = WhatsApp_Funcionario;
+    }
+
+    public int getCod_Cidade() {
+        return Cod_Cidade;
+    }
+
+    public void setCod_Cidade(int Cod_Cidade) {
+        this.Cod_Cidade = Cod_Cidade;
+    }
+
+    public int getCod_Estado() {
+        return Cod_Estado;
+    }
+
+    public void setCod_Estado(int Cod_Estado) {
+        this.Cod_Estado = Cod_Estado;
     }
 
     public String getEndereco_Funcionario() {

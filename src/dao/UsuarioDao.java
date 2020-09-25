@@ -154,8 +154,7 @@ public abstract class UsuarioDao {
             rs = stmt.executeQuery();
             List <Usuario> usuarios = new ArrayList<>();
             while(rs.next()){
-                    usuarios.add(new Usuario(rs.getInt("codigo"), rs.getString("login"), new Funcionario(rs.getString("funcionario")))
-                );
+                    usuarios.add(new Usuario(rs.getInt("codigo"), rs.getString("login"), new Funcionario(rs.getString("funcionario"))));
                     
             }
             return usuarios;

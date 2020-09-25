@@ -362,11 +362,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuCadastroCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCargosActionPerformed
         if (FRM_CAD_CARGO == null)
             FRM_CAD_CARGO = new FrmCadCargo();
-        FRM_CAD_CARGO.setINSERIR(true);
-        FRM_CAD_CARGO.setATUALIZAR(true);
-        FRM_CAD_CARGO.setINATIVAR(true);
-        FRM_CAD_CARGO.setCONSULTAR(true);
-        FRM_CAD_CARGO.carregarPermissoes();
+        
         FRM_CAD_CARGO.setVisible(true);
         /*
         List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_CARGOS");

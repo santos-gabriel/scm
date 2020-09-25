@@ -33,4 +33,8 @@ public class CtrlCliente {
         return ClienteDao.PesquisarViaDescricaoInicia(prCliente.getNome_Cliente());
     }
     
+    public static List<Cliente> PesquisarTodos(){
+        return ClienteDao.PesquisarTodos();
+    }
+    
 }
