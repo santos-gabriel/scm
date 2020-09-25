@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCliente;
+import dao.ClienteDao;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
 import mensagens.Informacao;
@@ -26,6 +27,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
         jRFisica.setSelected(true);
         VerificarTipoPessoa();
+        CarregarTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -120,9 +122,14 @@ public class FrmCadCliente extends javax.swing.JFrame {
 
         jLabel9.setText("Sexo");
 
+        JComboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+
         ButonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
         ButonNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ButonNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButonNovoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ButonNovoMouseEntered(evt);
             }
@@ -134,6 +141,9 @@ public class FrmCadCliente extends javax.swing.JFrame {
         ButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png"))); // NOI18N
         ButtonExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ButtonExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonExcluirMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ButtonExcluirMouseEntered(evt);
             }
@@ -150,6 +160,12 @@ public class FrmCadCliente extends javax.swing.JFrame {
                 "Código", "Nome", "WhatsApp"
             }
         ));
+        TabelaCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TabelaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaCliente);
 
         jLabel14.setText("CNPJ");
@@ -491,6 +507,47 @@ public class FrmCadCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jRJuridicaActionPerformed
 
+    private void TabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClienteMouseClicked
+        //LimparCampos();
+        if (TabelaCliente.getSelectedRow() != -1) {
+            CtrlCliente.PesquisarTodosPorCodigo(Integer.parseInt(String.valueOf(TabelaCliente.getModel().getValueAt(TabelaCliente.getSelectedRow(), 0)))).forEach((c) -> {
+                TxtCod.setText(Integer.toString(c.getCod_Cliente()));
+                TxtNome.setText(c.getNome_Cliente());
+                TxtDataNasc.setText(c.getData_Nascimento_Cliente());
+                TxtWhatsapp.setText(c.getWhatsApp_Cliente());
+                TxtTelefone.setText(c.getTelefone_Cliente());
+                TxtRG.setText(c.getRG_Cliente());
+                TxtCNPJ.setText(c.getCNPJ_Cliente());
+                TxtCPF.setText(c.getCPF_Cliente());
+                TxtCodCidade.setText(Integer.toString(c.getCod_Cidade()));
+                TxtCodEstado.setText(Integer.toString(c.getCod_Estado()));
+                String[] EnderecoSeparado = c.getEndereco_Cliente().split(",");
+                TxtCep.setText(EnderecoSeparado[0]);
+                TxtLogradouro.setText(EnderecoSeparado[1]);
+                TxtNumero.setText(EnderecoSeparado[2]);
+                TxtBairro.setText(EnderecoSeparado[3]);
+
+            });
+            if (TxtCPF.getText().equals("   .   .   -  ")) {
+                jRJuridica.setSelected(true);
+                HabilitaCamposJuridica();
+            }else if(TxtCNPJ.getText().equals("  .   .   /    -  ")){
+                jRFisica.setSelected(true);
+                HabilitaCamposFisica();
+            }
+        }
+
+    }//GEN-LAST:event_TabelaClienteMouseClicked
+
+    private void ButonNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonNovoMouseClicked
+        LimparCampos();
+    }//GEN-LAST:event_ButonNovoMouseClicked
+
+    private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
+    CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
+    CtrlCliente.Excluir(CLIENTE);
+    }//GEN-LAST:event_ButtonExcluirMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -525,31 +582,60 @@ public class FrmCadCliente extends javax.swing.JFrame {
             }
         });
     }
-    
-    public  void CarregarTabela(){
+
+    public void CarregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) TabelaCliente.getModel();
         modelo.setNumRows(0);
         CtrlCliente.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object []{
+            modelo.addRow(new Object[]{
                 c.getCod_Cliente(),
-                c.getNome_Cliente()
+                c.getNome_Cliente(),
+                c.getWhatsApp_Cliente()
             });
         });
-    
+
     }
-    public void VerificarTipoPessoa() {
+
+    public void LimparCampos() {
+        TxtCod.setText("");
+        TxtNome.setText("");
+        TxtDataNasc.setText("");
+        TxtWhatsapp.setText("");
+        TxtRG.setText("");
+        TxtCPF.setText("");
+        TxtCNPJ.setText("");
+        TxtCep.setText("");
+        TxtLogradouro.setText("");
+        TxtBairro.setText("");
+        TxtCodCidade.setText("");
+        TxtCodEstado.setText("");
+        TxtNumero.setText("");
+    }
+    public void HabilitaCamposFisica(){
+        if (jRFisica.isSelected()) {
+            TxtCNPJ.setEditable(false);
+            TxtDataNasc.setEditable(true);
+            TxtRG.setEditable(true);
+            TxtCPF.setEditable(true);
+            JComboSexo.setEnabled(true);
+        }
+    }
+    
+    public void HabilitaCamposJuridica(){
         if (jRJuridica.isSelected()) {
             TxtCNPJ.setEditable(true);
             TxtDataNasc.setEditable(false);
             TxtRG.setEditable(false);
             TxtCPF.setEditable(false);
             JComboSexo.setEnabled(false);
+        }
+    }
+
+    public void VerificarTipoPessoa() {
+        if (jRJuridica.isSelected()) {
+            HabilitaCamposJuridica();
         } else if (jRFisica.isSelected()) {
-            TxtCNPJ.setEditable(false);
-            TxtDataNasc.setEditable(true);
-            TxtRG.setEditable(true);
-            TxtCPF.setEditable(true);
-            JComboSexo.setEnabled(true);
+            HabilitaCamposFisica();
         }
     }
 
@@ -558,19 +644,19 @@ public class FrmCadCliente extends javax.swing.JFrame {
         if (TxtNome.getText().isEmpty()) {
             Erro.show("Informe o Nome!");
             return;
-        } else if (TxtDataNasc.getText().isEmpty()) {
+        } else if (TxtDataNasc.getText().equals("  /  /    ")) {
             Erro.show("Informe a Data de Nascimento!");
             return;
-        } else if (TxtWhatsapp.getText().isEmpty()) {
+        } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
             Erro.show("Informe o WhatsApp!");
             return;
-        } else if (TxtTelefone.getText().isEmpty()) {
+        } else if (TxtTelefone.getText().equals("   .   .   -  ")) {
             Erro.show("Informe o Telefone!");
             return;
-        } else if (TxtRG.getText().isEmpty()) {
+        } else if (TxtRG.getText().equals("       ")) {
             Erro.show("Informe o RG!");
             return;
-        } else if (TxtCPF.getText().isEmpty()) {
+        } else if (TxtCPF.getText().equals("   .   .   -  ")) {
             Erro.show("Informe o CPF!");
             return;
         } else if (TxtCep.getText().isEmpty()) {
@@ -602,20 +688,21 @@ public class FrmCadCliente extends javax.swing.JFrame {
         CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
         CLIENTE.setCod_Estado(Integer.parseInt(TxtCodEstado.getText()));
         CLIENTE.setCod_Cidade(Integer.parseInt(TxtCodCidade.getText()));
-        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + " " + TxtNumero.getText() + " " + TxtBairro.getText() + " " + jCCidade.getToolTipText() + " " + jCEstado.getToolTipText());
+        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
 
-        if (TxtCod.getText().isEmpty()) {
+        if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 
             Informacao.show("Cliente Físico salvo com sucesso!");
-            CtrlCliente.SalvarTodosCampos(CLIENTE);
+            CtrlCliente.SalvarTodosCamposFisica(CLIENTE);
 
         } else {
 
             CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
-            CtrlCliente.AtualizarTodosCampos(CLIENTE);
+            CtrlCliente.AtualizarTodosCamposFisica(CLIENTE);
             Informacao.show("Cliente Físico atualizado com sucesso!");
         }
-        //carregarRegistros();
+        CarregarTabela();
+        LimparCampos();
     }
 
     public void ClienteJuridico() {
@@ -623,13 +710,10 @@ public class FrmCadCliente extends javax.swing.JFrame {
         if (TxtNome.getText().isEmpty()) {
             Erro.show("Informe o Nome!");
             return;
-        } else if (TxtWhatsapp.getText().isEmpty()) {
+        } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
             Erro.show("Informe o WhatsApp!");
             return;
-        } else if (TxtTelefone.getText().isEmpty()) {
-            Erro.show("Informe o Telefone!");
-            return;
-        } else if (TxtCNPJ.getText().isEmpty()) {
+        } else if (TxtCNPJ.getText().equals("  .   .   /    -  ")) {
             Erro.show("Informe o CNPJ!");
             return;
         } else if (TxtCep.getText().isEmpty()) {
@@ -658,21 +742,21 @@ public class FrmCadCliente extends javax.swing.JFrame {
         CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
         CLIENTE.setCod_Estado(Integer.parseInt(TxtCodEstado.getText()));
         CLIENTE.setCod_Cidade(Integer.parseInt(TxtCodCidade.getText()));
-        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + " " + TxtNumero.getText() + " " + TxtBairro.getText() + " " + jCCidade.getToolTipText() + " " + jCEstado.getToolTipText());
-        CtrlCliente.SalvarTodosCampos(CLIENTE);
+        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
 
-        if (TxtCod.getText().isEmpty()) {
+        if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 
             Informacao.show("Cliente Jurídico salvo com sucesso!");
-            CtrlCliente.SalvarTodosCampos(CLIENTE);
+            CtrlCliente.SalvarTodosCamposJuridica(CLIENTE);
 
         } else {
-
+            
             CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
-            CtrlCliente.AtualizarTodosCampos(CLIENTE);
+            CtrlCliente.AtualizarTodosCamposJuridica(CLIENTE);
             Informacao.show("Cliente Jurídico atualizado com sucesso!");
         }
-        //carregarRegistros();
+        CarregarTabela();
+        LimparCampos();
     }
 
     public void ConverteDataPISO() {
