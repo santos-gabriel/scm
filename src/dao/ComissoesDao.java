@@ -13,19 +13,20 @@ import modelo.Comissoes;
 /**
  * @author Gabriel
  */
-public class ComissoesDao {
+public abstract class ComissoesDao {
     
     private static Connection conexao = null;
     
     
     public static void SalvarTodosCampos (Comissoes prComissoes){
        CriarConexoes();
-       String sql = "INSERT INTO COMISSOES(VALOR, UNIDADE_MEDIDA) VALUES(?, ?)";
+       String sql = "INSERT INTO COMISSOES(valor_comissao, unidade_medida, ativo) VALUES(?, ?, true)";
        PreparedStatement stmt = null;
 
        try {
            stmt = conexao.prepareStatement(sql);
            stmt.setDouble(1, prComissoes.getValor_comisssao());
+           stmt.setString(2, prComissoes.getUnidade_medida());
            stmt.executeUpdate();
        } catch (SQLException e) {
            throw new ExcecaoDB(e, "Falha ao salvar comissao, entre em contato com o suporte do sistema ");
@@ -38,10 +39,11 @@ public class ComissoesDao {
      public static void AtualizarTodosCampos(Comissoes prComissoes){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "UPDATE COMISSOES SET VALOR = ?, SET UNIDADE_MEDIDA = ? WHERE CODIGO = ?";
+        String sql = "UPDATE COMISSOES SET valor_comissao = ?, unidade_medida = ? WHERE cod_comissao = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, prComissoes.getValor_comisssao());
+            stmt.setString(2, prComissoes.getUnidade_medida());
             stmt.setInt(3, prComissoes.getCod_comissao());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -55,13 +57,13 @@ public class ComissoesDao {
     public static void Excluir(Integer prCodigoComissao){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "DELETE FROM COMISSOES WHERE CODIGO = ?";
+        String sql = "UPDATE COMISSOES SET ativo = false WHERE cod_comissao = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoComissao);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao excluir comissão, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao inativar comissão, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, null);
         }
@@ -71,7 +73,7 @@ public class ComissoesDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.VALOR, C.UNIDADE_MEDIDA FROM COMISSOES C WHERE C.CODIGO = ?";
+        String sql = "SELECT c.cod_comissao, c.valor_comissao, c.unidade_medida, c.ativo FROM comissoes c WHERE c.cod_comissao = ? AND c.ativo = true";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoComissao);
@@ -80,7 +82,7 @@ public class ComissoesDao {
                 Comissoes c =  new Comissoes();
                 c.setCod_comissao(rs.getInt("CODIGO"));
                 c.setValor_comisssao(rs.getDouble("VALOR"));
-                // c.setUnidadeMedida(rs.getString("UNIDADE_MEDIDA"));
+                c.setUnidade_medida(rs.getString("UNIDADE_MEDIDA"));
                 return c;
             }else
                 return null;
@@ -91,45 +93,21 @@ public class ComissoesDao {
         }
     }
     
-    
-    public static List<Comissoes> PesquisarViaDescricaoExata(String prDescricaoComissao){
+    public static List<Comissoes> PesquisarTodos(){
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "";
+        String sql = "SELECT c.cod_comissao AS codigo, c.valor_comissao AS valor, c.unidade_medida, c.ativo FROM comissoes c WHERE c.ativo = true";
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, prDescricaoComissao);
             rs = stmt.executeQuery();
             List <Comissoes> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Comissoes());
+                lista.add(new Comissoes(rs.getInt("CODIGO"), rs.getDouble("VALOR"), rs.getString("UNIDADE_MEDIDA"), rs.getBoolean("ATIVO")));
             }
             return lista;
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar comissão pela descrção, entre em contato com o suporte do sistema ");
-        }finally{
-            FecharConexoes(conexao, stmt, rs);
-        }
-    }
-    
-    
-    public static List<Comissoes> PesquisarViaDescricaoInicia(String prDescricaoComissao){
-        CriarConexoes();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String sql = "";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, prDescricaoComissao);
-            rs = stmt.executeQuery();
-            List <Comissoes> lista = new ArrayList<>();
-            while(rs.next()){
-                lista.add(new Comissoes());
-            }
-            return lista;
-        } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar comissão pela descrção, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao localizar comissões, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }

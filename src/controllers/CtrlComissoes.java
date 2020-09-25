@@ -7,7 +7,7 @@ import modelo.Comissoes;
 /**
  * @author Gabriel
  */
-public class CtrlComissoes {
+public abstract class CtrlComissoes {
     
     public static void SalvarTodosCampos (Comissoes prComissoes){
         ComissoesDao.SalvarTodosCampos(prComissoes);
@@ -23,6 +23,10 @@ public class CtrlComissoes {
     
     public static Comissoes PesquisarViaCodigo(Comissoes prComissoes){
         return ComissoesDao.PesquisarViaCodigo(prComissoes.getCod_comissao());
+    }
+    
+    public static List<Comissoes> PesquisarTodos(){
+        return ComissoesDao.PesquisarTodos();
     }
     
        
