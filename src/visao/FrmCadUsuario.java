@@ -191,6 +191,14 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         btnInserir.setContentAreaFilled(false);
         btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInserir.setFocusPainted(false);
+        btnInserir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInserirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInserirMouseExited(evt);
+            }
+        });
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);
@@ -202,6 +210,14 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         btnSalvar.setContentAreaFilled(false);
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalvar.setFocusPainted(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseExited(evt);
+            }
+        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -213,6 +229,14 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         btnInativar.setContentAreaFilled(false);
         btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInativar.setFocusPainted(false);
+        btnInativar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInativarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInativarMouseExited(evt);
+            }
+        });
         btnInativar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInativarActionPerformed(evt);
@@ -463,6 +487,30 @@ public class FrmCadUsuario extends javax.swing.JFrame {
                 txtFuncionario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2)));
         }
     }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnInserirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseEntered
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_btnInserirMouseEntered
+
+    private void btnInserirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseExited
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_btnInserirMouseExited
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar2.png")));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseExited
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png")));
+    }//GEN-LAST:event_btnSalvarMouseExited
+
+    private void btnInativarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseEntered
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar2.png")));
+    }//GEN-LAST:event_btnInativarMouseEntered
+
+    private void btnInativarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseExited
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png")));
+    }//GEN-LAST:event_btnInativarMouseExited
 
     /**
      * @param args the command line arguments

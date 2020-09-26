@@ -159,6 +159,14 @@ public class FrmCadCidades extends javax.swing.JFrame {
         btnNovo.setContentAreaFilled(false);
         btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNovo.setFocusPainted(false);
+        btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNovoMouseExited(evt);
+            }
+        });
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
@@ -170,6 +178,14 @@ public class FrmCadCidades extends javax.swing.JFrame {
         btnSalvar.setContentAreaFilled(false);
         btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalvar.setFocusPainted(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseExited(evt);
+            }
+        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -181,6 +197,14 @@ public class FrmCadCidades extends javax.swing.JFrame {
         btnInvativar.setContentAreaFilled(false);
         btnInvativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInvativar.setFocusPainted(false);
+        btnInvativar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInvativarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInvativarMouseExited(evt);
+            }
+        });
         btnInvativar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInvativarActionPerformed(evt);
@@ -368,6 +392,30 @@ public class FrmCadCidades extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)
             btnBuscarCidadeActionPerformed(null);
     }//GEN-LAST:event_txtBuscarCidadeKeyPressed
+
+    private void btnNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseEntered
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_btnNovoMouseEntered
+
+    private void btnNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseExited
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_btnNovoMouseExited
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar2.png")));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseExited
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png")));
+    }//GEN-LAST:event_btnSalvarMouseExited
+
+    private void btnInvativarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInvativarMouseEntered
+        btnInvativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar2.png")));
+    }//GEN-LAST:event_btnInvativarMouseEntered
+
+    private void btnInvativarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInvativarMouseExited
+        btnInvativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png")));
+    }//GEN-LAST:event_btnInvativarMouseExited
 
     /**
      * @param args the command line arguments
