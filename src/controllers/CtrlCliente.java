@@ -9,12 +9,18 @@ import modelo.Cliente;
  */
 public class CtrlCliente {
     
-    public static void SalvarTodosCampos (Cliente prCliente){
-        ClienteDao.SalvarTodosCampos(prCliente);
+    public static void SalvarTodosCamposFisica (Cliente prCliente){
+        ClienteDao.SalvarTodosCamposFisica(prCliente);
+    }
+    public static void SalvarTodosCamposJuridica (Cliente prCliente){
+        ClienteDao.SalvarTodosCamposJuridica(prCliente);
     }
     
-    public static void AtualizarTodosCampos(Cliente prCliente){
-        ClienteDao.AtualizarTodosCampos(prCliente);
+    public static void AtualizarTodosCamposFisica(Cliente prCliente){
+        ClienteDao.AtualizarTodosCamposFisica(prCliente);
+    }
+    public static void AtualizarTodosCamposJuridica(Cliente prCliente){
+        ClienteDao.AtualizarTodosCamposJuridica(prCliente);
     }
     
     public static void Excluir(Cliente prCliente){
@@ -35,6 +41,9 @@ public class CtrlCliente {
     
     public static List<Cliente> PesquisarTodos(){
         return ClienteDao.PesquisarTodos();
+    }
+    public static List<Cliente> PesquisarTodosPorCodigo(int Cod_cliente){
+        return ClienteDao.PesquisarTodosPorCodigo(Cod_cliente);
     }
     
 }
