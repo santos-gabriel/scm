@@ -123,6 +123,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
 
         btnBuscaEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscaEstado.setText("Buscar");
+        btnBuscaEstado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscaEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscaEstadoActionPerformed(evt);
@@ -164,6 +165,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
         btnNovo.setBorderPainted(false);
         btnNovo.setContentAreaFilled(false);
+        btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNovo.setFocusPainted(false);
         btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -182,6 +184,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png"))); // NOI18N
         btnSalvar.setBorderPainted(false);
         btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalvar.setFocusPainted(false);
         btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -200,6 +203,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png"))); // NOI18N
         btnInativar.setBorderPainted(false);
         btnInativar.setContentAreaFilled(false);
+        btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInativar.setFocusPainted(false);
         btnInativar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -346,6 +350,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         CtrlEstado.Excluir(ESTADO);
         Informacao.show("Estado inativado com sucesso");
         carregarRegistros();
+        limparCamposTexto();
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void btnBuscaEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaEstadoActionPerformed

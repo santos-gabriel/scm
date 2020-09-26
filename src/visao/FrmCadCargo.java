@@ -200,6 +200,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
 
         btnBuscarCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscarCargo.setText("Buscar");
+        btnBuscarCargo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCargoActionPerformed(evt);

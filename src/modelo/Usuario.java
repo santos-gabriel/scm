@@ -19,6 +19,10 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(int Cod_Usuario) {
+        this.Cod_Usuario = Cod_Usuario;
+    }
+    
     public Usuario(int Cod_Usuario, String Login) {
         this.Cod_Usuario = Cod_Usuario;
         this.Login = Login;

@@ -170,6 +170,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -582,6 +583,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
         txtDescProduto.setText("");
         txtValorCusto.setText("");
         txtValorVenda.setText("");
+        cbxCategorias.setSelectedItem(new CategoriasProdutos(0, "Selecione"));
     }
     
     private void carregarCombobox(){

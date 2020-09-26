@@ -11,16 +11,17 @@ package modelo;
  */
 public class Funcionario {
     private int Cod_Funcionario;
-    private int Cod_Cargo;
+    private Cargo cargo;
     private String Nome_Funcionario;
     private String Data_Nascimento;
     private String Rg_Funcionario;
     private String CPF_Funcionario;
     private String WhatsApp_Funcionario;
-    private int Cod_Cidade;
-    private int Cod_Estado;
+    private Cidades cidade;
+    private Estados estado;
     private String Endereco_Funcionario;
     private boolean ativo;
+    private Usuario usuarioCadastro;
 
     public Funcionario() {
     }
@@ -32,20 +33,48 @@ public class Funcionario {
     public Funcionario(String nome){
         this.Nome_Funcionario = nome;
     }
-    public Funcionario(int Cod_Funcionario, int Cod_Cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, int Cod_Cidade, int Cod_Estado, String Endereco_Funcionario, boolean ativo) {
+    
+    public Funcionario(int Cod_Funcionario, Cargo cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, Cidades cidade, Estados estado, String Endereco_Funcionario) {
         this.Cod_Funcionario = Cod_Funcionario;
-        this.Cod_Cargo = Cod_Cargo;
+        this.cargo = cargo;
         this.Nome_Funcionario = Nome_Funcionario;
         this.Data_Nascimento = Data_Nascimento;
         this.Rg_Funcionario = Rg_Funcionario;
         this.CPF_Funcionario = CPF_Funcionario;
         this.WhatsApp_Funcionario = WhatsApp_Funcionario;
-        this.Cod_Cidade = Cod_Cidade;
-        this.Cod_Estado = Cod_Estado;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.Endereco_Funcionario = Endereco_Funcionario;
+    }
+    
+    public Funcionario(int Cod_Funcionario, Cargo cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, Cidades cidade, Estados estado, String Endereco_Funcionario, boolean ativo) {
+        this.Cod_Funcionario = Cod_Funcionario;
+        this.cargo = cargo;
+        this.Nome_Funcionario = Nome_Funcionario;
+        this.Data_Nascimento = Data_Nascimento;
+        this.Rg_Funcionario = Rg_Funcionario;
+        this.CPF_Funcionario = CPF_Funcionario;
+        this.WhatsApp_Funcionario = WhatsApp_Funcionario;
+        this.cidade = cidade;
+        this.estado = estado;
         this.Endereco_Funcionario = Endereco_Funcionario;
         this.ativo = ativo;
     }
 
+    public Funcionario(int Cod_Funcionario, Cargo cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, Cidades cidade, Estados estado, String Endereco_Funcionario, boolean ativo, Usuario usuarioCadastro) {
+        this.Cod_Funcionario = Cod_Funcionario;
+        this.cargo = cargo;
+        this.Nome_Funcionario = Nome_Funcionario;
+        this.Data_Nascimento = Data_Nascimento;
+        this.Rg_Funcionario = Rg_Funcionario;
+        this.CPF_Funcionario = CPF_Funcionario;
+        this.WhatsApp_Funcionario = WhatsApp_Funcionario;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.Endereco_Funcionario = Endereco_Funcionario;
+        this.ativo = ativo;
+        this.usuarioCadastro = usuarioCadastro;
+    }
 
     public int getCod_Funcionario() {
         return Cod_Funcionario;
@@ -55,12 +84,12 @@ public class Funcionario {
         this.Cod_Funcionario = Cod_Funcionario;
     }
 
-    public int getCod_Cargo() {
-        return Cod_Cargo;
+    public Cargo getCargo() {
+        return cargo;
     }
 
-    public void setCod_Cargo(int Cod_Cargo) {
-        this.Cod_Cargo = Cod_Cargo;
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 
     public String getNome_Funcionario() {
@@ -103,20 +132,20 @@ public class Funcionario {
         this.WhatsApp_Funcionario = WhatsApp_Funcionario;
     }
 
-    public int getCod_Cidade() {
-        return Cod_Cidade;
+    public Cidades getCidade() {
+        return cidade;
     }
 
-    public void setCod_Cidade(int Cod_Cidade) {
-        this.Cod_Cidade = Cod_Cidade;
+    public void setCidade(Cidades cidade) {
+        this.cidade = cidade;
     }
 
-    public int getCod_Estado() {
-        return Cod_Estado;
+    public Estados getEstado() {
+        return estado;
     }
 
-    public void setCod_Estado(int Cod_Estado) {
-        this.Cod_Estado = Cod_Estado;
+    public void setEstado(Estados estado) {
+        this.estado = estado;
     }
 
     public String getEndereco_Funcionario() {
@@ -133,6 +162,14 @@ public class Funcionario {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public Usuario getUsuarioCadastro() {
+        return usuarioCadastro;
+    }
+
+    public void setUsuarioCadastro(Usuario usuarioCadastro) {
+        this.usuarioCadastro = usuarioCadastro;
     }
 
 }

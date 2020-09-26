@@ -5,17 +5,27 @@
  */
 package visao;
 
+import controllers.CtrlTipoPagamento;
+import javax.swing.table.DefaultTableModel;
+import mensagens.Erro;
+import mensagens.Informacao;
+import modelo.TipoPagamento;
+
 /**
  *
  * @author Guilherme
  */
 public class FrmCadTipoPagamento extends javax.swing.JFrame {
 
+    TipoPagamento TIPO_PAGAMENTO = null;
+    
     /**
      * Creates new form FrmTipoPagamento
      */
     public FrmCadTipoPagamento() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        carregarRegistros();
     }
 
     /**
@@ -30,44 +40,57 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        TxtCodigo = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TxtDescrição = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        TxtPesquisa = new javax.swing.JTextField();
-        jRCodigo = new javax.swing.JRadioButton();
-        jRNome = new javax.swing.JRadioButton();
+        tblTiposPagamentos = new javax.swing.JTable();
         ButonSalvar = new javax.swing.JLabel();
         ButtonExcluir = new javax.swing.JLabel();
+        ButtonNovo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastros | Tipos de Pagamentos");
+        setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro Tipo Pagamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N
 
         jLabel1.setText("Código");
 
+        txtCodigo.setEditable(false);
+
         jLabel2.setText("Descrição");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTiposPagamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Código", "Descrição"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
-        buttonGroup1.add(jRCodigo);
-        jRCodigo.setText("Código");
-
-        buttonGroup1.add(jRNome);
-        jRNome.setText("Nome");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTiposPagamentos.getTableHeader().setReorderingAllowed(false);
+        tblTiposPagamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTiposPagamentosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblTiposPagamentos);
 
         ButonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png"))); // NOI18N
         ButonSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ButonSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButonSalvarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ButonSalvarMouseEntered(evt);
             }
@@ -79,6 +102,9 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
         ButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Excluir.png"))); // NOI18N
         ButtonExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ButtonExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonExcluirMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ButtonExcluirMouseEntered(evt);
             }
@@ -87,56 +113,62 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
             }
         });
 
+        ButtonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
+        ButtonNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonNovoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ButtonNovoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ButtonNovoMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jRCodigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRNome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtPesquisa)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtDescrição, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(ButtonNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ButonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(ButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(TxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(TxtDescrição, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))
-                    .addComponent(ButonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ButonSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ButtonExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ButtonNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRCodigo)
-                    .addComponent(jRNome)
-                    .addComponent(TxtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,6 +183,7 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButonSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonSalvarMouseEntered
@@ -168,6 +201,57 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
     private void ButtonExcluirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseExited
         ButtonExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Excluir.png")));
     }//GEN-LAST:event_ButtonExcluirMouseExited
+
+    private void ButtonNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonNovoMouseEntered
+        ButtonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_ButtonNovoMouseEntered
+
+    private void ButtonNovoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonNovoMouseExited
+        ButtonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_ButtonNovoMouseExited
+
+    private void ButtonNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonNovoMouseClicked
+        TIPO_PAGAMENTO = null;
+        limparTodosCampos();
+    }//GEN-LAST:event_ButtonNovoMouseClicked
+
+    private void ButonSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonSalvarMouseClicked
+        if (txtDescricao.getText() == null || txtDescricao.getText().isEmpty()){
+            Erro.show("Informe a descrição");
+            return;
+        }
+        if (TIPO_PAGAMENTO == null)
+            TIPO_PAGAMENTO = new TipoPagamento();
+        TIPO_PAGAMENTO.setDesc_pagamento(txtDescricao.getText());
+        if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()){
+            CtrlTipoPagamento.SalvarTodosCampos(TIPO_PAGAMENTO);
+            Informacao.show("Tipo de pagamento salvo com sucesso");
+        } else {
+            TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
+            CtrlTipoPagamento.AtualizarTodosCampos(TIPO_PAGAMENTO);
+            Informacao.show("Tipo de pagamento atualizado com sucesso");
+        }
+        carregarRegistros();
+        limparTodosCampos();
+    }//GEN-LAST:event_ButonSalvarMouseClicked
+
+    private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
+        if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty())
+            return;
+        if (TIPO_PAGAMENTO == null)
+            TIPO_PAGAMENTO = new TipoPagamento();
+        TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
+        CtrlTipoPagamento.Excluir(TIPO_PAGAMENTO);
+        carregarRegistros();
+        limparTodosCampos();
+    }//GEN-LAST:event_ButtonExcluirMouseClicked
+
+    private void tblTiposPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTiposPagamentosMouseClicked
+        if (evt.getClickCount() >= 2){
+            txtCodigo.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 0))));
+            txtDescricao.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 1))));
+        }
+    }//GEN-LAST:event_tblTiposPagamentosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -210,16 +294,31 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ButonSalvar;
     private javax.swing.JLabel ButtonExcluir;
-    private javax.swing.JTextField TxtCodigo;
-    private javax.swing.JTextField TxtDescrição;
-    private javax.swing.JTextField TxtPesquisa;
+    private javax.swing.JLabel ButtonNovo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRCodigo;
-    private javax.swing.JRadioButton jRNome;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblTiposPagamentos;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
+
+    private void limparTodosCampos() {
+        txtCodigo.setText("");
+        txtDescricao.setText("");
+    }
+    
+    private void carregarRegistros() {
+        DefaultTableModel modelo = (DefaultTableModel) tblTiposPagamentos.getModel();
+        modelo.setNumRows(0);
+        CtrlTipoPagamento.PesquisarTodos().forEach((tp) -> {
+            modelo.addRow(new Object []{
+                tp.getCod_pagamento(),
+                tp.getDesc_pagamento()
+            });
+        });
+    }
+    
 }

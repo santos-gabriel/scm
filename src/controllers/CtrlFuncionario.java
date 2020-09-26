@@ -7,7 +7,7 @@ import modelo.Funcionario;
 /**
  * @author Gabriel
  */
-public class CtrlFuncionario {
+public abstract class CtrlFuncionario {
     
     public static void SalvarTodosCampos (Funcionario prFuncionario){
         FuncionarioDao.SalvarTodosCampos(prFuncionario);
@@ -31,6 +31,10 @@ public class CtrlFuncionario {
     
     public static List<Funcionario> PesquisarViaDescricaoInicia(Funcionario prFuncionario){
         return FuncionarioDao.PesquisarViaDescricaoInicia(prFuncionario.getNome_Funcionario());
+    }
+    
+    public static List<Funcionario> PesquisarTodos(){
+        return FuncionarioDao.PesquisarTodos();
     }
     
 }

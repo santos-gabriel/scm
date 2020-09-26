@@ -1,12 +1,13 @@
 package controllers;
 
 import dao.CondicaoPagamentoDao;
+import java.util.List;
 import modelo.CondicaoPagamento;
 
 /**
  * @author Gabriel
  */
-public class CtrlCondicaoPagamento {
+public abstract class CtrlCondicaoPagamento {
     
     public static void SalvarTodosCampos (CondicaoPagamento prCondicaoPagamento){
         CondicaoPagamentoDao.SalvarTodosCampos(prCondicaoPagamento);
@@ -22,6 +23,10 @@ public class CtrlCondicaoPagamento {
     
     public static CondicaoPagamento PesquisarViaCodigo(CondicaoPagamento prCondicaoPagamento){
         return CondicaoPagamentoDao.PesquisarViaCodigo(prCondicaoPagamento.getCod_condicao_pagamento());
+    }
+    
+    public static List<CondicaoPagamento> PesquisarTodos(){
+        return CondicaoPagamentoDao.PesquisarTodos();
     }
     
         

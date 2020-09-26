@@ -430,11 +430,11 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
         if (txtLoginUsuario.getText().equals("") || txtLoginUsuario.getText() == null){
-            Erro.show("Informe uma senha por favor");
+            Erro.show("Informe um login por favor");
             return;
         }
         if (new String(txtSenhaUsuario.getPassword()).equals("") || txtSenhaUsuario.getPassword() == null){
-            Erro.show("Informe um login por favor");
+            Erro.show("Informe uma senha por favor");
             return;
         }
         
@@ -443,11 +443,11 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         
         USUARIO.setLogin(txtLoginUsuario.getText());
         USUARIO.setSenha(Funcoes.getEncrypt(new String(txtSenhaUsuario.getPassword())));
+        if (CtrlUsuario.PesquisarViaLogin(USUARIO) != null){
+            Erro.show("Login indisponível, por favor tente outro");
+            return;
+        }
         if (txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null || txtCodUsuario.getText().isEmpty()){
-            if (CtrlUsuario.PesquisarViaLogin(USUARIO) != null){
-                Erro.show("Login indisponível, por favor tente outro");
-                return;
-            }
             CtrlUsuario.SalvarTodosCampos(USUARIO);
             USUARIO = CtrlUsuario.PesquisarViaLogin(USUARIO);
             txtCodUsuario.setText(Integer.toString(USUARIO.getCod_Usuario()));
@@ -477,6 +477,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        limparEntradasDeDados();
         if (evt.getClickCount() >= 2){
             txtCodUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 0)));
             txtLoginUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 1)));

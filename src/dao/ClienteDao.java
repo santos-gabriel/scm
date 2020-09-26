@@ -91,16 +91,16 @@ public abstract class ClienteDao {
     public static void AtualizarTodosCamposFisica(Cliente prCliente){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "UPDATE CLIENTES SET NOME = ?, "
-                + "SET DATA_NASCIMENTO = ?, "
-                + "SET RG_CLIENTE = ?, "
-                + "SET CPF_CLIENTE = ?,  "
-                + "SET WHATSAPP_CLIENTE = ?, "
-                + "SET TELEFONE_CLIENTE = ?, "
-                + "SET ENDERECO_CLIENTE = ? "
-                + "SET COD_CIDADE = ? "
-                + "SET COD_ESTADO = ? "
-                + "WHERE CODIGO = ?";
+        String sql = "UPDATE CLIENTES SET NOME_CLIENTE = ?, "
+                + " DATA_NASCIMENTO = ?, "
+                + " RG_CLIENTE = ?, "
+                + " CPF_CLIENTE = ?,  "
+                + " WHATSAPP_CLIENTE = ?, "
+                + " TELEFONE_CLIENTE = ?, "
+                + " ENDERECO_CLIENTE = ?, "
+                + " COD_CIDADE = ?, "
+                + " COD_ESTADO = ? "
+                + "WHERE COD_CLIENTE = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prCliente.getNome_Cliente());
@@ -113,6 +113,7 @@ public abstract class ClienteDao {
             stmt.setInt(8, prCliente.getCod_Cidade());
             stmt.setInt(9, prCliente.getCod_Estado());
             stmt.setInt(10, prCliente.getCod_Cliente());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao atualizar cliente, entre em contato com o suporte do sistema ");
         }finally{
@@ -122,14 +123,14 @@ public abstract class ClienteDao {
     public static void AtualizarTodosCamposJuridica(Cliente prCliente){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "UPDATE CLIENTES SET NOME = ?, "
-                + "SET CNPJ_CLIENTE = ?,  "
-                + "SET WHATSAPP_CLIENTE = ?, "
-                + "SET TELEFONE_CLIENTE = ?, "
-                + "SET ENDERECO_CLIENTE = ? "
-                + "SET COD_CIDADE = ? "
-                + "SET COD_ESTADO = ? "
-                + "WHERE CODIGO = ?";
+        String sql = "UPDATE CLIENTES SET NOME_CLIENTE = ?, "
+                + "CNPJ_CLIENTE = ?,  "
+                + "WHATSAPP_CLIENTE = ?, "
+                + "TELEFONE_CLIENTE = ?, "
+                + "ENDERECO_CLIENTE = ?, "
+                + "COD_CIDADE = ?,  "
+                + "COD_ESTADO = ? "
+                + "WHERE COD_CLIENTE = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prCliente.getNome_Cliente());
@@ -140,6 +141,7 @@ public abstract class ClienteDao {
             stmt.setInt(6, prCliente.getCod_Cidade());
             stmt.setInt(7, prCliente.getCod_Estado());
             stmt.setInt(8, prCliente.getCod_Cliente());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao atualizar cliente, entre em contato com o suporte do sistema ");
         }finally{
@@ -166,7 +168,7 @@ public abstract class ClienteDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.* FROM CLIENTES C WHERE C.CODIGO = ?";
+        String sql = "SELECT C.* FROM CLIENTES C WHERE C.COD_CLIENTE = ? AND C.ATIVO = true";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCliente);
@@ -211,7 +213,7 @@ public abstract class ClienteDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM CLIENTES WHERE COD_CLIENTE = ?";
+        String sql = "SELECT * FROM CLIENTES WHERE COD_CLIENTE = ? AND ATIVO = true";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, Cod_cliente);
@@ -245,7 +247,7 @@ public abstract class ClienteDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.* FROM CLIENTES WHERE UPPER(C.NOME) = UPPER(?) C.NOME ASC";
+        String sql = "SELECT C.* FROM CLIENTES C WHERE UPPER(C.NOME_CLIENTE) = UPPER(?) AND C.ATIVO = true ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricaoCliente);
@@ -266,10 +268,10 @@ public abstract class ClienteDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.* FROM CLIENTES WHERE UPPER(C.NOME) LIKE UPPER(?%) C.NOME ASC";
+        String sql = "SELECT C.* FROM CLIENTES C WHERE UPPER(C.NOME_CLIENTE) LIKE UPPER(?) AND C.ATIVO = true";
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, prDescricaoCliente);
+            stmt.setString(1, prDescricaoCliente + "%");
             rs = stmt.executeQuery();
             List <Cliente> lista = new ArrayList<>();
             while(rs.next()){

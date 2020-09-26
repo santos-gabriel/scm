@@ -78,6 +78,12 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         txtBuscarFornecedor = new javax.swing.JTextField();
         btnBuscarFornecedor = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtBairro = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtNumero = new javax.swing.JTextField();
+        txtCep = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastros | Fornecedores");
@@ -232,6 +238,7 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
 
         btnBuscarFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscarFornecedor.setText("Buscar");
+        btnBuscarFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarFornecedorActionPerformed(evt);
@@ -239,6 +246,12 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Buscar Fornecedor");
+
+        jLabel4.setText("CEP");
+
+        jLabel7.setText("Bairro");
+
+        jLabel8.setText("Número");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -272,9 +285,10 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel14)
                                         .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(TxtInscricaoMunicipal, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
@@ -286,16 +300,29 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(TxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(TxtCodEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(txtBairro, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(TxtCodEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(83, 83, 83)
+                                                    .addComponent(jLabel15))
+                                                .addComponent(TxtLogradouro, javax.swing.GroupLayout.Alignment.LEADING))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(cbxEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(83, 83, 83)
-                                            .addComponent(jLabel15)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(TxtCodCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(cbxCidades, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(TxtLogradouro)))))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(TxtCodCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(cbxCidades, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtCep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(jLabel8)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -340,7 +367,15 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TxtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel4)
+                            .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,7 +469,7 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         FORNECEDOR.setCNPJ_Fornecedor(cnpj);
         FORNECEDOR.setInscricao_Municipal(TxtInscricaoMunicipal.getText());
         FORNECEDOR.setTelefone_Fornecedor(TxtTelefone.getText());
-        FORNECEDOR.setEndereco_Fornecedor(TxtLogradouro.getText());
+        FORNECEDOR.setEndereco_Fornecedor(trataEnderecoParaDb());
         FORNECEDOR.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
         FORNECEDOR.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
         FORNECEDOR.setUsuario(new Usuario(UsuariosUtil.getUsuario().getCod_Usuario()));
@@ -472,7 +507,7 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
             TxtCnpj.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 2))));
             TxtInscricaoMunicipal.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 3))));
             TxtTelefone.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 4))));          
-            TxtLogradouro.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 5))));
+            trataEnderecoDoDb((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 5))));
             TxtCodEstado.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 6))));
             cbxEstados.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
             TxtCodCidade.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 8))));
@@ -529,7 +564,7 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                 TxtCnpj.setText(registroSelecionado[2]);
                 TxtInscricaoMunicipal.setText(registroSelecionado[3]);
                 TxtTelefone.setText(registroSelecionado[4]);
-                TxtLogradouro.setText(registroSelecionado[5]);
+                trataEnderecoDoDb(registroSelecionado[5]);
                 TxtCodEstado.setText(registroSelecionado[6]);
                 cbxEstados.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
                 TxtCodCidade.setText(registroSelecionado[8]);
@@ -602,12 +637,18 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblFornecedores;
+    private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtBuscarFornecedor;
+    private javax.swing.JTextField txtCep;
+    private javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 
     private void limparCamposTextos(){
@@ -617,6 +658,9 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         TxtLogradouro.setText("");
         TxtNome.setText("");
         TxtTelefone.setText("");
+        txtCep.setText("");
+        txtNumero.setText("");
+        txtBairro.setText("");
         cbxCidades.setSelectedItem(new Cidades(0, "Selecione"));
         cbxEstados.setSelectedItem(new Estados(0, "Selecione"));
     }
@@ -655,6 +699,34 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                 cbxEstados.addItem(estado);
             });
         }
+    }
+    
+    private String trataEnderecoParaDb() {
+        String cep = txtCep.getText().replaceAll(",", " ");
+        String logradouro = TxtLogradouro.getText().replaceAll(",", " ");
+        String numero = txtNumero.getText().replaceAll(",", " ");
+        String bairro = txtBairro.getText().replaceAll(",", " ");
+        return cep +","+ logradouro +","+ numero +","+ bairro;
+    }
+    
+    private void trataEnderecoDoDb(String prEndereco) {
+        String [] enderecoSeparado = prEndereco.split(",");
+        if (enderecoSeparado.length > 0 && (!enderecoSeparado[0].equals("null")))
+            txtCep.setText(enderecoSeparado[0]);
+        else 
+            txtCep.setText("");
+        if (enderecoSeparado.length > 1 && (!enderecoSeparado[1].equals("null")))
+            TxtLogradouro.setText(enderecoSeparado[1]);
+        else 
+            TxtLogradouro.setText("");
+        if (enderecoSeparado.length > 2 && (!enderecoSeparado[2].equals("null")))
+            txtNumero.setText(enderecoSeparado[2]);
+        else
+            txtNumero.setText("");
+        if (enderecoSeparado.length > 3 && (!enderecoSeparado[3].equals("null")))
+            txtBairro.setText(enderecoSeparado[3]);
+        else
+            txtBairro.setText("");
     }
     
 }

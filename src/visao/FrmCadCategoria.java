@@ -111,6 +111,7 @@ public class FrmCadCategoria extends javax.swing.JFrame {
 
         btnBuscarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscarCategoria.setText("Buscar");
+        btnBuscarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCategoriaActionPerformed(evt);
