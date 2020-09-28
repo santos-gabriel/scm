@@ -82,7 +82,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuCadastroComissoes = new javax.swing.JMenuItem();
         subMenuCadastroTiposPagamentos = new javax.swing.JMenuItem();
         subMenuCadastroCondicoesPagamentos = new javax.swing.JMenuItem();
-        subMenuCaixa = new javax.swing.JMenuItem();
         menuFuncionarios = new javax.swing.JMenu();
         subMenuCadastroCargos = new javax.swing.JMenuItem();
         subMenuCadastroFuncionarios = new javax.swing.JMenuItem();
@@ -92,6 +91,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuMovimentacoes = new javax.swing.JMenu();
         subMenuEntradas = new javax.swing.JMenuItem();
         subMenuSaidas = new javax.swing.JMenuItem();
+        subMenuCaixa = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -295,10 +295,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuFinanceiro.add(subMenuCadastrosFinanceiros);
 
-        subMenuCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
-        subMenuCaixa.setText("Caixa");
-        menuFinanceiro.add(subMenuCaixa);
-
         menuSuperior.add(menuFinanceiro);
 
         menuFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
@@ -357,6 +353,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuSaidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
         subMenuSaidas.setText("Saídas");
         menuMovimentacoes.add(subMenuSaidas);
+
+        subMenuCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
+        subMenuCaixa.setText("Caixa");
+        menuMovimentacoes.add(subMenuCaixa);
 
         menuSuperior.add(menuMovimentacoes);
 

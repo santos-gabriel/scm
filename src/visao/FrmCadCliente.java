@@ -485,8 +485,6 @@ public class FrmCadCliente extends javax.swing.JFrame {
 
     private void TabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClienteMouseClicked
         LimparCampos();
-        if (!(evt.getClickCount() >= 2))
-            return;
         if (TabelaCliente.getSelectedRow() != -1) {
             CtrlCliente.PesquisarTodosPorCodigo(Integer.parseInt(String.valueOf(TabelaCliente.getModel().getValueAt(TabelaCliente.getSelectedRow(), 0)))).forEach((c) -> {
                 TxtCod.setText(Integer.toString(c.getCod_Cliente()));
@@ -551,8 +549,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_ButonNovoMouseEntered
 
     private void ButonNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonNovoMouseClicked
-        LimparCampos();
         carregarTodosCombobox();
+        LimparCampos();
     }//GEN-LAST:event_ButonNovoMouseClicked
 
     /**
@@ -618,8 +616,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
         TxtCodEstado.setText("");
         TxtNumero.setText("");
         TxtTelefone.setText("");
-        jCCidade.setSelectedItem(new Cidades(0, "Selecione"));;
-        jCEstado.setSelectedItem(new Cidades(0, "Selecione"));;
+        jCCidade.setSelectedItem(new Cidades(0, "Selecione"));
+        jCEstado.setSelectedItem(new Estados(0, "Selecione"));
     }
     
     public void HabilitaCamposFisica(){

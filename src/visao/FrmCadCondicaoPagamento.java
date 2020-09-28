@@ -263,7 +263,8 @@ public class FrmCadCondicaoPagamento extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblCondicoesPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCondicoesPagamentosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblCondicoesPagamentos.getSelectedRow() != -1){
+            limparTodosCampos();
             txtCodigo.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 0))));
             txtDescricao.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 1))));
             txtQtdParcelas.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 2))));

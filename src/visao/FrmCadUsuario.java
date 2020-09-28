@@ -478,7 +478,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
         limparEntradasDeDados();
-        if (evt.getClickCount() >= 2){
+        if (tblUsuarios.getSelectedRow() != -1){
             txtCodUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 0)));
             txtLoginUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 1)));
             

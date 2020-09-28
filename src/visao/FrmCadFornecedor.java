@@ -428,8 +428,8 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         FORNECEDOR = null;
-        limparCamposTextos();
         carregarTodosCombobox();
+        limparCamposTextos();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
@@ -501,7 +501,8 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCidadesItemStateChanged
 
     private void tblFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFornecedoresMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblFornecedores.getSelectedRow() != -1){
+            limparCamposTextos();
             TxtCodFornecedor.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 0))));
             TxtNome.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 1))));
             TxtCnpj.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 2))));

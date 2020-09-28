@@ -375,7 +375,8 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarCargoKeyPressed
 
     private void tblCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCargosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblCargos.getSelectedRow() != -1){
+            limparCampos();
             txtCodCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 0)));
             txtDescCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 1)));
         }

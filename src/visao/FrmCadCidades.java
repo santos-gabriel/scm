@@ -382,7 +382,8 @@ public class FrmCadCidades extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInvativarActionPerformed
 
     private void tblCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblCidades.getSelectedRow() != -1){
+            limpaCamposTextos();
             txtCodCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 0)));
             txtDescCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 1)));
         }

@@ -338,9 +338,8 @@ public class FrmCadProduto extends javax.swing.JFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         CATEGORIASELECIONADA = null;
         PRODUTO              = null;
-        
-        limparCamposTextos();
         carregarCombobox();
+        limparCamposTextos();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
@@ -466,7 +465,8 @@ public class FrmCadProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void tblProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblProdutos.getSelectedRow() != -1){
+            limparCamposTextos();
             txtCodProduto.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 0)));
             txtCodCategoria.setText(String.valueOf(tblProdutos.getModel().getValueAt(tblProdutos.getSelectedRow(), 1)));
             cbxCategorias.setSelectedItem(new CategoriasProdutos(Integer.parseInt(txtCodCategoria.getText())));
@@ -588,6 +588,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
     
     private void carregarCombobox(){
         if (txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty()){
+            cbxCategorias.removeAllItems();
             cbxCategorias.addItem(new CategoriasProdutos(0, "Selecione"));
             CtrlCategoriasProdutos.PesquisarTodos().forEach(categoria -> {
                 cbxCategorias.addItem(categoria);

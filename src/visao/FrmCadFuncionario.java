@@ -470,6 +470,7 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxEstadosItemStateChanged
 
     private void ButonNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonNovoMouseClicked
+        carregarTodosCombobox();
         limparTodosCampos();
         FUNCIONARIO = null;
     }//GEN-LAST:event_ButonNovoMouseClicked
@@ -542,7 +543,8 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionariosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblFuncionarios.getSelectedRow() != -1){
+            limparTodosCampos();
             txtCod.setText((String.valueOf(tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0))));
             FUNCIONARIO = CtrlFuncionario.PesquisarViaCodigo(new Funcionario(Integer.parseInt(txtCod.getText())));
             txtWhatsapp.setText(FUNCIONARIO.getWhatsApp_Funcionario());

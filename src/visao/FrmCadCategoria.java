@@ -381,7 +381,8 @@ public class FrmCadCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarCategoriaKeyPressed
 
     private void tblCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblCategorias.getSelectedRow() != -1){
+            limparCamposTextos();
             txtCodCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 0)));
             txtDescCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 1)));
         }

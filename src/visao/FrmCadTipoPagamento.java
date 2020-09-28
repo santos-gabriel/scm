@@ -247,7 +247,8 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblTiposPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTiposPagamentosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblTiposPagamentos.getSelectedRow() != -1){
+            limparTodosCampos();
             txtCodigo.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 0))));
             txtDescricao.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 1))));
         }

@@ -397,7 +397,8 @@ public class FrmCadEstado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscaEstadoKeyPressed
 
     private void tblEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstadosMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblEstados.getSelectedRow() != -1){
+            limparCamposTexto();
             txtCodEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 0)));
             txtDescEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 1)));
             txtUfEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 2)));

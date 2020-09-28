@@ -128,14 +128,6 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuCaixa">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Caixa"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuFuncionarios">
@@ -224,6 +216,14 @@
                   <Image iconType="3" name="/img/iconsUtils/basket_go.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sa&#xed;das"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="subMenuCaixa">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Caixa"/>
               </Properties>
             </MenuItem>
           </SubComponents>

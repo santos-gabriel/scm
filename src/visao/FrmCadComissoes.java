@@ -53,6 +53,7 @@ public class FrmCadComissoes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro | Comissões");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N
 
@@ -285,7 +286,8 @@ public class FrmCadComissoes extends javax.swing.JFrame {
     }//GEN-LAST:event_undMedidaActionPerformed
 
     private void tblComissoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblComissoesMouseClicked
-        if (evt.getClickCount() >= 2){
+        if (tblComissoes.getSelectedRow() != -1){
+            limpaCamposTextos();
             TxtCodigo.setText(String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 0)));
             if (String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 1)).equals("R$"))
                 undMedida.setSelectedIndex(0);
