@@ -7,7 +7,7 @@ import modelo.Fornecedor;
 /**
  * @author Gabriel
  */
-public class CtrlFornecedor {
+public abstract class CtrlFornecedor {
     
     public static void SalvarTodosCampos (Fornecedor prFornecedor){
         FornecedorDao.SalvarTodosCampos(prFornecedor);
@@ -19,6 +19,10 @@ public class CtrlFornecedor {
     
     public static void Excluir(Fornecedor prFornecedor){
         FornecedorDao.Excluir(prFornecedor.getCod_Fornecedor());
+    }
+    
+    public static List<Fornecedor> PesquisarTodos(){
+        return FornecedorDao.PesquisarTodos();
     }
     
     public static Fornecedor PesquisarViaCodigo(Fornecedor prFornecedor){

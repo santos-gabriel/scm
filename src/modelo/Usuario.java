@@ -11,34 +11,47 @@ package modelo;
  */
 public class Usuario {
     private int Cod_Usuario;
-    private int Cod_Funcionario;
+    private Funcionario Funcionario;
     private String Login;
     private String Senha;
     private boolean ativo;
     
-
     public Usuario() {
     }
 
-    public Usuario(int Cod_Usuario, int Cod_Funcionario, String Login, String Senha, boolean ativo) {
+    public Usuario(int Cod_Usuario) {
         this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Funcionario = Cod_Funcionario;
+    }
+    
+    public Usuario(int Cod_Usuario, String Login) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Login = Login;
+    }
+    
+    public Usuario(int Cod_Usuario, Funcionario funcionario, String Login, String Senha, boolean ativo) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Funcionario = funcionario;
         this.Login = Login;
         this.Senha = Senha;
         this.ativo = ativo;
     }
 
-    
-    
     public Usuario(int Cod_Usuario, String Login, String Senha) {
         this.Cod_Usuario = Cod_Usuario;
         this.Login = Login;
         this.Senha = Senha;
     }
     
-    public Usuario(int Cod_Usuario, int Cod_Funcionario, String Login, String Senha) {
+    public Usuario(int Cod_Usuario, String Login, Funcionario funcionario) {
         this.Cod_Usuario = Cod_Usuario;
-        this.Cod_Funcionario = Cod_Funcionario;
+        this.Login = Login;
+        this.Funcionario = funcionario;
+    }
+
+    
+    public Usuario(int Cod_Usuario, Funcionario funcionario, String Login, String Senha) {
+        this.Cod_Usuario = Cod_Usuario;
+        this.Funcionario = funcionario;
         this.Login = Login;
         this.Senha = Senha;
     }
@@ -51,12 +64,12 @@ public class Usuario {
         this.Cod_Usuario = Cod_Usuario;
     }
 
-    public int getCod_Funcionario() {
-        return Cod_Funcionario;
+    public Funcionario getFuncionario() {
+        return Funcionario;
     }
 
-    public void setCod_Funcionario(int Cod_Funcionario) {
-        this.Cod_Funcionario = Cod_Funcionario;
+    public void setFuncionario(Funcionario funcionario) {
+        this.Funcionario = funcionario;
     }
 
     public String getLogin() {

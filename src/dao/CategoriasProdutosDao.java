@@ -1,5 +1,6 @@
 package dao;
 
+import com.mysql.jdbc.Statement;
 import conexao.Conexao;
 import excecoes.ExcecaoDB;
 import java.sql.Connection;
@@ -16,14 +17,19 @@ import modelo.CategoriasProdutos;
 public abstract class CategoriasProdutosDao {
     private static Connection conexao = null;
     
-    public static void SalvarTodosCampos (CategoriasProdutos prCategoria){
+    public static Integer SalvarTodosCampos (CategoriasProdutos prCategoria){
         CriarConexoes();
-        String sql = "INSERT INTO CATEGORIA_PRODUTO(DESCRICAO) VALUES(?)";
+        String sql = "INSERT INTO categorias(cod_categoria, desc_categoria, ativo) VALUES(null, ?, true)";
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement(sql);
+            stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, prCategoria.getDesc_Categoria());
             stmt.executeUpdate();
+            ResultSet rsKeys = stmt.getGeneratedKeys();
+            if (rsKeys.next())
+                return rsKeys.getInt(1);
+            else
+                return null;
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao salvar categoria, entre em contato com o suporte do sistema ");
         }finally{
@@ -34,7 +40,7 @@ public abstract class CategoriasProdutosDao {
     public static void AtualizarTodosCampos(CategoriasProdutos prCategoria){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "UPDATE CATEGORIA_PRODUTO SET DESCRICAO = ? WHERE CODIGO = ?";
+        String sql = "UPDATE categorias SET desc_categoria = ? WHERE cod_categoria = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prCategoria.getDesc_Categoria());
@@ -50,7 +56,7 @@ public abstract class CategoriasProdutosDao {
     public static void Excluir(Integer prCodigoCategoria){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "DELETE FROM CATEGORIA_PRODUTO WHERE CODIGO = ?";
+        String sql = "UPDATE categorias SET ativo = false WHERE cod_categoria = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCategoria);
@@ -66,13 +72,13 @@ public abstract class CategoriasProdutosDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CATEGORIA_PRODUTO C WHERE C.CODIGO = ?";
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE cod_categoria = ? AND ativo = true ORDER BY desc_categoria ASC";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCategoria);
             rs = stmt.executeQuery();
             if (rs.next())
-                return new CategoriasProdutos(rs.getInt("CODIGO"), rs.getString("DESCRICAO"));
+                return new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria"));
             else
                 return null;
         } catch (SQLException e) {
@@ -86,18 +92,18 @@ public abstract class CategoriasProdutosDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CATEGORIA_PRODUTO C WHERE UPPER(C.DESCRICAO) = UPPER(?) ORDER BY C.DESCRICAO ASC";
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE UPPER(desc_categoria) = UPPER(?) AND ativo = true ORDER BY desc_categoria ASC";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricaoCategoria);
             rs = stmt.executeQuery();
             List <CategoriasProdutos> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new CategoriasProdutos(rs.getInt("CODIGO"), rs.getString("DESCRICAO")));
+                lista.add(new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria")));
             }
             return lista;
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrição, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -108,22 +114,68 @@ public abstract class CategoriasProdutosDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT C.CODIGO, C.DECRICAO FROM CATEGORIA_PRODUTO C WHERE UPPER(C.DESCRICAO) LIKE UPPER(?%) ORDER BY C.DESCRICAO ASC";
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE UPPER(desc_categoria) LIKE UPPER(?) AND ativo = true ORDER BY desc_categoria ASC";
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, prDescricaoCategoria);
+            stmt.setString(1, prDescricaoCategoria+"%");
             rs = stmt.executeQuery();
             List<CategoriasProdutos> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new CategoriasProdutos(rs.getInt("CODIGO"), rs.getString("DESCRICAO")));
+                lista.add(new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria")));
             }
             return lista;
         } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrção, entre em contato com o suporte do sistema ");
+            throw new ExcecaoDB(e, "Falha ao localizar categoria pela descrição, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
     }
+    
+    public static List<CategoriasProdutos> PesquisarTodos(){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE ativo = true ORDER BY desc_categoria ASC";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            List<CategoriasProdutos> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria")));
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new ExcecaoDB(e, "Falha ao localizar categorias, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
+    
+    
+     public static List<CategoriasProdutos> PesquisarTodosExeto(CategoriasProdutos categoriaProduto){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT cod_categoria, desc_categoria FROM categorias WHERE ativo = true AND cod_categoria <> ? ORDER BY desc_categoria ASC";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, categoriaProduto.getCod_Categoria());
+            rs = stmt.executeQuery();
+            List<CategoriasProdutos> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new CategoriasProdutos(rs.getInt("cod_categoria"), rs.getString("desc_categoria")));
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new ExcecaoDB(e, "Falha ao localizar categorias, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
+    
+    
     
     private static void CriarConexoes(){
         conexao = Conexao.conectar();

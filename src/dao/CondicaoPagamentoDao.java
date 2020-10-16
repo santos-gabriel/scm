@@ -13,19 +13,19 @@ import modelo.CondicaoPagamento;
 /**
  * @author Gabriel
  */
-public class CondicaoPagamentoDao {
+public abstract class CondicaoPagamentoDao {
     
     private static Connection conexao = null;
     
     
     public static void SalvarTodosCampos (CondicaoPagamento prCondicao){
         CriarConexoes();
-        String sql = "";
+        String sql = "INSERT INTO condicoes_pagamentos(desc_condicao_pagamento, quantidade_parcela, ativo) VALUES (?, ?, true)";
         PreparedStatement stmt = null;
-        
         try {
             stmt = conexao.prepareStatement(sql);
-            // stmt.setString();
+            stmt.setString(1, prCondicao.getDesc_condicao_pagamento());
+            stmt.setInt(2, prCondicao.getQuantidade_parcelas());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao salvar condição de pagamento, entre em contato com o suporte do sistema ");
@@ -38,10 +38,12 @@ public class CondicaoPagamentoDao {
     public static void AtualizarTodosCampos(CondicaoPagamento prCondicao){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "";
+        String sql = "UPDATE condicoes_pagamentos SET desc_condicao_pagamento = ?, quantidade_parcela = ? WHERE cod_condicao_pagamento = ?";
         try {
             stmt = conexao.prepareStatement(sql);
-            // stmt.setString();
+            stmt.setString(1, prCondicao.getDesc_condicao_pagamento());
+            stmt.setInt(2, prCondicao.getQuantidade_parcelas());
+            stmt.setInt(3, prCondicao.getCod_condicao_pagamento());
             
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -55,7 +57,7 @@ public class CondicaoPagamentoDao {
     public static void Excluir(Integer prCodigoCondicao){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "";
+        String sql = "UPDATE condicoes_pagamentos SET ativo = false WHERE cod_condicao_pagamento = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCondicao);
@@ -72,17 +74,37 @@ public class CondicaoPagamentoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "";
+        String sql = "SELECT * FROM condicoes_pagamentos WHERE ativo = true AND cod_condicao_pagamento = ?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, prCodigoCondicao);
             rs = stmt.executeQuery();
             if (rs.next())
-                return new CondicaoPagamento();
+                return new CondicaoPagamento(rs.getInt("cod_condicao_pagamento"), rs.getString("desc_condicao_pagamento"), rs.getInt("quantidade_parcela"));
             else
                 return null;
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao localizar condição de pagamento pelo código, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
+    public static List<CondicaoPagamento> PesquisarTodos(){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM condicoes_pagamentos WHERE ativo = true ";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            List<CondicaoPagamento> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new CondicaoPagamento(rs.getInt("cod_condicao_pagamento"), rs.getString("desc_condicao_pagamento"), rs.getInt("quantidade_parcela")));
+            }
+            return lista;
+        } catch (SQLException e) {
+            throw new ExcecaoDB(e, "Falha ao localizar condições de pagamentos, entre em contato com o suporte do sistema ");
         }finally{
             FecharConexoes(conexao, stmt, rs);
         }
@@ -93,14 +115,14 @@ public class CondicaoPagamentoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "";
+        String sql = "SELECT * FROM condicoes_pagamentos WHERE ativo = true AND UPPER(desc_condicao_pagamento) = UPPER(?) ";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, prDescricaoCargo);
             rs = stmt.executeQuery();
             List <CondicaoPagamento> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new CondicaoPagamento());
+                lista.add(new CondicaoPagamento(rs.getInt("cod_condicao_pagamento"), rs.getString("desc_condicao_pagamento"), rs.getInt("quantidade_parcela")));
             }
             return lista;
         } catch (SQLException e) {
@@ -115,14 +137,14 @@ public class CondicaoPagamentoDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "";
+        String sql = "SELECT * FROM condicoes_pagamentos WHERE ativo = true AND UPPER(desc_condicao_pagamento) = UPPER(?) ";
         try {
-            stmt = conexao.prepareStatement(sql);
+            stmt = conexao.prepareStatement(sql+"%");
             stmt.setString(1, prDescricaoCargo);
             rs = stmt.executeQuery();
             List <CondicaoPagamento> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new CondicaoPagamento());
+                lista.add(new CondicaoPagamento(rs.getInt("cod_condicao_pagamento"), rs.getString("desc_condicao_pagamento"), rs.getInt("quantidade_parcela")));
             }
             return lista;
         } catch (SQLException e) {

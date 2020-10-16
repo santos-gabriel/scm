@@ -21,13 +21,8 @@ import modelo.Cargo;
  */
 public class FrmCadCargo extends javax.swing.JFrame {
 
-    
-    FrmSelecionaRegistro FRM_SELECIONA_REGISTRO = null;
-    private Cargo    CARGO                      = null;
-    private boolean  INSERIR                    = false;
-    private boolean  ATUALIZAR                  = false;
-    private boolean  INATIVAR                   = false;
-    private boolean  CONSULTAR                  = false;
+    FrmSelecionaRegistro FRM_SELECIONA_REGISTRO     = null;
+    private Cargo        CARGO                      = null;
     
     
     /**
@@ -36,15 +31,9 @@ public class FrmCadCargo extends javax.swing.JFrame {
     public FrmCadCargo() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        carregarPermissoes();
+        carregarRegistros();
     }
     
-    public FrmCadCargo(String prInserir, String prAtualizar, String prInativar, String prConsultar) {
-        initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        carregarPermissoes();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +56,9 @@ public class FrmCadCargo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBuscarCargo = new javax.swing.JTextField();
         btnBuscarCargo = new javax.swing.JButton();
+        pnlRegistros = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCargos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro | Cargos");
@@ -74,24 +66,57 @@ public class FrmCadCargo extends javax.swing.JFrame {
 
         pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard_add.png"))); // NOI18N
-        btnInserir.setText("Novo");
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
+        btnInserir.setBorderPainted(false);
+        btnInserir.setContentAreaFilled(false);
+        btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInserir.setFocusPainted(false);
+        btnInserir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInserirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInserirMouseExited(evt);
+            }
+        });
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInserirActionPerformed(evt);
             }
         });
 
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard_edit.png"))); // NOI18N
-        btnSalvar.setText("Salvar");
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png"))); // NOI18N
+        btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvar.setFocusPainted(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseExited(evt);
+            }
+        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
 
-        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard_delete.png"))); // NOI18N
-        btnInativar.setText("Inativar");
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png"))); // NOI18N
+        btnInativar.setBorderPainted(false);
+        btnInativar.setContentAreaFilled(false);
+        btnInativar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInativar.setFocusPainted(false);
+        btnInativar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInativarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInativarMouseExited(evt);
+            }
+        });
         btnInativar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInativarActionPerformed(evt);
@@ -103,23 +128,24 @@ public class FrmCadCargo extends javax.swing.JFrame {
         pnlOpcoesLayout.setHorizontalGroup(
             pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOpcoesLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInativar, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlOpcoesLayout.createSequentialGroup()
+                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addComponent(btnInativar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlOpcoesLayout.setVerticalGroup(
             pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOpcoesLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnInativar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnInativar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -128,25 +154,27 @@ public class FrmCadCargo extends javax.swing.JFrame {
 
         jLabel3.setText("Descrição");
 
+        txtCodCargo.setEditable(false);
+
         javax.swing.GroupLayout pnlDadosCadastraisLayout = new javax.swing.GroupLayout(pnlDadosCadastrais);
         pnlDadosCadastrais.setLayout(pnlDadosCadastraisLayout);
         pnlDadosCadastraisLayout.setHorizontalGroup(
             pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(txtCodCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtDescCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addComponent(txtDescCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDadosCadastraisLayout.setVerticalGroup(
             pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
@@ -154,11 +182,16 @@ public class FrmCadCargo extends javax.swing.JFrame {
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Buscar Cargo");
 
+        txtBuscarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarCargoActionPerformed(evt);
+            }
+        });
         txtBuscarCargo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarCargoKeyPressed(evt);
@@ -167,6 +200,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
 
         btnBuscarCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnBuscarCargo.setText("Buscar");
+        btnBuscarCargo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCargoActionPerformed(evt);
@@ -178,32 +212,69 @@ public class FrmCadCargo extends javax.swing.JFrame {
         pnlGeralLayout.setHorizontalGroup(
             pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGeralLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlGeralLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscarCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscarCargo))
                     .addGroup(pnlGeralLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGap(21, 21, 21)
+                        .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlGeralLayout.setVerticalGroup(
             pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlOpcoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGeralLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(pnlGeralLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addGroup(pnlGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtBuscarCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarCargo))
-                .addGap(50, 50, 50)
-                .addComponent(pnlDadosCadastrais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(pnlGeralLayout.createSequentialGroup()
+                .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        tblCargos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Descrição"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCargos.getTableHeader().setReorderingAllowed(false);
+        tblCargos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCargosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblCargos);
+
+        javax.swing.GroupLayout pnlRegistrosLayout = new javax.swing.GroupLayout(pnlRegistros);
+        pnlRegistros.setLayout(pnlRegistrosLayout);
+        pnlRegistrosLayout.setHorizontalGroup(
+            pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        pnlRegistrosLayout.setVerticalGroup(
+            pnlRegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,10 +282,15 @@ public class FrmCadCargo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -228,15 +304,12 @@ public class FrmCadCargo extends javax.swing.JFrame {
     private void btnBuscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCargoActionPerformed
         JTable tabela = new JTable();
         List<String[]> dados = new ArrayList<>();
-        
         Cargo cargo = new Cargo();
         cargo.setDesc_Cargo(txtBuscarCargo.getText());
         List<Cargo> cargoPesquisa = CtrlCargo.PesquisarViaDescricaoInicia(cargo);
-        
         for (Cargo c : cargoPesquisa){
             dados.add(new String[]{String.valueOf(c.getCod_Cargo()), c.getDesc_Cargo()});
         }
-        
         tabela.setModel(new DefaultTableModel(
             dados.toArray(new String[dados.size()][]),
             new String [] {"CODIGO", "DESCRICAO"}){
@@ -247,14 +320,11 @@ public class FrmCadCargo extends javax.swing.JFrame {
                 }                
             });
         tabela.getTableHeader().setReorderingAllowed(false);
-        
         if (FRM_SELECIONA_REGISTRO == null)
             FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
         FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
         FRM_SELECIONA_REGISTRO.setTitle("Cargos | Seleção ");
-        
         FRM_SELECIONA_REGISTRO.setVisible(true);
-        
         String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
         if (registroSelecionado != null){
             txtCodCargo.setText(registroSelecionado[0]);
@@ -263,12 +333,10 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarCargoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
         if (txtDescCargo.getText().isEmpty()){
             Erro.show("Informe a descrição do cargo");
             return;
         }
-        
         if (CARGO == null)
             CARGO = new Cargo();
         CARGO.setDesc_Cargo(txtDescCargo.getText());
@@ -282,25 +350,22 @@ public class FrmCadCargo extends javax.swing.JFrame {
             }
             
         } else{
-            if (!isATUALIZAR()){
-                Erro.show("Você não tem permissão para atualizar");
-                return;
-            }
             CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
             CtrlCargo.AtualizarTodosCampos(CARGO);
             Informacao.show("Cargo atualizado com sucesso");
         }
-        
+        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
-        if (!(txtCodCargo.getText().isEmpty())){
+        if (!(txtCodCargo.getText() == null || txtCodCargo.getText().isEmpty())){
             if (CARGO == null)
                 CARGO = new Cargo();
             CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
             CtrlCargo.Excluir(CARGO);
             Informacao.show("Cargo inativado com sucesso");
             limparCampos();
+            carregarRegistros();
         }
     }//GEN-LAST:event_btnInativarActionPerformed
 
@@ -308,6 +373,42 @@ public class FrmCadCargo extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)
             btnBuscarCargoActionPerformed(null);
     }//GEN-LAST:event_txtBuscarCargoKeyPressed
+
+    private void tblCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCargosMouseClicked
+        if (tblCargos.getSelectedRow() != -1){
+            limparCampos();
+            txtCodCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 0)));
+            txtDescCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 1)));
+        }
+    }//GEN-LAST:event_tblCargosMouseClicked
+
+    private void txtBuscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarCargoActionPerformed
+
+    private void btnInserirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseEntered
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_btnInserirMouseEntered
+
+    private void btnInserirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseExited
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_btnInserirMouseExited
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar2.png")));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseExited
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png")));
+    }//GEN-LAST:event_btnSalvarMouseExited
+
+    private void btnInativarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseEntered
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar2.png")));
+    }//GEN-LAST:event_btnInativarMouseEntered
+
+    private void btnInativarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInativarMouseExited
+        btnInativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Inativar.png")));
+    }//GEN-LAST:event_btnInativarMouseExited
 
     /**
      * @param args the command line arguments
@@ -352,9 +453,12 @@ public class FrmCadCargo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlDadosCadastrais;
     private javax.swing.JPanel pnlGeral;
     private javax.swing.JPanel pnlOpcoes;
+    private javax.swing.JPanel pnlRegistros;
+    private javax.swing.JTable tblCargos;
     private javax.swing.JTextField txtBuscarCargo;
     private javax.swing.JTextField txtCodCargo;
     private javax.swing.JTextField txtDescCargo;
@@ -363,45 +467,18 @@ public class FrmCadCargo extends javax.swing.JFrame {
     private void limparCampos(){
         txtCodCargo.setText("");
         txtDescCargo.setText("");
+        CARGO = null;
     }
-    
-    public void carregarPermissoes (){
-        btnInserir.setEnabled(isINSERIR());
-        btnInativar.setEnabled(isINATIVAR());
-        btnBuscarCargo.setEnabled(isCONSULTAR());
-        btnSalvar.setEnabled(isINSERIR() && isATUALIZAR());
-    }
-
-    public boolean isINSERIR() {
-        return INSERIR;
-    }
-
-    public void setINSERIR(boolean INSERIR) {
-        this.INSERIR = INSERIR;
-    }
-
-    public boolean isATUALIZAR() {
-        return ATUALIZAR;
-    }
-
-    public void setATUALIZAR(boolean ATUALIZAR) {
-        this.ATUALIZAR = ATUALIZAR;
-    }
-
-    public boolean isINATIVAR() {
-        return INATIVAR;
-    }
-
-    public void setINATIVAR(boolean INATIVAR) {
-        this.INATIVAR = INATIVAR;
-    }
-
-    public boolean isCONSULTAR() {
-        return CONSULTAR;
-    }
-
-    public void setCONSULTAR(boolean CONSULTAR) {
-        this.CONSULTAR = CONSULTAR;
+        
+    private void carregarRegistros(){
+        DefaultTableModel modelo = (DefaultTableModel) tblCargos.getModel();
+        modelo.setNumRows(0);
+        CtrlCargo.PesquisarTodos().forEach((c) -> {
+            modelo.addRow(new Object []{
+                c.getCod_Cargo(),
+                c.getDesc_Cargo()
+            });
+        });
     }
     
 }

@@ -11,8 +11,8 @@ package modelo;
  */
 public class Produto {
     private int Cod_Produto;
-    private int Cod_Categoria_Produto;
-    private int Cod_Usuario;
+    private CategoriasProdutos Categoria_Produto;
+    private Usuario usuario;
     private String Desc_Produto; 
     private Double Valor_Custo;
     private Double Valor_Venda;
@@ -21,10 +21,10 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int Cod_Produto, int Cod_Categoria_Produto, int Cod_Usuario, String Desc_Produto, Double Valor_Custo, Double Valor_Venda, boolean ativo) {
+    public Produto(int Cod_Produto, CategoriasProdutos Categoria_Produto, Usuario usuario, String Desc_Produto, Double Valor_Custo, Double Valor_Venda, boolean ativo) {
         this.Cod_Produto = Cod_Produto;
-        this.Cod_Categoria_Produto = Cod_Categoria_Produto;
-        this.Cod_Usuario = Cod_Usuario;
+        this.Categoria_Produto = Categoria_Produto;
+        this.usuario = usuario;
         this.Desc_Produto = Desc_Produto;
         this.Valor_Custo = Valor_Custo;
         this.Valor_Venda = Valor_Venda;
@@ -33,13 +33,13 @@ public class Produto {
 
     
     
-    public Produto(int Cod_Produto, int Cod_Usuario, String Desc_Produto, Double Valor_Custo, Double Valor_Venda, int Cod_Categoria_Produto) {
+    public Produto(int Cod_Produto, CategoriasProdutos Categoria_Produto, Usuario usuario, String Desc_Produto, Double Valor_Custo, Double Valor_Venda) {
         this.Cod_Produto = Cod_Produto;
-        this.Cod_Usuario = Cod_Usuario;
+        this.usuario = usuario;
         this.Desc_Produto = Desc_Produto;
         this.Valor_Custo = Valor_Custo;
         this.Valor_Venda = Valor_Venda;
-        this.Cod_Categoria_Produto = Cod_Categoria_Produto;
+        this.Categoria_Produto = Categoria_Produto;
     }
 
     public int getCod_Produto() {
@@ -50,12 +50,12 @@ public class Produto {
         this.Cod_Produto = Cod_Produto;
     }
 
-    public int getCod_Usuario() {
-        return Cod_Usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCod_Usuario(int Cod_Usuario) {
-        this.Cod_Usuario = Cod_Usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     
@@ -84,12 +84,12 @@ public class Produto {
         this.Valor_Venda = Valor_Venda;
     }
 
-    public int getCod_Categoria_Produto() {
-        return Cod_Categoria_Produto;
+    public CategoriasProdutos getCategoria_Produto() {
+        return Categoria_Produto;
     }
 
-    public void setCod_Categoria_Produto(int Cod_Categoria_Produto) {
-        this.Cod_Categoria_Produto = Cod_Categoria_Produto;
+    public void setCategoria_Produto(CategoriasProdutos Categoria_Produto) {
+        this.Categoria_Produto = Categoria_Produto;
     }
 
     public boolean isAtivo() {

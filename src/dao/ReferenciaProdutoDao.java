@@ -11,7 +11,7 @@ import modelo.ReferenciaProduto;
 /**
  * @author Gabriel
  */
-public class ReferenciaProdutoDao {
+public abstract class ReferenciaProdutoDao {
     
     private static Connection conexao = null;
     

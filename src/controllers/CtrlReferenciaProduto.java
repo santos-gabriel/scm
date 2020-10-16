@@ -6,7 +6,7 @@ import modelo.ReferenciaProduto;
 /**
  * @author Gabriel
  */
-public class CtrlReferenciaProduto {
+public abstract class CtrlReferenciaProduto {
     
     public static void SalvarTodosCampos (ReferenciaProduto prReferenciaProduto){
         ReferenciaProdutoDao.SalvarTodosCampos(prReferenciaProduto);

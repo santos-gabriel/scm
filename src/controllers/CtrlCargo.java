@@ -7,7 +7,7 @@ import modelo.Cargo;
 /**
  * @author Gabriel
  */
-public class CtrlCargo {
+public abstract class CtrlCargo {
     
     public static Integer SalvarTodosCampos (Cargo prCargo){
         return CargoDao.SalvarTodosCampos(prCargo);
@@ -31,6 +31,10 @@ public class CtrlCargo {
     
     public static List<Cargo> PesquisarViaDescricaoInicia(Cargo prCargo){
         return CargoDao.PesquisarViaDescricaoInicia(prCargo.getDesc_Cargo());
+    }
+    
+    public static List<Cargo> PesquisarTodos(){
+        return CargoDao.PesquisarTodos();
     }
     
 }
