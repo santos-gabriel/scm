@@ -7,7 +7,7 @@ import modelo.Fornecedor;
 /**
  * @author Gabriel
  */
-public class CtrlFornecedor {
+public abstract class CtrlFornecedor {
     
     public static void SalvarTodosCampos (Fornecedor prFornecedor){
         FornecedorDao.SalvarTodosCampos(prFornecedor);

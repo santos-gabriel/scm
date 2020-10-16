@@ -16,7 +16,7 @@ import modelo.Usuario;
 /**
  * @author Gabriel
  */
-public class FornecedorDao {
+public abstract class FornecedorDao {
     private static Connection conexao = null;
     
     

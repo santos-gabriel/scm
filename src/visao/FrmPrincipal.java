@@ -18,6 +18,9 @@ import utilitarios.UsuariosUtil;
 public class FrmPrincipal extends javax.swing.JFrame {
     
     private Info                    INFO                        = null;
+    private FrmCaixa                FRM_CAIXA                   = null;
+    private FrmVendas               FRM_VENDAS                  = null;
+    private FrmCompras              FRM_COMPRAS                 = null;
     private FrmCadCargo             FRM_CAD_CARGO               = null;
     private FrmCadCidades           FRM_CAD_CIDADE              = null;
     private FrmCadEstado            FRM_CAD_ESTADO              = null;
@@ -89,8 +92,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuCategorias = new javax.swing.JMenuItem();
         subMenuProdutos = new javax.swing.JMenuItem();
         menuMovimentacoes = new javax.swing.JMenu();
-        subMenuEntradas = new javax.swing.JMenuItem();
-        subMenuSaidas = new javax.swing.JMenuItem();
+        subMenuCompras = new javax.swing.JMenuItem();
+        subMenuVendas = new javax.swing.JMenuItem();
         subMenuCaixa = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
@@ -173,7 +176,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addComponent(btnCadastroFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastroClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 955, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 957, Short.MAX_VALUE)
                 .addComponent(imgLogo)
                 .addContainerGap())
         );
@@ -346,16 +349,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket.png"))); // NOI18N
         menuMovimentacoes.setText("Movimentações");
 
-        subMenuEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
-        subMenuEntradas.setText("Entradas");
-        menuMovimentacoes.add(subMenuEntradas);
+        subMenuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
+        subMenuCompras.setText("Compras");
+        subMenuCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuComprasActionPerformed(evt);
+            }
+        });
+        menuMovimentacoes.add(subMenuCompras);
 
-        subMenuSaidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
-        subMenuSaidas.setText("Saídas");
-        menuMovimentacoes.add(subMenuSaidas);
+        subMenuVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
+        subMenuVendas.setText("Vendas");
+        subMenuVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuVendasActionPerformed(evt);
+            }
+        });
+        menuMovimentacoes.add(subMenuVendas);
 
         subMenuCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
         subMenuCaixa.setText("Caixa");
+        subMenuCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCaixaActionPerformed(evt);
+            }
+        });
         menuMovimentacoes.add(subMenuCaixa);
 
         menuSuperior.add(menuMovimentacoes);
@@ -538,6 +556,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
         INFO.setVisible(true);
     }//GEN-LAST:event_menuSobreMouseClicked
 
+    private void subMenuComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuComprasActionPerformed
+        if (FRM_COMPRAS == null)
+            FRM_COMPRAS = new FrmCompras();
+        FRM_COMPRAS.setVisible(true);
+    }//GEN-LAST:event_subMenuComprasActionPerformed
+
+    private void subMenuVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuVendasActionPerformed
+        if (FRM_VENDAS == null)
+            FRM_VENDAS = new FrmVendas();
+        FRM_VENDAS.setVisible(true);
+    }//GEN-LAST:event_subMenuVendasActionPerformed
+
+    private void subMenuCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCaixaActionPerformed
+        if (FRM_CAIXA == null)
+            FRM_CAIXA = new FrmCaixa();
+        FRM_CAIXA.setVisible(true);
+    }//GEN-LAST:event_subMenuCaixaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -603,8 +639,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu subMenuCadastrosFinanceiros;
     private javax.swing.JMenuItem subMenuCaixa;
     private javax.swing.JMenuItem subMenuCategorias;
-    private javax.swing.JMenuItem subMenuEntradas;
+    private javax.swing.JMenuItem subMenuCompras;
     private javax.swing.JMenuItem subMenuProdutos;
-    private javax.swing.JMenuItem subMenuSaidas;
+    private javax.swing.JMenuItem subMenuVendas;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,7 +7,7 @@ import modelo.Cliente;
 /**
  * @author Gabriel
  */
-public class CtrlCliente {
+public abstract class CtrlCliente {
     
     public static void SalvarTodosCamposFisica (Cliente prCliente){
         ClienteDao.SalvarTodosCamposFisica(prCliente);
