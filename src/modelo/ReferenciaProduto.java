@@ -11,21 +11,21 @@ package modelo;
  */
 public class ReferenciaProduto {
     private int     cod_rastreio_produto;     //Código gerado para cada produto cadastrado na loja
-    private int     cod_produto;              //Chave Estrangeira da tabela produto
+    private Produto produto;              //Chave Estrangeira da tabela produto
     private boolean ativo;
     
     public ReferenciaProduto() {
     }
 
-    public ReferenciaProduto(int cod_rastreio_produto, int cod_produto, boolean ativo) {
+    public ReferenciaProduto(int cod_rastreio_produto, Produto produto, boolean ativo) {
         this.cod_rastreio_produto = cod_rastreio_produto;
-        this.cod_produto = cod_produto;
+        this.produto = produto;
         this.ativo = ativo;
     }
 
-    public ReferenciaProduto(int cod_rastreio_produto, int cod_produto) {
+    public ReferenciaProduto(int cod_rastreio_produto, Produto produto) {
         this.cod_rastreio_produto = cod_rastreio_produto;
-        this.cod_produto = cod_produto;
+        this.produto = produto;
     }
 
     public int getCod_rastreio_produto() {
@@ -36,12 +36,12 @@ public class ReferenciaProduto {
         this.cod_rastreio_produto = cod_rastreio_produto;
     }
 
-    public int getCod_produto() {
-        return cod_produto;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setCod_produto(int cod_produto) {
-        this.cod_produto = cod_produto;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public boolean isAtivo() {

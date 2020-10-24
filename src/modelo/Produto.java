@@ -17,7 +17,9 @@ public class Produto {
     private Double Valor_Custo;
     private Double Valor_Venda;
     private boolean ativo;
-
+    
+    private int auxQuantidade;
+    
     public Produto() {
     }
 
@@ -100,5 +102,12 @@ public class Produto {
         this.ativo = ativo;
     }
     
+    public int getAuxQuantidade(){
+        return this.auxQuantidade;
+    }
+    
+    public void setAuxQuantidade(int quantidade){
+        this.auxQuantidade = quantidade;
+    }
     
 }

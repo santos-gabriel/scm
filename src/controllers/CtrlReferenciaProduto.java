@@ -8,12 +8,12 @@ import modelo.ReferenciaProduto;
  */
 public abstract class CtrlReferenciaProduto {
     
-    public static void SalvarTodosCampos (ReferenciaProduto prReferenciaProduto){
-        ReferenciaProdutoDao.SalvarTodosCampos(prReferenciaProduto);
+    public static Integer Inserir(ReferenciaProduto prReferenciaProduto){
+        return ReferenciaProdutoDao.Inserir(prReferenciaProduto);
     }
     
-    public static void AtualizarTodosCampos(ReferenciaProduto prReferenciaProduto){
-        ReferenciaProdutoDao.AtualizarTodosCampos(prReferenciaProduto);
+    public static void Atualizar(ReferenciaProduto prReferenciaProduto){
+        ReferenciaProdutoDao.Atualizar(prReferenciaProduto);
     }
         
 }
