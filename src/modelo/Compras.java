@@ -8,9 +8,9 @@ import java.util.Date;
 public class Compras {
     
     private int codCompra;
-    private int codFornecedor;
-    private int codUsuario;
-    private Date data;
+    private Fornecedor fornecedor;
+    private Usuario usuario;
+    private String data;
     private Double totalBruto;
     private Double desconto;
     private Double totalLiquido;
@@ -20,10 +20,10 @@ public class Compras {
     public Compras(){
     }
 
-    public Compras(int codCompra, int codFornecedor, int codUsuario, Date data, Double totalBruto, Double desconto, Double totalLiquido, boolean ativo) {
+    public Compras(int codCompra, Fornecedor fornecedor, Usuario usuario, String data, Double totalBruto, Double desconto, Double totalLiquido, boolean ativo) {
         this.codCompra = codCompra;
-        this.codFornecedor = codFornecedor;
-        this.codUsuario = codUsuario;
+        this.fornecedor = fornecedor;
+        this.usuario = usuario;
         this.data = data;
         this.totalBruto = totalBruto;
         this.desconto = desconto;
@@ -32,10 +32,10 @@ public class Compras {
     }
     
     
-    public Compras(int codCompra, int codFornecedor, int codUsuario, Date dataCOmpra, Double valorBruto, Double desconto, Double valorLiquido) {
+    public Compras(int codCompra, Fornecedor fornecedor, Usuario usuario, String dataCOmpra, Double valorBruto, Double desconto, Double valorLiquido) {
         this.codCompra = codCompra;
-        this.codFornecedor = codFornecedor;
-        this.codUsuario = codUsuario;
+        this.fornecedor = fornecedor;
+        this.usuario = usuario;
         this.data = dataCOmpra;
         this.totalBruto = valorBruto;
         this.desconto = desconto;
@@ -50,27 +50,27 @@ public class Compras {
         this.codCompra = codCompra;
     }
 
-    public int getCodFornecedor() {
-        return codFornecedor;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setCodFornecedor(int codFornecedor) {
-        this.codFornecedor = codFornecedor;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
-    public int getCodUsuario() {
-        return codUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCodUsuario(int codUsuario) {
-        this.codUsuario = codUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

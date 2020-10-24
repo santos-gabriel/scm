@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import modelo.ReferenciaProduto;
 
 /**
@@ -15,15 +16,20 @@ public abstract class ReferenciaProdutoDao {
     
     private static Connection conexao = null;
     
-    public static void SalvarTodosCampos (ReferenciaProduto prReferenciaProduto){
+    public static Integer Inserir(ReferenciaProduto prReferenciaProduto){
         CriarConexoes();
-        String sql = "";
+        String sql = "INSERT INTO referencia_produto(cod_rastreio_produto, cod_produto, ativo) VALUES (null, ?, true)";
         PreparedStatement stmt = null;
         
         try {
-            stmt = conexao.prepareStatement(sql);
-            // stmt.setString();
+            stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, prReferenciaProduto.getProduto().getCod_Produto());
             stmt.executeUpdate();
+            ResultSet keys = stmt.getGeneratedKeys();
+            if (keys.next())
+                return keys.getInt(1);
+            else
+                return null;
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao salvar referencia, entre em contato com o suporte do sistema ");
         }finally{
@@ -32,14 +38,13 @@ public abstract class ReferenciaProdutoDao {
     }
     
     
-    public static void AtualizarTodosCampos(ReferenciaProduto prReferenciaProduto){
+    public static void Atualizar(ReferenciaProduto prReferenciaProduto){
         CriarConexoes();
         PreparedStatement stmt = null;
-        String sql = "";
+        String sql = "UPDATE referencia_produto SET ativo = ?;";
         try {
             stmt = conexao.prepareStatement(sql);
-            // stmt.setString();
-            
+            stmt.setBoolean(1, prReferenciaProduto.isAtivo());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new ExcecaoDB(e, "Falha ao atualizar referencia, entre em contato com o suporte do sistema ");
@@ -48,43 +53,6 @@ public abstract class ReferenciaProdutoDao {
         }
     }
     
-    
-    public static void Excluir(Integer prCodigo){
-        CriarConexoes();
-        PreparedStatement stmt = null;
-        String sql = "";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, prCodigo);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao excluir referencia, entre em contato com o suporte do sistema ");
-        }finally{
-            FecharConexoes(conexao, stmt, null);
-        }
-    }
-    
-    
-    
-    public static ReferenciaProduto PesquisarViaCodigo(Integer prCodigo){
-        CriarConexoes();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String sql = "";
-        try {
-            stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, prCodigo);
-            rs = stmt.executeQuery();
-            if (rs.next())
-                return new ReferenciaProduto();
-            else
-                return null;
-        } catch (SQLException e) {
-            throw new ExcecaoDB(e, "Falha ao localizar referencia pelo código, entre em contato com o suporte do sistema ");
-        }finally{
-            FecharConexoes(conexao, stmt, rs);
-        }
-    }
     
     
     

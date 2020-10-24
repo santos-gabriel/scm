@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**Classe de funções úteis 
@@ -72,6 +74,30 @@ public abstract class Funcoes {
         } catch (Exception e) {
             throw new ExcecaoNetWork(e, "Falha ao reconhecer nome da máquina, entre em contato com o suporte do sistema");
         }
+    }
+    
+    /**Método para tratar data para que possa ser enviada para o Banco, ex.: dd/MM/yyyy passada como parâmetro será retornada como yyyy-MM-dd
+     * @return String - data em yyyy-MM-dd
+     * @param prData  - data em dd/MM/yyyy
+     * @since v1.0
+     */
+    private String trataDataParaDb(String prData) {
+        String dia = prData.substring(0, 2);
+        String mes = prData.substring(3, 5);
+        String ano = prData.substring(6, 10);
+        return ano + "-" + mes + "-" + dia;
+    }
+    
+    /**Método para tratar data que está armazenada no banco de dados, ex.: yyyy-MM-dd passada como parâmetro será retornada como dd/MM/yyyy
+     * @return String - data em dd/MM/yyyy
+     * @param prData  - data em yyyy-MM-dd
+     * @since v1.0
+     */
+    private String trataDataDoDb(String prData) {
+        String ano = prData.substring(0, 4);
+        String mes = prData.substring(5, 7);
+        String dia = prData.substring(8, 10);
+        return dia + "/" + mes + "/" + ano;
     }
     
 }
