@@ -10,6 +10,7 @@ import controllers.CtrlFornecedor;
 import controllers.CtrlProduto;
 import controllers.CtrlProdutosCompra;
 import controllers.CtrlReferenciaProduto;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -107,6 +108,12 @@ public class FrmCompras extends javax.swing.JFrame {
 
         txtCodProduto.setEditable(false);
 
+        txtDescProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescProdutoKeyPressed(evt);
+            }
+        });
+
         btnLocalizarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnLocalizarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLocalizarProduto.setEnabled(false);
@@ -126,11 +133,13 @@ public class FrmCompras extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setText("Custo");
+        jLabel11.setText("Custo/ Compra");
 
         jLabel12.setText("Venda");
 
         txtValorCustoProduto.setEditable(false);
+
+        txtValorVendaProduto.setEditable(false);
 
         javax.swing.GroupLayout pnlPesquisaProdutoLayout = new javax.swing.GroupLayout(pnlPesquisaProduto);
         pnlPesquisaProduto.setLayout(pnlPesquisaProdutoLayout);
@@ -141,30 +150,36 @@ public class FrmCompras extends javax.swing.JFrame {
                 .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
                         .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCodProduto))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
                             .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
-                                .addComponent(txtDescProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18))
+                            .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                                .addComponent(txtCodProduto)
+                                .addGap(10, 10, 10)))
+                        .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE))
+                            .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                                .addComponent(txtDescProduto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
                         .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(txtQtdeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPesquisaProdutoLayout.createSequentialGroup()
+                        .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtValorCustoProduto)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(54, 54, 54)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel12)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
-                                .addComponent(txtValorCustoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(8, 8, 8)
                                 .addComponent(txtValorVendaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(283, 283, 283)
                                 .addComponent(btnInserirProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
@@ -179,11 +194,12 @@ public class FrmCompras extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQtdeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtQtdeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -195,6 +211,12 @@ public class FrmCompras extends javax.swing.JFrame {
                     .addComponent(btnInserirProduto))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        txtDescFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescFornecedorKeyPressed(evt);
+            }
+        });
 
         txtCodFornecedor.setEditable(false);
 
@@ -248,12 +270,13 @@ public class FrmCompras extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLocalizarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLocalizarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDescUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(42, 42, 42)
                 .addComponent(pnlPesquisaProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -304,19 +327,18 @@ public class FrmCompras extends javax.swing.JFrame {
         pnlOpcoesLayout.setHorizontalGroup(
             pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOpcoesLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalvar))
-                .addGap(29, 29, 29))
+                .addGap(35, 35, 35))
         );
         pnlOpcoesLayout.setVerticalGroup(
             pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOpcoesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlOpcoesLayout.createSequentialGroup()
                 .addComponent(btnInserir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -358,7 +380,11 @@ public class FrmCompras extends javax.swing.JFrame {
 
         jLabel9.setText("Total de Desconto");
 
-        txtTotalDesconto.setEditable(false);
+        txtTotalDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTotalDescontoKeyPressed(evt);
+            }
+        });
 
         jLabel10.setText("Total Líquido");
 
@@ -463,6 +489,7 @@ public class FrmCompras extends javax.swing.JFrame {
                 return;
         }
         limparCampos();
+        limpaTblProdutosCompra();
         Informacao.show("Compra concluída e salva com sucesso ");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -558,6 +585,7 @@ public class FrmCompras extends javax.swing.JFrame {
                     txtDescProduto.setText(registroSelecionado[1]);
                     txtValorCustoProduto.setText(registroSelecionado[4]);
                     txtValorVendaProduto.setText(registroSelecionado[5]);
+                    txtQtdeProduto.setText("1");
                 }
     }//GEN-LAST:event_btnLocalizarProdutoActionPerformed
 
@@ -586,7 +614,7 @@ public class FrmCompras extends javax.swing.JFrame {
         ReferenciaProduto referencia = new ReferenciaProduto();
         referencia.setProduto(produto);
         Compras compra = new Compras();
-        double valoresProdutos = (produto.getValor_Venda() * quantidade);
+        double valoresProdutos = (produto.getValor_Custo() * quantidade);
         compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
         compra.setTotalBruto((Double.parseDouble(txtTotalBruto.getText())) + valoresProdutos);
         compra.setTotalLiquido(Double.parseDouble(txtTotalLiquido.getText()));
@@ -603,7 +631,28 @@ public class FrmCompras extends javax.swing.JFrame {
         CtrlCompras.AtualizarTotais(compra);
         txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
         carregarProdutosCompra();
+        txtCodProduto.setText("");
+        txtDescProduto.setText("");
+        txtQtdeProduto.setText("");
+        txtValorCustoProduto.setText("");
+        txtValorVendaProduto.setText("");
+        calcularTotalLiquido();
     }//GEN-LAST:event_btnInserirProdutoActionPerformed
+
+    private void txtDescFornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescFornecedorKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            btnLocalizarFornecedorActionPerformed(null);
+    }//GEN-LAST:event_txtDescFornecedorKeyPressed
+
+    private void txtDescProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescProdutoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            btnLocalizarProdutoActionPerformed(null);
+    }//GEN-LAST:event_txtDescProdutoKeyPressed
+
+    private void txtTotalDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalDescontoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            calcularTotalLiquido();
+    }//GEN-LAST:event_txtTotalDescontoKeyPressed
 
     /**
      * @param args the command line arguments
@@ -691,6 +740,8 @@ public class FrmCompras extends javax.swing.JFrame {
         txtTotalBruto.setText("");
         txtTotalDesconto.setText("");
         txtTotalLiquido.setText("");
+        txtValorCustoProduto.setText("");
+        txtValorVendaProduto.setText("");
     }
     
     private boolean inserirCompra(){
@@ -723,6 +774,26 @@ public class FrmCompras extends javax.swing.JFrame {
                 produto.getAuxQuantidade()
             });
         });
+    }
+    
+    private void limpaTblProdutosCompra(){
+        DefaultTableModel modelo = (DefaultTableModel) tblProdutosCompra.getModel();
+        modelo.setNumRows(0);
+    }
+    
+    private void calcularTotalLiquido() {
+        if (txtTotalDesconto.getText() == null || txtTotalDesconto.getText().isEmpty())
+            txtTotalDesconto.setText("0");
+        if (txtTotalBruto.getText() == null || txtTotalBruto.getText().isEmpty())
+            txtTotalBruto.setText("0");
+        double totalBruto    = Double.parseDouble(txtTotalBruto.getText());
+        double totalDesconto = Double.parseDouble(txtTotalDesconto.getText());
+        double totalLiquido  = (totalBruto - totalDesconto);
+        txtTotalLiquido.setText(formataCasaDecimal(totalLiquido));
+    }
+    
+    private String formataCasaDecimal(double prValor){
+        return String.format("%.2f", prValor);
     }
     
 }
