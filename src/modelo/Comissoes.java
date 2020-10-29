@@ -18,6 +18,11 @@ public class Comissoes {
     public Comissoes() {
     }
 
+    public Comissoes(int cod_comissao, double valor_comisssao) {
+        this.cod_comissao = cod_comissao;
+        this.valor_comisssao = valor_comisssao;
+    }    
+    
     public Comissoes(int cod_comissao, double valor_comisssao, String unidade_medida, boolean ativo) {
         this.cod_comissao = cod_comissao;
         this.valor_comisssao = valor_comisssao;
@@ -61,6 +66,36 @@ public class Comissoes {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.cod_comissao;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Comissoes other = (Comissoes) obj;
+        if (this.cod_comissao != other.cod_comissao) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(valor_comisssao);
     }
     
 }

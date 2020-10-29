@@ -8,7 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Cidades;
 import modelo.Cliente;
+import modelo.Estados;
+import modelo.Usuario;
 import utilitarios.UsuariosUtil;
 
 /**
@@ -43,8 +46,8 @@ public abstract class ClienteDao {
             stmt.setString(6, prCliente.getTelefone_Cliente());
             stmt.setString(7, prCliente.getEndereco_Cliente());
             stmt.setInt(8,UsuariosUtil.getUsuario().getCod_Usuario());
-            stmt.setInt(9, prCliente.getCod_Estado());
-            stmt.setInt(10, prCliente.getCod_Cidade());
+            stmt.setInt(9, prCliente.getEstado().getCodEstado());
+            stmt.setInt(10, prCliente.getCidade().getCodCidade());
             stmt.setBoolean(11, true);
             
             stmt.executeUpdate();
@@ -76,8 +79,8 @@ public abstract class ClienteDao {
             stmt.setString(4, prCliente.getTelefone_Cliente());
             stmt.setString(5, prCliente.getEndereco_Cliente());
             stmt.setInt(6,UsuariosUtil.getUsuario().getCod_Usuario());
-            stmt.setInt(7, prCliente.getCod_Estado());
-            stmt.setInt(8, prCliente.getCod_Cidade());
+            stmt.setInt(7, prCliente.getEstado().getCodEstado());
+            stmt.setInt(8, prCliente.getCidade().getCodCidade());
             stmt.setBoolean(9, true);
             
             stmt.executeUpdate();
@@ -110,8 +113,8 @@ public abstract class ClienteDao {
             stmt.setString(5, prCliente.getWhatsApp_Cliente());
             stmt.setString(6, prCliente.getTelefone_Cliente());
             stmt.setString(7, prCliente.getEndereco_Cliente());
-            stmt.setInt(8, prCliente.getCod_Cidade());
-            stmt.setInt(9, prCliente.getCod_Estado());
+            stmt.setInt(8, prCliente.getCidade().getCodCidade());
+            stmt.setInt(9, prCliente.getEstado().getCodEstado());
             stmt.setInt(10, prCliente.getCod_Cliente());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -138,8 +141,8 @@ public abstract class ClienteDao {
             stmt.setString(3, prCliente.getWhatsApp_Cliente());
             stmt.setString(4, prCliente.getTelefone_Cliente());
             stmt.setString(5, prCliente.getEndereco_Cliente());
-            stmt.setInt(6, prCliente.getCod_Cidade());
-            stmt.setInt(7, prCliente.getCod_Estado());
+            stmt.setInt(6, prCliente.getCidade().getCodCidade());
+            stmt.setInt(7, prCliente.getEstado().getCodEstado());
             stmt.setInt(8, prCliente.getCod_Cliente());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -230,8 +233,8 @@ public abstract class ClienteDao {
                 c.setWhatsApp_Cliente(rs.getString("whatsapp_cliente"));
                 c.setTelefone_Cliente(rs.getString("telefone_cliente"));
                 c.setEndereco_Cliente(rs.getString("endereco_cliente"));
-                c.setCod_Estado(rs.getInt("cod_estado"));
-                c.setCod_Cidade(rs.getInt("cod_cidade"));
+                c.setEstado(new Estados(rs.getInt("cod_estado")));
+                c.setCidade(new Cidades(rs.getInt("cod_cidade")));
                 c.setAtivo(rs.getBoolean("ativo"));
                 lista.add(c);
             }
@@ -275,7 +278,20 @@ public abstract class ClienteDao {
             rs = stmt.executeQuery();
             List <Cliente> lista = new ArrayList<>();
             while(rs.next()){
-                lista.add(new Cliente());
+                lista.add(new Cliente(
+                        rs.getInt("cod_cliente"), 
+                        new Usuario(rs.getInt("cod_usuario")), 
+                        rs.getString("nome_cliente"), 
+                        rs.getString("data_nascimento"), 
+                        rs.getString("rg_cliente"), 
+                        rs.getString("cpf_cliente"), 
+                        rs.getString("cnpj_cliente"), 
+                        rs.getString("whatsapp_cliente"), 
+                        rs.getString("telefone_cliente"), 
+                        new Cidades(rs.getInt("cod_cidade")), 
+                        new Estados(rs.getInt("cod_estado")), 
+                        rs.getString("endereco_cliente"), true)
+                );
             }
             return lista;
         } catch (SQLException e) {

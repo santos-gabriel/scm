@@ -54,5 +54,36 @@ public class TipoPagamento {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + this.cod_pagamento;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TipoPagamento other = (TipoPagamento) obj;
+        if (this.cod_pagamento != other.cod_pagamento) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return desc_pagamento;
+    }
+       
     
 }

@@ -5,12 +5,32 @@
  */
 package visao;
 
+import controllers.CtrlCliente;
+import controllers.CtrlComissoes;
+import controllers.CtrlCondicaoPagamento;
+import controllers.CtrlFuncionario;
+import controllers.CtrlProduto;
+import controllers.CtrlTipoPagamento;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Comissoes;
+import modelo.CondicaoPagamento;
+import modelo.Funcionario;
+import modelo.Produto;
+import modelo.TipoPagamento;
+import utilitarios.UsuariosUtil;
+
 /**
  *
  * @author Gabriel
  */
 public class FrmVendas extends javax.swing.JFrame {
 
+    
+    private FrmSelecionaRegistro FRM_SELECIONA_REGISTRO = null;
     /**
      * Creates new form FrmVendas
      */
@@ -28,24 +48,611 @@ public class FrmVendas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlVenda = new javax.swing.JPanel();
+        txtCodVenda = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
+        txtCodCliente = new javax.swing.JTextField();
+        txtCodFuncionario = new javax.swing.JTextField();
+        txtNomeFuncionario = new javax.swing.JTextField();
+        txtNomeCliente = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnLocalizarCliente = new javax.swing.JButton();
+        btnLocalizarFuncionario = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cbxTipoPagamento = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cbxCondicaoPagamento = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        cbxComissao = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        pnlPesquisaProduto = new javax.swing.JPanel();
+        txtCodProduto = new javax.swing.JTextField();
+        txtProduto = new javax.swing.JTextField();
+        txtQuantidade = new javax.swing.JTextField();
+        txtValorCusto = new javax.swing.JTextField();
+        txtValorVenda = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        btnLocalizarProduto = new javax.swing.JButton();
+        pnlOpcoes = new javax.swing.JPanel();
+        btnInserir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        pnlItensVenda = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProdutosVendas = new javax.swing.JTable();
+        pnlValores = new javax.swing.JPanel();
+        txtTotalBruto = new javax.swing.JTextField();
+        txtTotalDesconto = new javax.swing.JTextField();
+        txtTotalLiquido = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stock Control Manager | Vendas");
         setResizable(false);
+
+        txtCodVenda.setEditable(false);
+
+        txtUsuario.setEditable(false);
+
+        txtCodFuncionario.setEditable(false);
+
+        jLabel1.setText("Código");
+
+        btnLocalizarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
+        btnLocalizarCliente.setEnabled(false);
+        btnLocalizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarClienteActionPerformed(evt);
+            }
+        });
+
+        btnLocalizarFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
+        btnLocalizarFuncionario.setEnabled(false);
+        btnLocalizarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarFuncionarioActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Cód. Cliente");
+
+        jLabel3.setText("Nome Cliente");
+
+        jLabel4.setText("Usuário");
+
+        jLabel5.setText("Cód. Funcionário");
+
+        jLabel6.setText("Tipo Pagamento");
+
+        jLabel7.setText("Condição Pagamento");
+
+        jLabel11.setText("Comissão");
+
+        txtCodProduto.setEditable(false);
+
+        txtValorCusto.setEditable(false);
+
+        jLabel12.setText("Cód. Produto");
+
+        jLabel13.setText("Custo / Compra");
+
+        jLabel14.setText("Venda");
+
+        jLabel15.setText("Produto");
+
+        jLabel16.setText("Quantidade");
+
+        btnLocalizarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
+        btnLocalizarProduto.setEnabled(false);
+        btnLocalizarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarProdutoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlPesquisaProdutoLayout = new javax.swing.GroupLayout(pnlPesquisaProduto);
+        pnlPesquisaProduto.setLayout(pnlPesquisaProdutoLayout);
+        pnlPesquisaProdutoLayout.setHorizontalGroup(
+            pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtCodProduto)
+                    .addComponent(txtValorCusto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                        .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16)
+                        .addGap(61, 61, 61))
+                    .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
+        );
+        pnlPesquisaProdutoLayout.setVerticalGroup(
+            pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPesquisaProdutoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLocalizarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
+                .addGap(1, 1, 1)
+                .addGroup(pnlPesquisaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlVendaLayout = new javax.swing.GroupLayout(pnlVenda);
+        pnlVenda.setLayout(pnlVendaLayout);
+        pnlVendaLayout.setHorizontalGroup(
+            pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVendaLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxCondicaoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(cbxComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlPesquisaProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(32, 32, 32)
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                .addComponent(txtCodFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtNomeFuncionario)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                .addComponent(txtCodVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel3)
+                                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                        .addComponent(txtNomeCliente)
+                                                        .addGap(10, 10, 10)))))
+                                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnLocalizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnLocalizarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                        .addGap(27, 27, 27))
+                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(402, 402, 402)))
+                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4)
+                                    .addComponent(cbxTipoPagamento, 0, 135, Short.MAX_VALUE)
+                                    .addComponent(txtUsuario))))
+                        .addGap(42, 42, 42))))
+        );
+        pnlVendaLayout.setVerticalGroup(
+            pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVendaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(3, 3, 3)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLocalizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(1, 1, 1)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLocalizarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxTipoPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel11))
+                .addGap(1, 1, 1)
+                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxCondicaoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlPesquisaProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
+
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png"))); // NOI18N
+        btnInserir.setBorderPainted(false);
+        btnInserir.setContentAreaFilled(false);
+        btnInserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInserir.setFocusPainted(false);
+        btnInserir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInserirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInserirMouseExited(evt);
+            }
+        });
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png"))); // NOI18N
+        btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvar.setFocusPainted(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseExited(evt);
+            }
+        });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlOpcoesLayout = new javax.swing.GroupLayout(pnlOpcoes);
+        pnlOpcoes.setLayout(pnlOpcoesLayout);
+        pnlOpcoesLayout.setHorizontalGroup(
+            pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOpcoesLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalvar))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        pnlOpcoesLayout.setVerticalGroup(
+            pnlOpcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOpcoesLayout.createSequentialGroup()
+                .addComponent(btnInserir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tblProdutosVendas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Produto", "Categoria", "Venda", "Quantidade"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProdutosVendas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblProdutosVendas);
+
+        javax.swing.GroupLayout pnlItensVendaLayout = new javax.swing.GroupLayout(pnlItensVenda);
+        pnlItensVenda.setLayout(pnlItensVendaLayout);
+        pnlItensVendaLayout.setHorizontalGroup(
+            pnlItensVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        pnlItensVendaLayout.setVerticalGroup(
+            pnlItensVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlItensVendaLayout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pnlValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores"));
+
+        txtTotalBruto.setEditable(false);
+
+        txtTotalLiquido.setEditable(false);
+
+        jLabel8.setText("Total Bruto");
+
+        jLabel9.setText("Total Desconto");
+
+        jLabel10.setText("Total Líquido");
+
+        javax.swing.GroupLayout pnlValoresLayout = new javax.swing.GroupLayout(pnlValores);
+        pnlValores.setLayout(pnlValoresLayout);
+        pnlValoresLayout.setHorizontalGroup(
+            pnlValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlValoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTotalDesconto)
+                    .addComponent(txtTotalBruto, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTotalLiquido)
+                    .addGroup(pnlValoresLayout.createSequentialGroup()
+                        .addGroup(pnlValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlValoresLayout.setVerticalGroup(
+            pnlValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlValoresLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalLiquido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnlItensVenda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlVenda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlOpcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlItensVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlOpcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInserirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseEntered
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo2.png")));
+    }//GEN-LAST:event_btnInserirMouseEntered
+
+    private void btnInserirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInserirMouseExited
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Novo.png")));
+    }//GEN-LAST:event_btnInserirMouseExited
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        limparTodosCamposTextos();
+        carregarTodosCombobox();
+        btnLocalizarCliente.setEnabled(true);
+        btnLocalizarFuncionario.setEnabled(true);
+        btnLocalizarProduto.setEnabled(true);
+        txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());
+    }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar2.png")));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnSalvarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseExited
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Salvar.png")));
+    }//GEN-LAST:event_btnSalvarMouseExited
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        btnLocalizarCliente.setEnabled(false);
+        btnLocalizarFuncionario.setEnabled(false);
+        btnLocalizarProduto.setEnabled(false);
+        limparTodosCamposTextos();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnLocalizarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarFuncionarioActionPerformed
+        JTable tabela = new JTable();
+        List<String[]> dados = new ArrayList<>();
+
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome_Funcionario(txtNomeCliente.getText());
+        List<Funcionario> resultadoPesquisa = CtrlFuncionario.PesquisarViaDescricaoInicia(funcionario);
+
+        for (Funcionario f : resultadoPesquisa){
+            dados.add(new String[]{
+                                    String.valueOf(f.getCod_Funcionario()),
+                                    f.getNome_Funcionario(),
+                                    f.getCPF_Funcionario(),
+                                    f.getRg_Funcionario(),                    
+                                    f.getData_Nascimento(),
+                                    f.getWhatsApp_Funcionario()
+                                  });
+        }
+
+        tabela.setModel(new DefaultTableModel(
+            dados.toArray(new String[dados.size()][]),
+            new String [] {"CODIGO", "NOME", "CPF", "RG", "NASCIMENTO", "WHATSAPP"}){
+                boolean[] canEdit = new boolean []{false, false, false, false, false, false};
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }                
+            });
+        tabela.getTableHeader().setReorderingAllowed(false);
+
+        if (FRM_SELECIONA_REGISTRO == null)
+            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+        FRM_SELECIONA_REGISTRO.setTitle("Funcionarios | Seleção ");
+
+        FRM_SELECIONA_REGISTRO.setVisible(true);
+
+        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+        if (registroSelecionado != null){
+            txtCodFuncionario.setText(registroSelecionado[0]);
+            txtNomeFuncionario.setText(registroSelecionado[1]);
+        }  
+        carregarTodosCombobox();
+    }//GEN-LAST:event_btnLocalizarFuncionarioActionPerformed
+
+    private void btnLocalizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarClienteActionPerformed
+        JTable tabela = new JTable();
+        List<String[]> dados = new ArrayList<>();
+
+        Cliente cliente = new Cliente();
+        cliente.setNome_Cliente(txtNomeCliente.getText());
+        List<Cliente> resultadoPesquisa = CtrlCliente.PesquisarViaDescricaoInicia(cliente);
+
+        for (Cliente c : resultadoPesquisa){
+            dados.add(new String[]{
+                                    String.valueOf(c.getCod_Cliente()), 
+                                    c.getNome_Cliente(),                                            
+                                    c.getCPF_Cliente(),
+                                    c.getRG_Cliente(),
+                                    c.getCNPJ_Cliente(),                                            
+                                    c.getData_Nascimento_Cliente(),
+                                    c.getTelefone_Cliente(),
+                                    c.getWhatsApp_Cliente()
+                                  });
+        }
+
+        tabela.setModel(new DefaultTableModel(
+            dados.toArray(new String[dados.size()][]),
+            new String [] {"CODIGO", "NOME", "CPF", "RG", "CNPJ", "NASCIMENTO", "TELEFONE", "WHATSAPP"}){
+                boolean[] canEdit = new boolean []{false, false, false, false, false, false, false, false};
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }                
+            });
+        tabela.getTableHeader().setReorderingAllowed(false);
+
+        if (FRM_SELECIONA_REGISTRO == null)
+            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+        FRM_SELECIONA_REGISTRO.setTitle("Clientes | Seleção ");
+
+        FRM_SELECIONA_REGISTRO.setVisible(true);
+
+        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+        if (registroSelecionado != null){
+            txtCodCliente.setText(registroSelecionado[0]);
+            txtNomeCliente.setText(registroSelecionado[1]);
+        }  
+        carregarTodosCombobox();
+    }//GEN-LAST:event_btnLocalizarClienteActionPerformed
+
+    private void btnLocalizarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarProdutoActionPerformed
+        JTable tabela = new JTable();
+        List<String[]> dados = new ArrayList<>();
+
+        Produto produto = new Produto();
+        produto.setDesc_Produto(txtProduto.getText());
+        List<Produto> resultadoPesquisa = CtrlProduto.PesquisarViaDescricaoInicia(produto);
+
+        for (Produto p : resultadoPesquisa){
+            dados.add(new String[]{
+                                    String.valueOf(p.getCod_Produto()), 
+                                    p.getDesc_Produto(),
+                                    String.valueOf(p.getCategoria_Produto().getCod_Categoria()),
+                                    p.getCategoria_Produto().getDesc_Categoria(),
+                                    String.valueOf(p.getValor_Custo()),
+                                    String.valueOf(p.getValor_Venda())
+                                  });
+        }
+
+        tabela.setModel(new DefaultTableModel(
+            dados.toArray(new String[dados.size()][]),
+            new String [] {"CODIGO", "DESCRICAO", "COD. CATEGORIA", "CATEGORIA", "VALOR DE CUSTO", "VALOR DE VENDA"}){
+                boolean[] canEdit = new boolean []{false, false, false, false, false, false};
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }                
+            });
+        tabela.getTableHeader().setReorderingAllowed(false);
+
+        if (FRM_SELECIONA_REGISTRO == null)
+            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+        FRM_SELECIONA_REGISTRO.setTitle("Produtos | Seleção ");
+
+        FRM_SELECIONA_REGISTRO.setVisible(true);
+
+        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+        if (registroSelecionado != null){
+            txtCodProduto.setText(registroSelecionado[0]);
+            txtProduto.setText(registroSelecionado[1]);            
+        }  
+        carregarTodosCombobox();
+    }//GEN-LAST:event_btnLocalizarProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,5 +690,90 @@ public class FrmVendas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnLocalizarCliente;
+    private javax.swing.JButton btnLocalizarFuncionario;
+    private javax.swing.JButton btnLocalizarProduto;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<Comissoes> cbxComissao;
+    private javax.swing.JComboBox<CondicaoPagamento> cbxCondicaoPagamento;
+    private javax.swing.JComboBox<TipoPagamento> cbxTipoPagamento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnlItensVenda;
+    private javax.swing.JPanel pnlOpcoes;
+    private javax.swing.JPanel pnlPesquisaProduto;
+    private javax.swing.JPanel pnlValores;
+    private javax.swing.JPanel pnlVenda;
+    private javax.swing.JTable tblProdutosVendas;
+    private javax.swing.JTextField txtCodCliente;
+    private javax.swing.JTextField txtCodFuncionario;
+    private javax.swing.JTextField txtCodProduto;
+    private javax.swing.JTextField txtCodVenda;
+    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtNomeFuncionario;
+    private javax.swing.JTextField txtProduto;
+    private javax.swing.JTextField txtQuantidade;
+    private javax.swing.JTextField txtTotalBruto;
+    private javax.swing.JTextField txtTotalDesconto;
+    private javax.swing.JTextField txtTotalLiquido;
+    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtValorCusto;
+    private javax.swing.JTextField txtValorVenda;
     // End of variables declaration//GEN-END:variables
+    
+    
+    private void limparTodosCamposTextos(){
+        txtCodCliente.setText("");
+        txtCodFuncionario.setText("");
+        txtCodProduto.setText("");
+        txtCodVenda.setText("");
+        txtNomeCliente.setText("");
+        txtNomeFuncionario.setText("");
+        txtProduto.setText("");
+        txtQuantidade.setText("");
+        txtTotalBruto.setText("");
+        txtTotalDesconto.setText("");
+        txtTotalLiquido.setText("");
+        txtUsuario.setText("");
+        txtValorCusto.setText("");
+        txtValorVenda.setText("");
+    }
+    
+    private void carregarTodosCombobox(){
+        cbxComissao.removeAllItems();
+        cbxComissao.addItem(new Comissoes(0, 0));
+        CtrlComissoes.PesquisarTodos().forEach(comissao -> {
+            cbxComissao.addItem(comissao);
+        });
+        
+        cbxCondicaoPagamento.removeAllItems();
+        cbxCondicaoPagamento.addItem(new CondicaoPagamento(0, "Selecione"));
+        CtrlCondicaoPagamento.PesquisarTodos().forEach(condicaoPagamento -> {
+            cbxCondicaoPagamento.addItem(condicaoPagamento);
+        });
+        
+        cbxTipoPagamento.removeAllItems();
+        cbxTipoPagamento.addItem(new TipoPagamento(0, "Selecione"));
+        CtrlTipoPagamento.PesquisarTodos().forEach(tipoPagamento -> {
+            cbxTipoPagamento.addItem(tipoPagamento);
+        });
+        
+    }
+    
 }

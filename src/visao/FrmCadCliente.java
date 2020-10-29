@@ -521,9 +521,9 @@ public class FrmCadCliente extends javax.swing.JFrame {
                 TxtRG.setText(c.getRG_Cliente());
                 TxtCNPJ.setText(c.getCNPJ_Cliente());
                 TxtCPF.setText(c.getCPF_Cliente());
-                TxtCodCidade.setText(Integer.toString(c.getCod_Cidade()));
+                TxtCodCidade.setText(Integer.toString(c.getCidade().getCodCidade()));
                 jCCidade.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-                TxtCodEstado.setText(Integer.toString(c.getCod_Estado()));
+                TxtCodEstado.setText(Integer.toString(c.getEstado().getCodEstado()));
                 jCEstado.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
                 String[] EnderecoSeparado = c.getEndereco_Cliente().split(",");
                 if (EnderecoSeparado.length > 0)
@@ -719,8 +719,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
         CLIENTE.setRG_Cliente(TxtRG.getText());
         CLIENTE.setCPF_Cliente(TxtCPF.getText());
         CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
-        CLIENTE.setCod_Estado(Integer.parseInt(TxtCodEstado.getText()));
-        CLIENTE.setCod_Cidade(Integer.parseInt(TxtCodCidade.getText()));
+        CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+        CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
         CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
 
         if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
@@ -774,8 +774,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
         String cnpj = TxtCNPJ.getText().replaceAll("\\D", "");
         CLIENTE.setCNPJ_Cliente(cnpj);
         CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
-        CLIENTE.setCod_Estado(Integer.parseInt(TxtCodEstado.getText()));
-        CLIENTE.setCod_Cidade(Integer.parseInt(TxtCodCidade.getText()));
+        CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+        CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
         CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
         if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 

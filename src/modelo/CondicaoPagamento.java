@@ -18,6 +18,11 @@ public class CondicaoPagamento {
     public CondicaoPagamento() {
     }
 
+    public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento) {
+        this.cod_condicao_pagamento = cod_condicao_pagamento;
+        this.desc_condicao_pagamento = desc_condicao_pagamento;
+    }
+
     public CondicaoPagamento(int cod_condicao_pagamento, String desc_condicao_pagamento, int quantidade_parcelas, boolean ativo) {
         this.cod_condicao_pagamento = cod_condicao_pagamento;
         this.desc_condicao_pagamento = desc_condicao_pagamento;
@@ -63,6 +68,36 @@ public class CondicaoPagamento {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.cod_condicao_pagamento;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CondicaoPagamento other = (CondicaoPagamento) obj;
+        if (this.cod_condicao_pagamento != other.cod_condicao_pagamento) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return desc_condicao_pagamento;
     }
 
 }
