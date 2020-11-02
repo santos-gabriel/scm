@@ -6,48 +6,48 @@ package modelo;
 public class Vendas {
     
     private int codVenda;
-    private int codCliente;
-    private int codFuncionario;
-    private int codCondicaoPagamento;
-    private int codTipoPagamento;
-    private int codComissao;
+    private Cliente cliente;
+    private Funcionario funcionario;
+    private CondicaoPagamento condicaoPagamento;
+    private TipoPagamento tipoPagamento;
+    private Comissoes comissao;
     private double valorBruto;
     private double desconto;
     private double valorTotal;
     private boolean finalizada;
     private boolean ativo;
-
+    private String dataVenda;
     
     public Vendas(){
     }
 
-    public Vendas(int codVenda, int codCliente, int codFuncionario, int codCondicaoPagamento, int codTipoPagamento, int codComissao, double valorBruto, double desconto, double valorTotal, boolean finalizada, boolean ativo) {
+    public Vendas(int codVenda, Cliente cliente, Funcionario funcionario, CondicaoPagamento condicaoPagamento, TipoPagamento tipoPagamento, Comissoes comissao, double valorBruto, double desconto, double valorTotal, String dataVenda, boolean finalizada) {
         this.codVenda = codVenda;
-        this.codCliente = codCliente;
-        this.codFuncionario = codFuncionario;
-        this.codCondicaoPagamento = codCondicaoPagamento;
-        this.codTipoPagamento = codTipoPagamento;
-        this.codComissao = codComissao;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
+        this.condicaoPagamento = condicaoPagamento;
+        this.tipoPagamento = tipoPagamento;
+        this.comissao = comissao;
         this.valorBruto = valorBruto;
         this.desconto = desconto;
         this.valorTotal = valorTotal;
+        this.dataVenda = dataVenda;
         this.finalizada = finalizada;
-        this.ativo = ativo;
     }
-    
-    
-    
-    public Vendas(int codVenda, int codCliente, int codFuncionario, int codCondicaoPagamento, int codTipoPagamento, int codComissao, double valorBruto, double desconto, double valorTotal, boolean finalizada) {
+
+    public Vendas(int codVenda, Cliente cliente, Funcionario funcionario, CondicaoPagamento condicaoPagamento, TipoPagamento tipoPagamento, Comissoes comissao, double valorBruto, double desconto, double valorTotal, String dataVenda, boolean finalizada, boolean ativo) {
         this.codVenda = codVenda;
-        this.codCliente = codCliente;
-        this.codFuncionario = codFuncionario;
-        this.codCondicaoPagamento = codCondicaoPagamento;
-        this.codTipoPagamento = codTipoPagamento;
-        this.codComissao = codComissao;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
+        this.condicaoPagamento = condicaoPagamento;
+        this.tipoPagamento = tipoPagamento;
+        this.comissao = comissao;
         this.valorBruto = valorBruto;
         this.desconto = desconto;
         this.valorTotal = valorTotal;
         this.finalizada = finalizada;
+        this.dataVenda = dataVenda;
+        this.ativo = ativo;
     }
 
     public int getCodVenda() {
@@ -58,44 +58,44 @@ public class Vendas {
         this.codVenda = codVenda;
     }
 
-    public int getCodCliente() {
-        return codCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCodCliente(int codCliente) {
-        this.codCliente = codCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public int getCodFuncionario() {
-        return codFuncionario;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setCodFuncionario(int codFuncionario) {
-        this.codFuncionario = codFuncionario;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
-    public int getCodCondicaoPagamento() {
-        return codCondicaoPagamento;
+    public CondicaoPagamento getCondicaoPagamento() {
+        return condicaoPagamento;
     }
 
-    public void setCodCondicaoPagamento(int codCondicaoPagamento) {
-        this.codCondicaoPagamento = codCondicaoPagamento;
+    public void setCondicaoPagamento(CondicaoPagamento condicaoPagamento) {
+        this.condicaoPagamento = condicaoPagamento;
     }
 
-    public int getCodTipoPagamento() {
-        return codTipoPagamento;
+    public TipoPagamento getTipoPagamento() {
+        return tipoPagamento;
     }
 
-    public void setCodTipoPagamento(int codTipoPagamento) {
-        this.codTipoPagamento = codTipoPagamento;
+    public void setTipoPagamento(TipoPagamento tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
     }
 
-    public int getCodComissao() {
-        return codComissao;
+    public Comissoes getComissao() {
+        return comissao;
     }
 
-    public void setCodComissao(int codComissao) {
-        this.codComissao = codComissao;
+    public void setComissao(Comissoes comissao) {
+        this.comissao = comissao;
     }
 
     public double getValorBruto() {
@@ -137,7 +137,14 @@ public class Vendas {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
+    public String getDataVenda() {
+        return dataVenda;
+    }
+
+    public void setDataVenda(String dataVenda) {
+        this.dataVenda = dataVenda;
+    }
     
     
 }

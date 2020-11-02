@@ -1,6 +1,8 @@
 package controllers;
 
 import dao.ReferenciaProdutoDao;
+import java.util.List;
+import modelo.Produto;
 import modelo.ReferenciaProduto;
 
 /**
@@ -16,4 +18,11 @@ public abstract class CtrlReferenciaProduto {
         ReferenciaProdutoDao.Atualizar(prReferenciaProduto);
     }
         
+    public static List<ReferenciaProduto> PesquisaTodosAtivosViaCodProduto(Produto prProduto){
+        return ReferenciaProdutoDao.PesquisaTodosAtivosViaCodProduto(prProduto);
+    }
+    
+    public static List<ReferenciaProduto> PesquisaAtivosViaCodProduto(Produto prProduto, Integer prQuantidade){
+        return ReferenciaProdutoDao.PesquisaAtivosViaCodProduto(prProduto, prQuantidade);
+    }
 }

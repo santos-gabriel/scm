@@ -208,10 +208,10 @@ public abstract class FuncionarioDao {
                     + "INNER JOIN estados 		est 	ON                                                                                              "
                     + "     est.cod_estado = f.cod_estado                                                                                                       "
                     + "WHERE f.ativo = true                                                                                                                     "
-                    + "AND   UPPER(f.nome_funcionario) = UPPER(?)                                                                                               ";
+                    + "AND   UPPER(f.nome_funcionario) LIKE UPPER(?)                                                                                            ";
         try {
-            stmt = conexao.prepareStatement(sql+"%");
-            stmt.setString(1, prDescricaoFuncionario);
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, prDescricaoFuncionario+"%");
             rs = stmt.executeQuery();
             List <Funcionario> lista = new ArrayList<>();
             while(rs.next()){
