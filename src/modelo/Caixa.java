@@ -1,34 +1,32 @@
 package modelo;
 
-import java.util.Date;
-
 /**
  * @author Gabriel
  */
 public class Caixa {
     
     private int codCaixa;
-    private int codUsuario;
-    private Date fechamentoData;
+    private Usuario usuario;
+    private String fechamentoData;
     private Double valor;
     private boolean ativo;
 
     public Caixa(){
     }
 
-    public Caixa(int codCaixa, int codUsuario, Date fechamentoData, Double valor, boolean ativo) {
+    public Caixa(int codCaixa, Usuario usuario, String fechamentoData, Double valor) {
         this.codCaixa = codCaixa;
-        this.codUsuario = codUsuario;
+        this.usuario = usuario;
+        this.fechamentoData = fechamentoData;
+        this.valor = valor;
+    }
+
+    public Caixa(int codCaixa, Usuario usuario, String fechamentoData, Double valor, boolean ativo) {
+        this.codCaixa = codCaixa;
+        this.usuario = usuario;
         this.fechamentoData = fechamentoData;
         this.valor = valor;
         this.ativo = ativo;
-    }
-    
-    public Caixa(int codCaixa, int codUsuario, Date fechamentoData, Double valor) {
-        this.codCaixa = codCaixa;
-        this.codUsuario = codUsuario;
-        this.fechamentoData = fechamentoData;
-        this.valor = valor;
     }
 
     public int getCodCaixa() {
@@ -39,19 +37,19 @@ public class Caixa {
         this.codCaixa = codCaixa;
     }
 
-    public int getCodUsuario() {
-        return codUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCodUsuario(int codUsuario) {
-        this.codUsuario = codUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Date getFechamentoData() {
+    public String getFechamentoData() {
         return fechamentoData;
     }
 
-    public void setFechamentoData(Date fechamentoData) {
+    public void setFechamentoData(String fechamentoData) {
         this.fechamentoData = fechamentoData;
     }
 
@@ -70,8 +68,5 @@ public class Caixa {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
-    
-    
     
 }

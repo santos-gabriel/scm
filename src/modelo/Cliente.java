@@ -24,8 +24,13 @@ public class Cliente {
     private String Endereco_Cliente;
     private boolean ativo;
     
+    
 
     public Cliente() {
+    }
+
+    public Cliente(int Cod_Cliente) {
+        this.Cod_Cliente = Cod_Cliente;
     }
 
     public Cliente(int Cod_Cliente, Usuario usuario, String Nome_Cliente, String Data_Nascimento_Cliente, String RG_Cliente, String CPF_Cliente, String CNPJ_Cliente, String WhatsApp_Cliente, String Telefone_Cliente, Cidades cidade, Estados estado, String Endereco_Cliente, boolean ativo) {
@@ -41,7 +46,8 @@ public class Cliente {
         this.Cidade = cidade;
         this.Estado = estado;
         this.Endereco_Cliente = Endereco_Cliente;
-        this.ativo = ativo;
+        
+        this.ativo = ativo;        
     }
 
     public int getCod_Cliente() {
@@ -147,5 +153,7 @@ public class Cliente {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    
 
 }

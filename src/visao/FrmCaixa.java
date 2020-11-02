@@ -5,6 +5,17 @@
  */
 package visao;
 
+import controllers.CtrlCaixa;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import mensagens.Erro;
+import mensagens.Informacao;
+import modelo.Caixa;
+import utilitarios.Funcoes;
+import utilitarios.UsuariosUtil;
+
 /**
  *
  * @author Gabriel
@@ -17,6 +28,7 @@ public class FrmCaixa extends javax.swing.JFrame {
     public FrmCaixa() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        carregarCaixas();
     }
 
     /**
@@ -39,7 +51,7 @@ public class FrmCaixa extends javax.swing.JFrame {
         txtValor = new javax.swing.JTextField();
         pnlTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCaixas = new javax.swing.JTable();
         pnlOpcoes = new javax.swing.JPanel();
         btnInserir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -77,9 +89,7 @@ public class FrmCaixa extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(29, 29, 29)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(92, 92, 92))
+                    .addComponent(jLabel4)
                     .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,24 +125,24 @@ public class FrmCaixa extends javax.swing.JFrame {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaixas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Usuário", "Data Fechamento"
+                "Codigo", "Valor", "Data Fechamento", "Usuário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        tblCaixas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblCaixas);
 
         javax.swing.GroupLayout pnlTabelaLayout = new javax.swing.GroupLayout(pnlTabela);
         pnlTabela.setLayout(pnlTabelaLayout);
@@ -241,6 +251,7 @@ public class FrmCaixa extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         limparEntradasDeDados();
+        preencheDados();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
@@ -252,7 +263,31 @@ public class FrmCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarMouseExited
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
+        if (txtFechamentoData.getText() == null || txtFechamentoData.getText().isEmpty()){
+            Erro.show("Não foi possível salvar, erro ao preencher a data");
+            return;
+        }
+        if (txtUsuario.getText() == null || txtUsuario.getText().isEmpty()){
+            Erro.show("Não foi possível salvar, erro ao preencher o usuário");
+            return;
+        }
+        if (txtValor.getText() == null || txtValor.getText().isEmpty()){
+            Erro.show("Não foi possíve salvar, erro ao preencher valor");
+            return;
+        }
+        
+        Caixa caixa = new Caixa();
+        caixa.setAtivo(true);
+        caixa.setFechamentoData(Funcoes.trataDataParaDb(txtFechamentoData.getText()));
+        caixa.setUsuario(UsuariosUtil.getUsuario());
+        caixa.setValor(Double.parseDouble(txtValor.getText()));
+        
+        CtrlCaixa.Inserir(caixa);
+        
+        limparEntradasDeDados();
+        carregarCaixas();
+        Informacao.show("Caixa salvo com sucesso");
+       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
@@ -298,10 +333,10 @@ public class FrmCaixa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlDadosCadastrais;
     private javax.swing.JPanel pnlOpcoes;
     private javax.swing.JPanel pnlTabela;
+    private javax.swing.JTable tblCaixas;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFechamentoData;
     private javax.swing.JTextField txtUsuario;
@@ -309,7 +344,31 @@ public class FrmCaixa extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limparEntradasDeDados(){
-        
+        txtCodigo.setText("");
+        txtFechamentoData.setText("");
+        txtUsuario.setText("");
+        txtValor.setText("");                
+    }
+    
+    private void preencheDados(){
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date data = new Date();
+        txtFechamentoData.setText(formato.format(data));
+        txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());        
+        txtValor.setText(Double.toString(CtrlCaixa.PesquisaSaldoAtual()));
+    }
+    
+    private void carregarCaixas(){
+        DefaultTableModel modelo = (DefaultTableModel) tblCaixas.getModel();
+        modelo.setNumRows(0);
+        CtrlCaixa.PesquisaTodos().forEach((caixa) -> {
+            modelo.addRow(new Object []{
+                caixa.getCodCaixa(),
+                caixa.getValor(),
+                caixa.getFechamentoData(),
+                caixa.getUsuario().getLogin()
+            });
+        });
     }
     
 }

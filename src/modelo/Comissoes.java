@@ -95,7 +95,7 @@ public class Comissoes {
 
     @Override
     public String toString() {
-        return Double.toString(valor_comisssao);
+        return unidade_medida+" "+Double.toString(valor_comisssao);
     }
     
 }

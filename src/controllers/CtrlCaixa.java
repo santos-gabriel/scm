@@ -5,10 +5,30 @@
  */
 package controllers;
 
+import dao.CaixaDao;
+import java.util.List;
+import modelo.Caixa;
+
 /**
  *
  * @author Gabriel
  */
 public abstract class CtrlCaixa {
+
+    public static void Inserir(Caixa prCaixa){
+        CaixaDao.Inserir(prCaixa);
+    }
+    
+    public static Caixa PesquisaUltimoCaixa(){  
+        return CaixaDao.PesquisaUltimoCaixa();
+    }
+    
+    public static Double PesquisaSaldoAtual(){        
+        return CaixaDao.PesquisaSaldoAtual(PesquisaUltimoCaixa());
+    }
+    
+    public static List<Caixa> PesquisaTodos(){
+        return CaixaDao.PesquisaTodos();
+    }
     
 }

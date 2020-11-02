@@ -484,13 +484,21 @@ public class FrmCompras extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarMouseExited
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        calcularTotalLiquido();
         if ((txtCodCompra.getText() == null) || txtCodCompra.getText().isEmpty()){
             if (!inserirCompra())
                 return;
+        } else {
+            Compras compra = new Compras();
+            compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
+            compra.setTotalBruto(Double.parseDouble(txtTotalBruto.getText()));
+            compra.setDesconto(Double.parseDouble(txtTotalDesconto.getText()));
+            compra.setTotalLiquido(Double.parseDouble(txtTotalLiquido.getText()));
+            CtrlCompras.AtualizarTotais(compra);
         }
         limparCampos();
         limpaTblProdutosCompra();
-        Informacao.show("Compra concluída e salva com sucesso ");
+        Informacao.show("Compra concluída/finalizada com sucesso ");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLocalizarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarFornecedorActionPerformed
@@ -616,9 +624,12 @@ public class FrmCompras extends javax.swing.JFrame {
         Compras compra = new Compras();
         double valoresProdutos = (produto.getValor_Custo() * quantidade);
         compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
-        compra.setTotalBruto((Double.parseDouble(txtTotalBruto.getText())) + valoresProdutos);
-        compra.setTotalLiquido(Double.parseDouble(txtTotalLiquido.getText()));
-        compra.setDesconto(Double.parseDouble(txtTotalDesconto.getText()));
+        calcularTotalLiquido();
+        Double desconto = Double.parseDouble(txtTotalDesconto.getText());
+        Double bruto    = Double.parseDouble(txtTotalBruto.getText());
+        compra.setTotalBruto(bruto + valoresProdutos);
+        compra.setDesconto(desconto);        
+        compra.setTotalLiquido(bruto - desconto);        
         for (int i = 0; i < quantidade; i++){
             Integer codigoRastreio = CtrlReferenciaProduto.Inserir(referencia);
             if (codigoRastreio <= 0){
@@ -628,7 +639,7 @@ public class FrmCompras extends javax.swing.JFrame {
             ProdutosCompra produtoCompra = new ProdutosCompra(compra, new ReferenciaProduto(codigoRastreio, produto));
             CtrlProdutosCompra.Inserir(produtoCompra);
         }        
-        CtrlCompras.AtualizarTotais(compra);
+        
         txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
         carregarProdutosCompra();
         txtCodProduto.setText("");
@@ -637,6 +648,7 @@ public class FrmCompras extends javax.swing.JFrame {
         txtValorCustoProduto.setText("");
         txtValorVendaProduto.setText("");
         calcularTotalLiquido();
+        CtrlCompras.AtualizarTotais(compra);
     }//GEN-LAST:event_btnInserirProdutoActionPerformed
 
     private void txtDescFornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescFornecedorKeyPressed
@@ -789,11 +801,11 @@ public class FrmCompras extends javax.swing.JFrame {
         double totalBruto    = Double.parseDouble(txtTotalBruto.getText());
         double totalDesconto = Double.parseDouble(txtTotalDesconto.getText());
         double totalLiquido  = (totalBruto - totalDesconto);
-        txtTotalLiquido.setText(formataCasaDecimal(totalLiquido));
+        txtTotalLiquido.setText(formataCasaDecimal(totalLiquido));        
     }
     
     private String formataCasaDecimal(double prValor){
-        return String.format("%.2f", prValor);
+        return String.format("%.2f", prValor).replaceAll(",", ".");
     }
     
 }

@@ -146,11 +146,14 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         linha = null;
         this.dispose();
+        limpaTabela();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        setDadosSelecao();
-        this.dispose();
+        if (tbRegistros.getSelectedRow() != -1){
+            setDadosSelecao();
+            this.dispose();
+        }        
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void tbRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRegistrosMouseClicked
@@ -251,6 +254,13 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
         for (int i = 0; i < tbRegistros.getColumnCount(); i++){
             linha[i] = String.valueOf(tbRegistros.getModel().getValueAt(tbRegistros.getSelectedRow(), i));
         }        
+    }
+    
+    /**Método responsável por limpar a jtable que contém os registros da pesquisa
+     * @since v1.0
+     */
+    public void limpaTabela () {
+        ((DefaultTableModel) tbRegistros.getModel()).setRowCount(0);
     }
     
 }

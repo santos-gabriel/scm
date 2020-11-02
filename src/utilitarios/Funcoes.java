@@ -81,7 +81,7 @@ public abstract class Funcoes {
      * @param prData  - data em dd/MM/yyyy
      * @since v1.0
      */
-    private String trataDataParaDb(String prData) {
+    public static String trataDataParaDb(String prData) {
         String dia = prData.substring(0, 2);
         String mes = prData.substring(3, 5);
         String ano = prData.substring(6, 10);
@@ -93,11 +93,29 @@ public abstract class Funcoes {
      * @param prData  - data em yyyy-MM-dd
      * @since v1.0
      */
-    private String trataDataDoDb(String prData) {
+    public static String trataDataDoDb(String prData) {
         String ano = prData.substring(0, 4);
         String mes = prData.substring(5, 7);
         String dia = prData.substring(8, 10);
         return dia + "/" + mes + "/" + ano;
     }
+    
+    public static String trataDataHoraParaDb(String prDataHora){
+        String dia    = prDataHora.substring(0, 2);
+        String mes    = prDataHora.substring(3, 5);
+        String ano    = prDataHora.substring(6, 10);
+        String hora   = prDataHora.substring(11, 13);
+        String minuto = prDataHora.substring(14, 16);
+        return ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
+    }
+    
+    public static String trataDataHoraDoDb(String prDataHora){
+        String ano    = prDataHora.substring(0, 4);
+        String mes    = prDataHora.substring(5, 7);
+        String dia    = prDataHora.substring(8, 10);
+        String hora   = prDataHora.substring(11, 13);
+        String minuto = prDataHora.substring(14, 16);
+        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minuto;
+    }    
     
 }
