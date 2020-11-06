@@ -808,4 +808,22 @@ public class FrmCompras extends javax.swing.JFrame {
         return String.format("%.2f", prValor).replaceAll(",", ".");
     }
     
+    public void carregarCompra(Compras compra){
+        limpaTblProdutosCompra();
+        limparCampos();
+        txtDescProduto.setEditable(false);
+        txtQtdeProduto.setEditable(false);
+        txtDescFornecedor.setEditable(false);
+        txtDescUsuario.setEditable(false);
+        
+        txtCodCompra.setText(Integer.toString(compra.getCodCompra()));
+        txtCodFornecedor.setText(Integer.toString(compra.getFornecedor().getCod_Fornecedor()));
+        txtDescFornecedor.setText(compra.getFornecedor().getNome_Fornecedor());
+        txtDescUsuario.setText(compra.getUsuario().getLogin());
+        txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
+        txtTotalDesconto.setText(Double.toString(compra.getDesconto()));
+        txtTotalLiquido.setText(Double.toString(compra.getTotalLiquido()));
+        carregarProdutosCompra();
+    }
+    
 }

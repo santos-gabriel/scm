@@ -33,6 +33,11 @@ public class Funcionario {
     public Funcionario(String nome){
         this.Nome_Funcionario = nome;
     }
+
+    public Funcionario(int Cod_Funcionario, String Nome_Funcionario) {
+        this.Cod_Funcionario = Cod_Funcionario;
+        this.Nome_Funcionario = Nome_Funcionario;
+    }
     
     public Funcionario(int Cod_Funcionario, Cargo cargo, String Nome_Funcionario, String Data_Nascimento, String Rg_Funcionario, String CPF_Funcionario, String WhatsApp_Funcionario, Cidades cidade, Estados estado, String Endereco_Funcionario) {
         this.Cod_Funcionario = Cod_Funcionario;
@@ -171,5 +176,36 @@ public class Funcionario {
     public void setUsuarioCadastro(Usuario usuarioCadastro) {
         this.usuarioCadastro = usuarioCadastro;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + this.Cod_Funcionario;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funcionario other = (Funcionario) obj;
+        if (this.Cod_Funcionario != other.Cod_Funcionario) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return Nome_Funcionario;
+    }
+    
 
 }

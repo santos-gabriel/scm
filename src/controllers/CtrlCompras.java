@@ -8,6 +8,7 @@ package controllers;
 import dao.ComprasDao;
 import java.util.List;
 import modelo.Compras;
+import modelo.Fornecedor;
 import modelo.Produto;
 
 /**
@@ -26,6 +27,10 @@ public abstract class CtrlCompras {
     
     public static void AtualizarTotais(Compras prCompra){
         ComprasDao.AtualizarTotais(prCompra);
+    }
+    
+    public static List<Compras> PesquisarVendasPorPeriodoFuncionario(String prDataInicial, String prDataFinal, Fornecedor prFornecedor){
+        return ComprasDao.PesquisarVendasPorPeriodoFuncionario(prDataInicial, prDataFinal, prFornecedor);
     }
     
 }

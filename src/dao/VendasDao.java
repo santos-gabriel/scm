@@ -14,7 +14,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.CategoriasProdutos;
+import modelo.Cliente;
+import modelo.Comissoes;
+import modelo.CondicaoPagamento;
+import modelo.Funcionario;
 import modelo.Produto;
+import modelo.TipoPagamento;
 import modelo.Vendas;
 
 /**
@@ -144,6 +149,66 @@ public abstract class VendasDao {
         }
     }
     
+    
+    public static List<Vendas> PesquisarVendasPorPeriodoFuncionario(String prDataInicial, String prDataFinal, Funcionario prFuncionario){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT v.*, f.nome_funcionario, c.nome_cliente "
+                   + "FROM   vendas v "
+                   + "INNER JOIN funcionarios f ON "
+                   + "  f.cod_funcionario = v.cod_funcionario "
+                   + "INNER JOIN clientes c ON "
+                   + "	c.cod_cliente = v.cod_cliente "
+                   + "WHERE v.data_venda >= ? "
+                   + "AND   v.data_venda <= ? ";
+        if (!(prFuncionario == null))
+            sql += "AND v.cod_funcionario = ? ";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, prDataInicial);
+            stmt.setString(2, prDataFinal);
+            if (!(prFuncionario == null))
+                stmt.setInt(3, prFuncionario.getCod_Funcionario());
+            rs = stmt.executeQuery();
+            List<Vendas> lista = new ArrayList<>();
+            while(rs.next()){
+                Vendas venda = new Vendas();
+                Cliente cliente = new Cliente();
+                cliente.setCod_Cliente(rs.getInt("cod_cliente"));
+                cliente.setNome_Cliente(rs.getString("nome_cliente"));
+                Funcionario funcionario = new Funcionario();
+                funcionario.setCod_Funcionario(rs.getInt("cod_funcionario"));
+                funcionario.setNome_Funcionario(rs.getString("nome_funcionario"));
+                Comissoes comissao = new Comissoes();
+                comissao.setCod_comissao(rs.getInt("cod_comissao"));
+                CondicaoPagamento condicao = new CondicaoPagamento();
+                condicao.setCod_condicao_pagamento(rs.getInt("cod_condicao_pagamento"));
+                TipoPagamento tipoPagamento = new TipoPagamento();
+                tipoPagamento.setCod_pagamento(rs.getInt("cod_tipo_pagamento"));
+                
+                venda.setCodVenda(rs.getInt("cod_venda"));
+                venda.setAtivo(rs.getBoolean("ativo"));                
+                venda.setCliente(cliente);
+                venda.setComissao(comissao);
+                venda.setCondicaoPagamento(condicao);
+                venda.setDataVenda(rs.getString("data_venda"));
+                venda.setDesconto(rs.getDouble("desconto"));
+                venda.setFinalizada(rs.getBoolean("finalizada"));
+                venda.setFuncionario(funcionario);
+                venda.setTipoPagamento(tipoPagamento);
+                venda.setValorBruto(rs.getDouble("valor_bruto"));
+                venda.setValorTotal(rs.getDouble("valor_total"));                
+                
+                lista.add(venda);
+            }
+            return lista;
+        } catch (Exception e) {
+            throw new ExcecaoDB(e, "Falha ao localizar vendas, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
     
     
     
