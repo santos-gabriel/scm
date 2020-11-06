@@ -60,7 +60,6 @@ public class FrmVendas extends javax.swing.JFrame {
 
         pnlVenda = new javax.swing.JPanel();
         txtCodVenda = new javax.swing.JTextField();
-        txtUsuario = new javax.swing.JTextField();
         txtCodCliente = new javax.swing.JTextField();
         txtCodFuncionario = new javax.swing.JTextField();
         txtNomeFuncionario = new javax.swing.JTextField();
@@ -70,7 +69,6 @@ public class FrmVendas extends javax.swing.JFrame {
         btnLocalizarFuncionario = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cbxTipoPagamento = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -116,18 +114,18 @@ public class FrmVendas extends javax.swing.JFrame {
 
         txtCodVenda.setEditable(false);
 
-        txtUsuario.setEditable(false);
-
         txtCodCliente.setEditable(false);
 
         txtCodFuncionario.setEditable(false);
 
+        txtNomeFuncionario.setEditable(false);
         txtNomeFuncionario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeFuncionarioKeyPressed(evt);
             }
         });
 
+        txtNomeCliente.setEditable(false);
         txtNomeCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeClienteKeyPressed(evt);
@@ -156,8 +154,6 @@ public class FrmVendas extends javax.swing.JFrame {
 
         jLabel3.setText("Nome Cliente");
 
-        jLabel4.setText("Usuário");
-
         jLabel5.setText("Cód. Funcionário");
 
         jLabel6.setText("Tipo Pagamento");
@@ -168,11 +164,14 @@ public class FrmVendas extends javax.swing.JFrame {
 
         txtCodProduto.setEditable(false);
 
+        txtProduto.setEditable(false);
         txtProduto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtProdutoKeyPressed(evt);
             }
         });
+
+        txtQtdeProduto.setEditable(false);
 
         txtValorCusto.setEditable(false);
 
@@ -278,32 +277,6 @@ public class FrmVendas extends javax.swing.JFrame {
                         .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlVendaLayout.createSequentialGroup()
                                 .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlVendaLayout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(pnlVendaLayout.createSequentialGroup()
-                                        .addComponent(txtCodFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtNomeFuncionario)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(pnlVendaLayout.createSequentialGroup()
-                                        .addComponent(txtCodVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addGroup(pnlVendaLayout.createSequentialGroup()
-                                                .addComponent(txtNomeCliente)
-                                                .addGap(10, 10, 10)))))
-                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnLocalizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLocalizarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                .addGap(27, 27, 27))
-                            .addGroup(pnlVendaLayout.createSequentialGroup()
-                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addGroup(pnlVendaLayout.createSequentialGroup()
                                         .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,12 +286,36 @@ public class FrmVendas extends javax.swing.JFrame {
                                         .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel11)
                                             .addComponent(cbxComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCodFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txtCodVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                .addComponent(txtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel3)
+                                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                                        .addComponent(txtNomeCliente)
+                                                        .addGap(10, 10, 10)))))
+                                        .addComponent(btnLocalizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlVendaLayout.createSequentialGroup()
+                                        .addComponent(txtNomeFuncionario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnLocalizarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel4)
-                            .addComponent(cbxTipoPagamento, 0, 135, Short.MAX_VALUE)
-                            .addComponent(txtUsuario))))
+                            .addComponent(cbxTipoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(42, 42, 42))
         );
         pnlVendaLayout.setVerticalGroup(
@@ -328,11 +325,9 @@ public class FrmVendas extends javax.swing.JFrame {
                 .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel3))
                 .addGap(3, 3, 3)
                 .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLocalizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCodVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -554,13 +549,16 @@ public class FrmVendas extends javax.swing.JFrame {
         limpaTblProdutosVenda();
         carregarTodosCombobox();
         btnLocalizarCliente.setEnabled(true);
+        txtNomeCliente.setEditable(true);
         btnLocalizarFuncionario.setEnabled(true);
+        txtNomeFuncionario.setEditable(true);
         btnLocalizarProduto.setEnabled(true);
+        txtProduto.setEditable(true);
+        txtQtdeProduto.setEditable(true);
         btnInserirProduto.setEnabled(true);
         txtTotalBruto.setText("0");
         txtTotalDesconto.setText("0");
-        txtTotalLiquido.setText("0");
-        txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());
+        txtTotalLiquido.setText("0");        
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
@@ -811,6 +809,11 @@ public class FrmVendas extends javax.swing.JFrame {
             CtrlReferenciaProduto.Atualizar(ref);
         }
         carregarProdutosVenda();
+        txtCodProduto.setText("");
+        txtProduto.setText("");
+        txtQtdeProduto.setText("");
+        txtValorCusto.setText("");
+        txtValorVenda.setText("");
     }//GEN-LAST:event_btnInserirProdutoActionPerformed
 
     private void txtTotalDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalDescontoKeyPressed
@@ -897,7 +900,6 @@ public class FrmVendas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -921,7 +923,6 @@ public class FrmVendas extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalBruto;
     private javax.swing.JTextField txtTotalDesconto;
     private javax.swing.JTextField txtTotalLiquido;
-    private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField txtValorCusto;
     private javax.swing.JTextField txtValorVenda;
     // End of variables declaration//GEN-END:variables
@@ -939,7 +940,6 @@ public class FrmVendas extends javax.swing.JFrame {
         txtTotalBruto.setText("");
         txtTotalDesconto.setText("");
         txtTotalLiquido.setText("");
-        txtUsuario.setText("");
         txtValorCusto.setText("");
         txtValorVenda.setText("");
     }
@@ -1029,6 +1029,37 @@ public class FrmVendas extends javax.swing.JFrame {
                 produto.getAuxQuantidade()
             });
         });
+    }
+    
+    public void carregarCampos(Vendas prVenda){
+        limpaTblProdutosVenda();
+        limparTodosCamposTextos();
+        carregarTodosCombobox();
+        txtNomeCliente.setEditable(false);
+        txtNomeFuncionario.setEditable(false);
+        txtProduto.setEditable(false);
+        txtQtdeProduto.setEditable(false);
+        btnInserirProduto.setEnabled(false);
+        btnLocalizarCliente.setEnabled(false);
+        btnLocalizarFuncionario.setEnabled(false);
+        btnLocalizarProduto.setEnabled(false);
+
+        txtCodVenda.setText(Integer.toString(prVenda.getCodVenda()));
+        txtCodFuncionario.setText(Integer.toString(prVenda.getFuncionario().getCod_Funcionario()));
+        txtNomeFuncionario.setText(prVenda.getFuncionario().getNome_Funcionario());
+        txtCodCliente.setText(Integer.toString(prVenda.getCliente().getCod_Cliente()));
+        txtNomeCliente.setText(prVenda.getCliente().getNome_Cliente());
+        if (prVenda.getTipoPagamento() != null)
+            cbxTipoPagamento.setSelectedItem(prVenda.getTipoPagamento());
+        if (prVenda.getComissao() != null)
+            cbxComissao.setSelectedItem(prVenda.getComissao());
+        if (prVenda.getCondicaoPagamento() != null)
+            cbxCondicaoPagamento.setSelectedItem(prVenda.getCondicaoPagamento());
+        
+        txtTotalBruto.setText(Double.toString(prVenda.getValorBruto()));
+        txtTotalDesconto.setText(Double.toString(prVenda.getDesconto()));
+        txtTotalLiquido.setText(Double.toString(prVenda.getValorTotal()));
+        carregarProdutosVenda();
     }
     
 }

@@ -7,6 +7,7 @@ package controllers;
 
 import dao.VendasDao;
 import java.util.List;
+import modelo.Funcionario;
 import modelo.Produto;
 import modelo.Vendas;
 
@@ -30,6 +31,10 @@ public abstract class CtrlVendas {
     
     public static Integer PesquisaQuantidadeDisponivelProduto(Produto prProduto){
         return VendasDao.PesquisaQuantidadeDisponivelProduto(prProduto);
+    }
+    
+    public static List<Vendas> PesquisarVendasPorPeriodoFuncionario(String prDataInicial, String prDataFinal, Funcionario prFuncionario){
+        return VendasDao.PesquisarVendasPorPeriodoFuncionario(prDataInicial, prDataFinal, prFuncionario);
     }
     
 }

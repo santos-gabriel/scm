@@ -23,6 +23,11 @@ public class Fornecedor {
 
     public Fornecedor() {
     }
+
+    public Fornecedor(int Cod_Fornecedor, String Nome_Fornecedor) {
+        this.Cod_Fornecedor = Cod_Fornecedor;
+        this.Nome_Fornecedor = Nome_Fornecedor;
+    }
     
     public Fornecedor(int Cod_Fornecedor, Usuario usuario, Estados estado, Cidades cidade, String Nome_Fornecedor, String CNPJ_Fornecedor, String Inscricao_Municipal, String Endereco_Fornecedor, String Telefone_Fornecedor) {
         this.Cod_Fornecedor = Cod_Fornecedor;
@@ -128,7 +133,35 @@ public class Fornecedor {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + this.Cod_Fornecedor;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Fornecedor other = (Fornecedor) obj;
+        if (this.Cod_Fornecedor != other.Cod_Fornecedor) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return Nome_Fornecedor;
+    }
     
 }

@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.CategoriasProdutos;
 import modelo.Compras;
+import modelo.Fornecedor;
 import modelo.Produto;
+import modelo.Usuario;
 
 /**
  *
@@ -117,6 +119,46 @@ public abstract class ComprasDao {
     }
     
     
+    public static List<Compras> PesquisarVendasPorPeriodoFuncionario(String prDataInicial, String prDataFinal, Fornecedor prFornecedor){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = 
+                  "SELECT c.*, u.login, f.nome_fornecedor       "
+                + "FROM   compras c                             "
+                + "INNER JOIN fornecedores f ON                 "
+                + "     f.cod_fornecedor = c.cod_fornecedor     "
+                + "INNER JOIN usuarios u ON                     "
+                + "     u.cod_usuario = c.cod_usuario           "
+                + "WHERE c.data >= ?                            "
+                + "AND   c.data <= ?                            ";
+        if (prFornecedor != null)
+            sql += "AND c.cod_fornecedor = ?                    ";        
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, prDataInicial);
+            stmt.setString(2, prDataFinal);
+            if (prFornecedor != null)
+                stmt.setInt(3, prFornecedor.getCod_Fornecedor());
+            rs = stmt.executeQuery();
+            List<Compras> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(new Compras(rs.getInt("cod_compra"), 
+                        new Fornecedor(rs.getInt("cod_fornecedor"), rs.getString("nome_fornecedor")), 
+                        new Usuario(rs.getInt("cod_usuario"), rs.getString("login")), 
+                        rs.getString("data"), 
+                        rs.getDouble("total_bruto"), 
+                        rs.getDouble("desconto"), 
+                        rs.getDouble("total_liquido"),
+                        rs.getBoolean("ativo")));                
+            }
+            return lista;
+        } catch (Exception e) {
+            throw new ExcecaoDB(e, "Falha ao localizar compras, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
     
     
     private static void CriarConexoes(){

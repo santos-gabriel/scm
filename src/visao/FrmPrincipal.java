@@ -28,10 +28,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmCadCliente           FRM_CAD_CLIENTE             = null;
     private FrmCadUsuario           FRM_CAD_USUARIO             = null;
     private FrmCadCategoria         FRM_CAD_CATEGORIA           = null;
-    private FrmCadComissoes         FRM_CAD_COMISSOES           = null;
+    private FrmCadComissoes         FRM_CAD_COMISSOES           = null;       
     private FrmCadFornecedor        FRM_CAD_FORNECEDOR          = null;
     private FrmCadFuncionario       FRM_CAD_FUNCIONARIO         = null;
-    private FrmCadTipoPagamento     FRM_CAD_TIPO_PAGAMENTO      = null;
+    private FrmVisualizarVendas     FRM_VISUALIZAR_VENDAS       = null;
+    private FrmCadTipoPagamento     FRM_CAD_TIPO_PAGAMENTO      = null;    
+    private FrmVisualizarCompras    FRM_VISUALIZAR_COMPRAS      = null;
     private FrmCadCondicaoPagamento FRM_CAD_CONDICAO_PAGAMENTO  = null;
     
     
@@ -92,8 +94,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuCategorias = new javax.swing.JMenuItem();
         subMenuProdutos = new javax.swing.JMenuItem();
         menuMovimentacoes = new javax.swing.JMenu();
-        subMenuCompras = new javax.swing.JMenuItem();
+        menuVendas = new javax.swing.JMenu();
         subMenuVendas = new javax.swing.JMenuItem();
+        subMenuVisualizarVendas = new javax.swing.JMenuItem();
+        menuCompras = new javax.swing.JMenu();
+        subMenuCompras = new javax.swing.JMenuItem();
+        subMenuVisualizarCompras = new javax.swing.JMenuItem();
         subMenuCaixa = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
@@ -349,23 +355,51 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuMovimentacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket.png"))); // NOI18N
         menuMovimentacoes.setText("Movimentações");
 
-        subMenuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
-        subMenuCompras.setText("Compras");
-        subMenuCompras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuComprasActionPerformed(evt);
-            }
-        });
-        menuMovimentacoes.add(subMenuCompras);
+        menuVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/cart.png"))); // NOI18N
+        menuVendas.setText("Vendas");
 
         subMenuVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
-        subMenuVendas.setText("Vendas");
+        subMenuVendas.setText("Nova Venda");
         subMenuVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuVendasActionPerformed(evt);
             }
         });
-        menuMovimentacoes.add(subMenuVendas);
+        menuVendas.add(subMenuVendas);
+
+        subMenuVisualizarVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
+        subMenuVisualizarVendas.setText("Visualizar Vendas");
+        subMenuVisualizarVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuVisualizarVendasActionPerformed(evt);
+            }
+        });
+        menuVendas.add(subMenuVisualizarVendas);
+
+        menuMovimentacoes.add(menuVendas);
+
+        menuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/cart.png"))); // NOI18N
+        menuCompras.setText("Compras");
+
+        subMenuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/basket_go.png"))); // NOI18N
+        subMenuCompras.setText("Nova Compra");
+        subMenuCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuComprasActionPerformed(evt);
+            }
+        });
+        menuCompras.add(subMenuCompras);
+
+        subMenuVisualizarCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
+        subMenuVisualizarCompras.setText("Visualizar Compras");
+        subMenuVisualizarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuVisualizarComprasActionPerformed(evt);
+            }
+        });
+        menuCompras.add(subMenuVisualizarCompras);
+
+        menuMovimentacoes.add(menuCompras);
 
         subMenuCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
         subMenuCaixa.setText("Caixa");
@@ -417,34 +451,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAD_USUARIO.setCONSULTAR(true);
         FRM_CAD_USUARIO.carregarPermissoes();
         FRM_CAD_USUARIO.setVisible(true);
-        /*
-        List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_USUARIOS");
-        if (permissoes.isEmpty()){
-            Erro.show("Você não tem permissão para acessar este módulo");
-            return;
-        }else{
-            if (FRM_CAD_USUARIO == null)
-                FRM_CAD_USUARIO = new FrmCadUsuario();
-            for (String permissao : permissoes){
-                switch(permissao){
-                    case "INSERIR":
-                        FRM_CAD_USUARIO.setINSERIR(true);
-                        break;
-                    case "ATUALIZAR":
-                        FRM_CAD_USUARIO.setATUALIZAR(true);
-                        break;
-                    case "INATIVAR":
-                        FRM_CAD_USUARIO.setINATIVAR(true);
-                        break;
-                    case "CONSULTAR":
-                        FRM_CAD_USUARIO.setCONSULTAR(true);
-                        break;
-                }
-            }
-            FRM_CAD_USUARIO.carregarPermissoes();
-            FRM_CAD_USUARIO.setVisible(true);
-        }
-        */
+        
     }//GEN-LAST:event_subMenuCadastroUsuariosActionPerformed
 
     private void subMenuCadastroCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroCargosActionPerformed
@@ -452,34 +459,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             FRM_CAD_CARGO = new FrmCadCargo();
         
         FRM_CAD_CARGO.setVisible(true);
-        /*
-        List<String> permissoes = UsuariosUtil.getPermissao("SIS_MODULO_CARGOS");
-        if (permissoes.isEmpty()){
-            Erro.show("Você não tem permissão para acessar este módulo");
-            return;
-        }else{
-            if (FRM_CAD_CARGO == null)
-                FRM_CAD_CARGO = new FrmCadCargo();
-            for (String permissao : permissoes){
-                switch(permissao){
-                    case "INSERIR":
-                        FRM_CAD_CARGO.setINSERIR(true);
-                        break;
-                    case "ATUALIZAR":
-                        FRM_CAD_CARGO.setATUALIZAR(true);
-                        break;
-                    case "INATIVAR":
-                        FRM_CAD_CARGO.setINATIVAR(true);
-                        break;
-                    case "CONSULTAR":
-                        FRM_CAD_CARGO.setCONSULTAR(true);
-                        break;
-                }
-            }
-            FRM_CAD_CARGO.carregarPermissoes();
-            FRM_CAD_CARGO.setVisible(true);
-        }
-        */
+       
     }//GEN-LAST:event_subMenuCadastroCargosActionPerformed
 
     private void subMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCategoriasActionPerformed
@@ -574,6 +554,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAIXA.setVisible(true);
     }//GEN-LAST:event_subMenuCaixaActionPerformed
 
+    private void subMenuVisualizarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuVisualizarVendasActionPerformed
+        if (FRM_VISUALIZAR_VENDAS == null)
+            FRM_VISUALIZAR_VENDAS = new FrmVisualizarVendas();
+        FRM_VISUALIZAR_VENDAS.setVisible(true);
+    }//GEN-LAST:event_subMenuVisualizarVendasActionPerformed
+
+    private void subMenuVisualizarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuVisualizarComprasActionPerformed
+        if (FRM_VISUALIZAR_COMPRAS == null)
+            FRM_VISUALIZAR_COMPRAS = new FrmVisualizarCompras();
+        FRM_VISUALIZAR_COMPRAS.setVisible(true);
+    }//GEN-LAST:event_subMenuVisualizarComprasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -617,12 +609,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuFinanceiro;
     private javax.swing.JMenu menuFuncionarios;
     private javax.swing.JMenu menuMovimentacoes;
     private javax.swing.JMenu menuProdutos;
     private javax.swing.JMenu menuSobre;
     private javax.swing.JMenuBar menuSuperior;
+    private javax.swing.JMenu menuVendas;
     private javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelFooter;
     private javax.swing.JPanel panelHeader;
@@ -642,5 +636,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subMenuCompras;
     private javax.swing.JMenuItem subMenuProdutos;
     private javax.swing.JMenuItem subMenuVendas;
+    private javax.swing.JMenuItem subMenuVisualizarCompras;
+    private javax.swing.JMenuItem subMenuVisualizarVendas;
     // End of variables declaration//GEN-END:variables
 }
