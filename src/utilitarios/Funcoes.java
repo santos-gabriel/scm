@@ -9,8 +9,6 @@ import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 /**Classe de funções úteis 
@@ -100,6 +98,11 @@ public abstract class Funcoes {
         return dia + "/" + mes + "/" + ano;
     }
     
+    /**Método para tratar data e hora que será enviada para o banco de dados
+     * @return String - data e hora em YYYY-MM-dd HH:mm
+     * @param prDataHora - data e hora em dd/MM/yyyy HH:mm
+     * @since v1.0
+     */
     public static String trataDataHoraParaDb(String prDataHora){
         String dia    = prDataHora.substring(0, 2);
         String mes    = prDataHora.substring(3, 5);
@@ -109,6 +112,11 @@ public abstract class Funcoes {
         return ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
     }
     
+    /**Método que trata data e hora do banco de dados
+     * @return String - data e hora em dd/MM/yyyy HH:mm
+     * @param prDataHora - data e hora em yyyy-MM-dd HH:mm
+     * @since v1.0
+     */
     public static String trataDataHoraDoDb(String prDataHora){
         String ano    = prDataHora.substring(0, 4);
         String mes    = prDataHora.substring(5, 7);
@@ -117,5 +125,6 @@ public abstract class Funcoes {
         String minuto = prDataHora.substring(14, 16);
         return dia + "/" + mes + "/" + ano + " " + hora + ":" + minuto;
     }    
+    
     
 }
