@@ -96,6 +96,33 @@ public abstract class CaixaDao {
         }
     }
     
+    public static Caixa PesquisaUltimoCaixaComTimesTamp(){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM caixa ORDER BY cod_caixa DESC LIMIT 1";
+        try {
+            stmt = conexao.prepareStatement(sql);            
+            rs = stmt.executeQuery();            
+            Caixa caixa = null;
+            if(rs.next()){
+                caixa = new Caixa();
+                caixa.setCodCaixa(rs.getInt("cod_caixa"));
+                caixa.setUsuario(new Usuario(rs.getInt("cod_usuario")));
+                caixa.setAuxFechamentoData(rs.getTimestamp("fechamento_data"));
+                caixa.setValor(rs.getDouble("valor"));
+                caixa.setAtivo(rs.getBoolean("ativo"));
+                return caixa;
+            }   
+            else 
+                return null;
+        } catch (Exception e) {
+            throw new ExcecaoDB(e, "Falha ao localizar caixa, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
     public static List<Caixa> PesquisaTodos(){
         CriarConexoes();
         PreparedStatement stmt = null;
