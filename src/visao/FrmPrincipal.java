@@ -5,11 +5,15 @@
  */
 package visao;
 
+import controllers.CtrlCaixa;
 import controllers.CtrlRelatorios;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import modelo.Caixa;
 import net.sf.jasperreports.view.JasperViewer;
 import utilitarios.UsuariosUtil;
 
@@ -106,11 +110,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
         subMenuVisualizarCompras = new javax.swing.JMenuItem();
         subMenuCaixa = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
+        menuRelClientes = new javax.swing.JMenu();
         subMenuRelatorioClientesFisicosAtivos = new javax.swing.JMenuItem();
         subMenuRelatorioClientesJuridicosAtivos = new javax.swing.JMenuItem();
-        subMenuRelatorioVendas = new javax.swing.JMenuItem();
+        subMenuRelatorioFuncionariosAtivos = new javax.swing.JMenuItem();
+        subMenuRelatoriosFornecedores = new javax.swing.JMenuItem();
+        menuRelProdutos = new javax.swing.JMenu();
         subMenuRelatorioProdutosAtivos = new javax.swing.JMenuItem();
+        subMenuRelatorioEstoqueProdutos = new javax.swing.JMenuItem();
+        subMenuRelatorioVendas = new javax.swing.JMenuItem();
         subMenuRelatorioCompras = new javax.swing.JMenuItem();
+        menuRelCaixa = new javax.swing.JMenu();
+        subMenuRelatorioCaixa = new javax.swing.JMenuItem();
+        subMenuRelatorioFechamentosCaixas = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -425,6 +437,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/report.png"))); // NOI18N
         menuRelatorio.setText("Relatórios");
 
+        menuRelClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
+        menuRelClientes.setText("Clientes");
+
         subMenuRelatorioClientesFisicosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
         subMenuRelatorioClientesFisicosAtivos.setText("Clientes Físicos");
         subMenuRelatorioClientesFisicosAtivos.addActionListener(new java.awt.event.ActionListener() {
@@ -432,7 +447,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 subMenuRelatorioClientesFisicosAtivosActionPerformed(evt);
             }
         });
-        menuRelatorio.add(subMenuRelatorioClientesFisicosAtivos);
+        menuRelClientes.add(subMenuRelatorioClientesFisicosAtivos);
 
         subMenuRelatorioClientesJuridicosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
         subMenuRelatorioClientesJuridicosAtivos.setText("Clientes Jurídicos");
@@ -441,7 +456,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 subMenuRelatorioClientesJuridicosAtivosActionPerformed(evt);
             }
         });
-        menuRelatorio.add(subMenuRelatorioClientesJuridicosAtivos);
+        menuRelClientes.add(subMenuRelatorioClientesJuridicosAtivos);
+
+        menuRelatorio.add(menuRelClientes);
+
+        subMenuRelatorioFuncionariosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
+        subMenuRelatorioFuncionariosAtivos.setText("Funcionários");
+        subMenuRelatorioFuncionariosAtivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatorioFuncionariosAtivosActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(subMenuRelatorioFuncionariosAtivos);
+
+        subMenuRelatoriosFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_gray.png"))); // NOI18N
+        subMenuRelatoriosFornecedores.setText("Fornecedores");
+        subMenuRelatoriosFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatoriosFornecedoresActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(subMenuRelatoriosFornecedores);
+
+        menuRelProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
+        menuRelProdutos.setText("Produtos");
+
+        subMenuRelatorioProdutosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
+        subMenuRelatorioProdutosAtivos.setText("Produtos Ativos");
+        subMenuRelatorioProdutosAtivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatorioProdutosAtivosActionPerformed(evt);
+            }
+        });
+        menuRelProdutos.add(subMenuRelatorioProdutosAtivos);
+
+        subMenuRelatorioEstoqueProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
+        subMenuRelatorioEstoqueProdutos.setText("Estoque de Produtos");
+        subMenuRelatorioEstoqueProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatorioEstoqueProdutosActionPerformed(evt);
+            }
+        });
+        menuRelProdutos.add(subMenuRelatorioEstoqueProdutos);
+
+        menuRelatorio.add(menuRelProdutos);
 
         subMenuRelatorioVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
         subMenuRelatorioVendas.setText("Vendas");
@@ -452,15 +510,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         menuRelatorio.add(subMenuRelatorioVendas);
 
-        subMenuRelatorioProdutosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
-        subMenuRelatorioProdutosAtivos.setText("Produtos Ativos");
-        subMenuRelatorioProdutosAtivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuRelatorioProdutosAtivosActionPerformed(evt);
-            }
-        });
-        menuRelatorio.add(subMenuRelatorioProdutosAtivos);
-
         subMenuRelatorioCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
         subMenuRelatorioCompras.setText("Compras");
         subMenuRelatorioCompras.addActionListener(new java.awt.event.ActionListener() {
@@ -469,6 +518,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         menuRelatorio.add(subMenuRelatorioCompras);
+
+        menuRelCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
+        menuRelCaixa.setText("Caixa");
+
+        subMenuRelatorioCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
+        subMenuRelatorioCaixa.setText("Caixa Atual");
+        subMenuRelatorioCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatorioCaixaActionPerformed(evt);
+            }
+        });
+        menuRelCaixa.add(subMenuRelatorioCaixa);
+
+        subMenuRelatorioFechamentosCaixas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
+        subMenuRelatorioFechamentosCaixas.setText("Fechamentos de Caixas");
+        subMenuRelatorioFechamentosCaixas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRelatorioFechamentosCaixasActionPerformed(evt);
+            }
+        });
+        menuRelCaixa.add(subMenuRelatorioFechamentosCaixas);
+
+        menuRelatorio.add(menuRelCaixa);
 
         menuSuperior.add(menuRelatorio);
 
@@ -656,6 +728,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_REL_COMPRAS.setVisible(true);
     }//GEN-LAST:event_subMenuRelatorioComprasActionPerformed
 
+    private void subMenuRelatorioEstoqueProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioEstoqueProdutosActionPerformed
+        String src = "src/relatorios/rel-estoque-produtos.jasper";        
+        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+        view.setVisible(true);
+    }//GEN-LAST:event_subMenuRelatorioEstoqueProdutosActionPerformed
+
+    private void subMenuRelatorioCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioCaixaActionPerformed
+        String src = "src/relatorios/rel-caixa.jasper";        
+        Caixa caixa = CtrlCaixa.PesquisaUltimoCaixaComTimesTamp();
+        Map parametros = new HashMap();
+        parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
+        JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
+        view.setVisible(true);
+    }//GEN-LAST:event_subMenuRelatorioCaixaActionPerformed
+
+    private void subMenuRelatorioFechamentosCaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFechamentosCaixasActionPerformed
+        String src = "src/relatorios/rel-fechamentos-caixas.jasper";
+        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+        view.setVisible(true);
+    }//GEN-LAST:event_subMenuRelatorioFechamentosCaixasActionPerformed
+
+    private void subMenuRelatorioFuncionariosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
+        String src = "src/relatorios/rel-funcionarios-ativos.jasper";
+        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+        view.setVisible(true);
+    }//GEN-LAST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
+
+    private void subMenuRelatoriosFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatoriosFornecedoresActionPerformed
+        String src = "src/relatorios/rel-fornecedores-ativos.jasper";
+        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+        view.setVisible(true);
+    }//GEN-LAST:event_subMenuRelatoriosFornecedoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -704,6 +809,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuFuncionarios;
     private javax.swing.JMenu menuMovimentacoes;
     private javax.swing.JMenu menuProdutos;
+    private javax.swing.JMenu menuRelCaixa;
+    private javax.swing.JMenu menuRelClientes;
+    private javax.swing.JMenu menuRelProdutos;
     private javax.swing.JMenu menuRelatorio;
     private javax.swing.JMenu menuSobre;
     private javax.swing.JMenuBar menuSuperior;
@@ -726,11 +834,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subMenuCategorias;
     private javax.swing.JMenuItem subMenuCompras;
     private javax.swing.JMenuItem subMenuProdutos;
+    private javax.swing.JMenuItem subMenuRelatorioCaixa;
     private javax.swing.JMenuItem subMenuRelatorioClientesFisicosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioClientesJuridicosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioCompras;
+    private javax.swing.JMenuItem subMenuRelatorioEstoqueProdutos;
+    private javax.swing.JMenuItem subMenuRelatorioFechamentosCaixas;
+    private javax.swing.JMenuItem subMenuRelatorioFuncionariosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioProdutosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioVendas;
+    private javax.swing.JMenuItem subMenuRelatoriosFornecedores;
     private javax.swing.JMenuItem subMenuVendas;
     private javax.swing.JMenuItem subMenuVisualizarCompras;
     private javax.swing.JMenuItem subMenuVisualizarVendas;
