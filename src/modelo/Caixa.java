@@ -1,5 +1,7 @@
 package modelo;
 
+import java.sql.Timestamp;
+
 /**
  * @author Gabriel
  */
@@ -10,7 +12,8 @@ public class Caixa {
     private String fechamentoData;
     private Double valor;
     private boolean ativo;
-
+    private Timestamp auxFechamentoData;
+    
     public Caixa(){
     }
 
@@ -68,5 +71,13 @@ public class Caixa {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
+    public Timestamp getAuxFechamentoData() {
+        return auxFechamentoData;
+    }
+
+    public void setAuxFechamentoData(Timestamp auxFechamentoData) {
+        this.auxFechamentoData = auxFechamentoData;
+    }
+      
 }

@@ -39,10 +39,10 @@ public class FrmRelCompras extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        ckFuncionario = new javax.swing.JCheckBox();
+        ckFornecedor = new javax.swing.JCheckBox();
         txtDataInicial = new javax.swing.JFormattedTextField();
         txtDataFinal = new javax.swing.JFormattedTextField();
-        cbxFuncionario = new javax.swing.JComboBox<>();
+        cbxFornecedor = new javax.swing.JComboBox<>();
         btnGerarRelatorio = new javax.swing.JButton();
         ckRelDetalhado = new javax.swing.JCheckBox();
 
@@ -54,10 +54,10 @@ public class FrmRelCompras extends javax.swing.JFrame {
 
         jLabel2.setText("Data Final");
 
-        ckFuncionario.setText("Filtrar por Funcionário");
-        ckFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        ckFornecedor.setText("Filtrar por Fornecedor");
+        ckFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ckFuncionarioActionPerformed(evt);
+                ckFornecedorActionPerformed(evt);
             }
         });
 
@@ -94,11 +94,11 @@ public class FrmRelCompras extends javax.swing.JFrame {
                         .addComponent(ckRelDetalhado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGerarRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(cbxFuncionario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxFornecedor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(ckFuncionario)
+                            .addComponent(ckFornecedor)
                             .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +118,9 @@ public class FrmRelCompras extends javax.swing.JFrame {
                     .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(ckFuncionario)
+                .addComponent(ckFornecedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ckRelDetalhado)
@@ -146,12 +146,12 @@ public class FrmRelCompras extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ckFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckFuncionarioActionPerformed
-        if (ckFuncionario.isSelected())
+    private void ckFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckFornecedorActionPerformed
+        if (ckFornecedor.isSelected())
         carregarCombobox();
         else
-        cbxFuncionario.removeAllItems();
-    }//GEN-LAST:event_ckFuncionarioActionPerformed
+        cbxFornecedor.removeAllItems();
+    }//GEN-LAST:event_ckFornecedorActionPerformed
 
     private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
         if (txtDataInicial.getText() == null || txtDataInicial.getText().isEmpty() || txtDataInicial.getText().equals("  /  /    ")){
@@ -162,25 +162,25 @@ public class FrmRelCompras extends javax.swing.JFrame {
             Erro.show("Informe a data final ");
             return;
         }
-        if (ckFuncionario.isSelected()){
-            if (!(cbxFuncionario.getSelectedIndex() > 0)){
-                Erro.show("Informe o fornecedor ");
+        if (ckFornecedor.isSelected()){
+            if (!(cbxFornecedor.getSelectedIndex() > 0)){
+                Erro.show("Informe o funcionário ");
                 return;
             }
-        }
+        }        
         Map parametros = new HashMap();
         parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
         parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
-        if (ckFuncionario.isSelected()){
-            String codFornecedor = Integer.toString(((Fornecedor)cbxFuncionario.getSelectedItem()).getCod_Fornecedor());
+        if (ckFornecedor.isSelected()){
+            String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
             parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);
-        }else
-        parametros.put("prFornecedor", "1 = 1");
+        }else 
+            parametros.put("prFornecedor", "1 = 1");                
         JasperViewer jasperViewer = null;
         if (ckRelDetalhado.isSelected())
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);
-        else
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);
+            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
+        else 
+            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
         jasperViewer.setVisible(true);
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
@@ -221,8 +221,8 @@ public class FrmRelCompras extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGerarRelatorio;
-    private javax.swing.JComboBox<Fornecedor> cbxFuncionario;
-    private javax.swing.JCheckBox ckFuncionario;
+    private javax.swing.JComboBox<Fornecedor> cbxFornecedor;
+    private javax.swing.JCheckBox ckFornecedor;
     private javax.swing.JCheckBox ckRelDetalhado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -237,10 +237,10 @@ public class FrmRelCompras extends javax.swing.JFrame {
     }
     
     private void carregarCombobox(){
-        cbxFuncionario.removeAllItems();
-        cbxFuncionario.addItem(new Fornecedor(0, "Selecione"));
+        cbxFornecedor.removeAllItems();
+        cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
         CtrlFornecedor.PesquisarTodos().forEach(fornecedor -> {
-            cbxFuncionario.addItem(fornecedor);
+            cbxFornecedor.addItem(fornecedor);
         });
     }   
     
