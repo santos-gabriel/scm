@@ -31,4 +31,8 @@ public abstract class CtrlCaixa {
         return CaixaDao.PesquisaTodos();
     }
     
+    public static Caixa PesquisaUltimoCaixaComTimesTamp(){  
+        return CaixaDao.PesquisaUltimoCaixaComTimesTamp();
+    }
+    
 }
