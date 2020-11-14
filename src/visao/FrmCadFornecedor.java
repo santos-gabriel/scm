@@ -19,6 +19,7 @@ import modelo.Cidades;
 import modelo.Estados;
 import modelo.Fornecedor;
 import modelo.Usuario;
+import utilitarios.Funcoes;
 import utilitarios.UsuariosUtil;
 
 /**
@@ -485,13 +486,20 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
             Erro.show("Informe a cidade");
             return;
         }
-        
+        String cnpj = null;
+        if (!TxtCnpj.getText().equals("  .   .   /    -  ")) {
+            cnpj = TxtCnpj.getText().replaceAll("\\D", "");
+            if (!Funcoes.validaCnpj(cnpj)){
+                Erro.show("CNPJ inválido");
+                return;                
+            }            
+        }
         
         if (FORNECEDOR == null)
             FORNECEDOR = new Fornecedor();
         
         FORNECEDOR.setNome_Fornecedor(TxtNome.getText());
-        String cnpj = TxtCnpj.getText().replaceAll("\\D", "");
+        
         
         FORNECEDOR.setCNPJ_Fornecedor(cnpj);
         FORNECEDOR.setInscricao_Municipal(TxtInscricaoMunicipal.getText());

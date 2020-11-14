@@ -187,15 +187,25 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
         if (txtDataInicial.getText() == null || txtDataInicial.getText().isEmpty() || txtDataInicial.getText().equals("  /  /    ")){
             Erro.show("Informe a data inicial ");
             return;
+        } else if (!Funcoes.validaData(txtDataInicial.getText())) {
+            Erro.show("Data inicial inválida");
+            return;
         }
         if (txtDataFinal.getText() == null || txtDataFinal.getText().isEmpty() || txtDataFinal.getText().equals("  /  /    ")){
             Erro.show("Informe a data final ");
+            return;
+        } else if (!Funcoes.validaData(txtDataFinal.getText())) {
+            Erro.show("Data final inválida");
             return;
         }
         if (ckFiltroFuncionarios.isSelected() && (cbxFiltroFuncionario.getSelectedIndex() == -1 || cbxFiltroFuncionario.getSelectedIndex() == 0)){        
             Erro.show("Informe o funcionário");
             return;
         }        
+        if (Funcoes.comparaDatas(txtDataInicial.getText(), txtDataFinal.getText())> 0) {
+            Erro.show("Datas inválidas");
+            return;
+        }
         carregarPesquisa();
     }//GEN-LAST:event_btnRealizarPesquisaActionPerformed
 

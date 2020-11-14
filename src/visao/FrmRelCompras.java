@@ -157,9 +157,15 @@ public class FrmRelCompras extends javax.swing.JFrame {
         if (txtDataInicial.getText() == null || txtDataInicial.getText().isEmpty() || txtDataInicial.getText().equals("  /  /    ")){
             Erro.show("Informe a data inicial ");
             return;
+        } else if (!Funcoes.validaData(txtDataInicial.getText())){
+            Erro.show("Data inicial inválida");
+            return;
         }
         if (txtDataFinal.getText() == null || txtDataFinal.getText().isEmpty() || txtDataFinal.getText().equals("  /  /    ")){
             Erro.show("Informe a data final ");
+            return;
+        } else if (!Funcoes.validaData(txtDataFinal.getText())){
+            Erro.show("Data final inválida");
             return;
         }
         if (ckFornecedor.isSelected()){
@@ -167,7 +173,11 @@ public class FrmRelCompras extends javax.swing.JFrame {
                 Erro.show("Informe o funcionário ");
                 return;
             }
-        }        
+        }
+        if (Funcoes.comparaDatas(txtDataInicial.getText(), txtDataFinal.getText()) > 0){
+            Erro.show("Datas inválidas");
+            return;
+        }
         Map parametros = new HashMap();
         parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
         parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));

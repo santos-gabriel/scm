@@ -8,6 +8,8 @@ package visao;
 import controllers.CtrlCidade;
 import controllers.CtrlCliente;
 import controllers.CtrlEstado;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
@@ -15,6 +17,7 @@ import mensagens.Informacao;
 import modelo.Cidades;
 import modelo.Cliente;
 import modelo.Estados;
+import utilitarios.Funcoes;
 
 /**
  *
@@ -674,11 +677,20 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }
 
     public void ClienteFisico() {
+        Date hoje = new Date();
+        SimpleDateFormat fomato = new SimpleDateFormat("dd/MM/yyyy");
+        String cpf = TxtCPF.getText().replaceAll("\\D", "");
         if (TxtNome.getText().isEmpty()) {
             Erro.show("Informe o Nome!");
             return;
         } else if (TxtDataNasc.getText().equals("  /  /    ")) {
             Erro.show("Informe a Data de Nascimento!");
+            return;
+        } else if (!Funcoes.validaData(TxtDataNasc.getText())){
+            Erro.show("Data de nascimento inválida");
+            return;
+        } else if (Funcoes.comparaDatas(TxtDataNasc.getText(), fomato.format(hoje)) > 0){
+            Erro.show("Data de nascimento inválida");
             return;
         } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
             Erro.show("Informe o WhatsApp!");
@@ -691,6 +703,9 @@ public class FrmCadCliente extends javax.swing.JFrame {
             return;
         } else if (TxtCPF.getText().equals("   .   .   -  ")) {
             Erro.show("Informe o CPF!");
+            return;
+        } else if (!Funcoes.validaCpf(cpf)) {
+            Erro.show("CPF inválido");
             return;
         } else if (TxtCep.getText().isEmpty()) {
             Erro.show("Informe o CEP!");
@@ -739,7 +754,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }
 
     public void ClienteJuridico() {
-
+        String validaCnpj = TxtCNPJ.getText().replaceAll("\\D", "");
         if (TxtNome.getText().isEmpty()) {
             Erro.show("Informe o Nome!");
             return;
@@ -748,6 +763,9 @@ public class FrmCadCliente extends javax.swing.JFrame {
             return;
         } else if (TxtCNPJ.getText().equals("  .   .   /    -  ")) {
             Erro.show("Informe o CNPJ!");
+            return;
+        } else if (!Funcoes.validaCnpj(validaCnpj)) {
+            Erro.show("CNPJ inválido");
             return;
         } else if (TxtCep.getText().isEmpty()) {
             Erro.show("Informe o CEP!");

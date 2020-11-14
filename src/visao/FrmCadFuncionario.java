@@ -9,6 +9,8 @@ import controllers.CtrlCargo;
 import controllers.CtrlCidade;
 import controllers.CtrlEstado;
 import controllers.CtrlFuncionario;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
 import mensagens.Informacao;
@@ -16,6 +18,7 @@ import modelo.Funcionario;
 import modelo.Cidades;
 import modelo.Estados;
 import modelo.Cargo;
+import utilitarios.Funcoes;
 import utilitarios.UsuariosUtil;
 
 /**
@@ -519,12 +522,27 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
             Erro.show("Informe a data de nascimento");
             return;
         } 
+        if (!Funcoes.validaData(txtDataNasc.getText())){
+            Erro.show("Data de nascimento inválida");
+            return;
+        }  
+        Date hoje = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        if (Funcoes.comparaDatas(txtDataNasc.getText(), formato.format(hoje)) > 0){
+            Erro.show("Data de nascimento inválida");
+            return;
+        }
         if (txtRg.getText().equals("       ")) {
             Erro.show("Informe o RG!");
             return;
         } 
         if (txtCpf.getText().equals("   .   .   -  ")) {
             Erro.show("Informe o CPF!");
+            return;
+        }
+        String cpf = txtCpf.getText().replaceAll("\\D", "");
+        if (!Funcoes.validaCpf(cpf)){
+            Erro.show("CPF inválido");
             return;
         }
         
