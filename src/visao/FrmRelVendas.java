@@ -7,6 +7,7 @@ package visao;
 
 import controllers.CtrlFuncionario;
 import controllers.CtrlRelatorios;
+import excecoes.ExcecaoGenerica;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -178,21 +179,25 @@ public class FrmRelVendas extends javax.swing.JFrame {
                 Erro.show("Informe o funcionário ");
                 return;
             }
-        }        
-        Map parametros = new HashMap();
-        parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
-        parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
-        if (ckFuncionario.isSelected()){
-            String codFuncionario = Integer.toString(((Funcionario)cbxFuncionario.getSelectedItem()).getCod_Funcionario());
-            parametros.put("prFuncionario", "vend.cod_funcionario = "+codFuncionario);
-        }else 
-            parametros.put("prFuncionario", "1 = 1");                
-        JasperViewer jasperViewer = null;
-        if (ckRelDetalhado.isSelected())
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas-detalhado.jasper", parametros);            
-        else 
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas.jasper", parametros);        
-        jasperViewer.setVisible(true);
+        }   
+        try {
+            Map parametros = new HashMap();
+            parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
+            parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
+            if (ckFuncionario.isSelected()){
+                String codFuncionario = Integer.toString(((Funcionario)cbxFuncionario.getSelectedItem()).getCod_Funcionario());
+                parametros.put("prFuncionario", "vend.cod_funcionario = "+codFuncionario);
+            }else 
+                parametros.put("prFuncionario", "1 = 1");                
+            JasperViewer jasperViewer = null;
+            if (ckRelDetalhado.isSelected())
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas-detalhado.jasper", parametros);            
+            else 
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas.jasper", parametros);        
+            jasperViewer.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**
@@ -248,11 +253,15 @@ public class FrmRelVendas extends javax.swing.JFrame {
     }
     
     private void carregarCombobox(){
-        cbxFuncionario.removeAllItems();
-        cbxFuncionario.addItem(new Funcionario(0, "Selecione"));
-        CtrlFuncionario.PesquisarTodos().forEach(funcionario -> {
-            cbxFuncionario.addItem(funcionario);
-        });
+        try {
+            cbxFuncionario.removeAllItems();
+            cbxFuncionario.addItem(new Funcionario(0, "Selecione"));
+            CtrlFuncionario.PesquisarTodos().forEach(funcionario -> {
+                cbxFuncionario.addItem(funcionario);
+            });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }    
     
 }

@@ -9,6 +9,7 @@ import controllers.CtrlCargo;
 import controllers.CtrlCidade;
 import controllers.CtrlEstado;
 import controllers.CtrlFuncionario;
+import excecoes.ExcecaoGenerica;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -526,80 +527,92 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
             Erro.show("Data de nascimento inválida");
             return;
         }  
-        Date hoje = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        if (Funcoes.comparaDatas(txtDataNasc.getText(), formato.format(hoje)) > 0){
-            Erro.show("Data de nascimento inválida");
-            return;
-        }
-        if (txtRg.getText().equals("       ")) {
-            Erro.show("Informe o RG!");
-            return;
-        } 
-        if (txtCpf.getText().equals("   .   .   -  ")) {
-            Erro.show("Informe o CPF!");
-            return;
-        }
-        String cpf = txtCpf.getText().replaceAll("\\D", "");
-        if (!Funcoes.validaCpf(cpf)){
-            Erro.show("CPF inválido");
-            return;
-        }
-        
-        if (FUNCIONARIO == null)
-            FUNCIONARIO = new Funcionario();
-        
-        FUNCIONARIO.setAtivo(true);
-        FUNCIONARIO.setCPF_Funcionario(txtCpf.getText());
-        FUNCIONARIO.setCargo(new Cargo(Integer.parseInt(txtCodCargo.getText())));
-        FUNCIONARIO.setCidade(new Cidades(Integer.parseInt(txtCodCidade.getText())));
-        FUNCIONARIO.setData_Nascimento(trataDataParaDb(txtDataNasc.getText()));
-        FUNCIONARIO.setEndereco_Funcionario(trataEnderecoParaDb());
-        FUNCIONARIO.setEstado(new Estados(Integer.parseInt(txtCodEstado.getText())));
-        FUNCIONARIO.setNome_Funcionario(txtNome.getText());
-        FUNCIONARIO.setRg_Funcionario(txtRg.getText());
-        FUNCIONARIO.setWhatsApp_Funcionario(txtWhatsapp.getText());
-        FUNCIONARIO.setUsuarioCadastro(UsuariosUtil.getUsuario());
-        if (txtCod.getText() == null || txtCod.getText().isEmpty()){
-            CtrlFuncionario.SalvarTodosCampos(FUNCIONARIO);
-            Informacao.show("Funcionário salvo com sucesso! ");
-        } else {
-            FUNCIONARIO.setCod_Funcionario(Integer.parseInt(txtCod.getText()));
-            CtrlFuncionario.AtualizarTodosCampos(FUNCIONARIO);
-            Informacao.show("Funcionário atualizado com sucesso! ");
-        }
-        carregarRegistros();
-        limparTodosCampos();
+        try {
+            Date hoje = new Date();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            if (Funcoes.comparaDatas(txtDataNasc.getText(), formato.format(hoje)) > 0){
+                Erro.show("Data de nascimento inválida");
+                return;
+            }
+            if (txtRg.getText().equals("       ")) {
+                Erro.show("Informe o RG!");
+                return;
+            } 
+            if (txtCpf.getText().equals("   .   .   -  ")) {
+                Erro.show("Informe o CPF!");
+                return;
+            }
+            String cpf = txtCpf.getText().replaceAll("\\D", "");
+            if (!Funcoes.validaCpf(cpf)){
+                Erro.show("CPF inválido");
+                return;
+            }
+
+            if (FUNCIONARIO == null)
+                FUNCIONARIO = new Funcionario();
+
+            FUNCIONARIO.setAtivo(true);
+            FUNCIONARIO.setCPF_Funcionario(txtCpf.getText());
+            FUNCIONARIO.setCargo(new Cargo(Integer.parseInt(txtCodCargo.getText())));
+            FUNCIONARIO.setCidade(new Cidades(Integer.parseInt(txtCodCidade.getText())));
+            FUNCIONARIO.setData_Nascimento(trataDataParaDb(txtDataNasc.getText()));
+            FUNCIONARIO.setEndereco_Funcionario(trataEnderecoParaDb());
+            FUNCIONARIO.setEstado(new Estados(Integer.parseInt(txtCodEstado.getText())));
+            FUNCIONARIO.setNome_Funcionario(txtNome.getText());
+            FUNCIONARIO.setRg_Funcionario(txtRg.getText());
+            FUNCIONARIO.setWhatsApp_Funcionario(txtWhatsapp.getText());
+            FUNCIONARIO.setUsuarioCadastro(UsuariosUtil.getUsuario());
+            if (txtCod.getText() == null || txtCod.getText().isEmpty()){
+                CtrlFuncionario.SalvarTodosCampos(FUNCIONARIO);
+                Informacao.show("Funcionário salvo com sucesso! ");
+            } else {
+                FUNCIONARIO.setCod_Funcionario(Integer.parseInt(txtCod.getText()));
+                CtrlFuncionario.AtualizarTodosCampos(FUNCIONARIO);
+                Informacao.show("Funcionário atualizado com sucesso! ");
+            }
+            carregarRegistros();
+            limparTodosCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }            
     }//GEN-LAST:event_ButonSalvar1MouseClicked
 
     private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
         if (txtCod.getText() == null || txtCod.getText().isEmpty())
             return;
-        if (FUNCIONARIO == null)
-            FUNCIONARIO = new Funcionario();
-        FUNCIONARIO.setCod_Funcionario(Integer.parseInt(txtCod.getText()));
-        CtrlFuncionario.Excluir(FUNCIONARIO);
-        limparTodosCampos();
-        carregarRegistros();
+        try {
+            if (FUNCIONARIO == null)
+                FUNCIONARIO = new Funcionario();
+            FUNCIONARIO.setCod_Funcionario(Integer.parseInt(txtCod.getText()));
+            CtrlFuncionario.Excluir(FUNCIONARIO);
+            limparTodosCampos();
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionariosMouseClicked
         if (tblFuncionarios.getSelectedRow() != -1){
-            limparTodosCampos();
-            txtCod.setText((String.valueOf(tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0))));
-            FUNCIONARIO = CtrlFuncionario.PesquisarViaCodigo(new Funcionario(Integer.parseInt(txtCod.getText())));
-            txtWhatsapp.setText(FUNCIONARIO.getWhatsApp_Funcionario());
-            txtRg.setText(FUNCIONARIO.getRg_Funcionario());
-            txtNome.setText(FUNCIONARIO.getNome_Funcionario());
-            txtDataNasc.setText(trataDataDoDb(FUNCIONARIO.getData_Nascimento()));
-            txtCpf.setText(FUNCIONARIO.getCPF_Funcionario());
-            trataEnderecoDoDb(FUNCIONARIO.getEndereco_Funcionario());
-            txtCodCidade.setText(Integer.toString(FUNCIONARIO.getCidade().getCodCidade()));
-            cbxCidades.setSelectedItem(new Cidades(Integer.parseInt(txtCodCidade.getText())));
-            txtCodEstado.setText(Integer.toString(FUNCIONARIO.getEstado().getCodEstado()));
-            cbxEstados.setSelectedItem(new Estados(Integer.parseInt(txtCodEstado.getText())));
-            txtCodCargo.setText(Integer.toString(FUNCIONARIO.getCargo().getCod_Cargo()));
-            cbxCargos.setSelectedItem(new Cargo(Integer.parseInt(txtCodCargo.getText())));
+            try {
+                limparTodosCampos();
+                txtCod.setText((String.valueOf(tblFuncionarios.getModel().getValueAt(tblFuncionarios.getSelectedRow(), 0))));
+                FUNCIONARIO = CtrlFuncionario.PesquisarViaCodigo(new Funcionario(Integer.parseInt(txtCod.getText())));
+                txtWhatsapp.setText(FUNCIONARIO.getWhatsApp_Funcionario());
+                txtRg.setText(FUNCIONARIO.getRg_Funcionario());
+                txtNome.setText(FUNCIONARIO.getNome_Funcionario());
+                txtDataNasc.setText(trataDataDoDb(FUNCIONARIO.getData_Nascimento()));
+                txtCpf.setText(FUNCIONARIO.getCPF_Funcionario());
+                trataEnderecoDoDb(FUNCIONARIO.getEndereco_Funcionario());
+                txtCodCidade.setText(Integer.toString(FUNCIONARIO.getCidade().getCodCidade()));
+                cbxCidades.setSelectedItem(new Cidades(Integer.parseInt(txtCodCidade.getText())));
+                txtCodEstado.setText(Integer.toString(FUNCIONARIO.getEstado().getCodEstado()));
+                cbxEstados.setSelectedItem(new Estados(Integer.parseInt(txtCodEstado.getText())));
+                txtCodCargo.setText(Integer.toString(FUNCIONARIO.getCargo().getCod_Cargo()));
+                cbxCargos.setSelectedItem(new Cargo(Integer.parseInt(txtCodCargo.getText())));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblFuncionariosMouseClicked
 
@@ -697,73 +710,98 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
     }
     
     private void carregarRegistros(){
-        DefaultTableModel modelo = (DefaultTableModel) tblFuncionarios.getModel();
-        modelo.setNumRows(0);
-        CtrlFuncionario.PesquisarTodos().forEach((f) -> {
-            modelo.addRow(new Object []{
-                f.getCod_Funcionario(),
-                f.getNome_Funcionario(),
-                f.getWhatsApp_Funcionario()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblFuncionarios.getModel();
+            modelo.setNumRows(0);
+            CtrlFuncionario.PesquisarTodos().forEach((f) -> {
+                modelo.addRow(new Object []{
+                    f.getCod_Funcionario(),
+                    f.getNome_Funcionario(),
+                    f.getWhatsApp_Funcionario()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void carregarTodosCombobox(){
-        if (txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty()){
-            cbxCidades.removeAllItems();
-            cbxCidades.addItem(new Cidades(0, "Selecione"));
-            CtrlCidade.PesquisarTodos().forEach(cidade -> {
-                cbxCidades.addItem(cidade);
-            });
-        }
-        if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty()){
-            cbxEstados.removeAllItems();
-            cbxEstados.addItem(new Estados(0, "Selecione"));
-            CtrlEstado.PesquisarTodos().forEach(estado -> {
-                cbxEstados.addItem(estado);
-            });
-        }
-        if (txtCodCargo.getText() == null || txtCodCargo.getText().isEmpty()){
-            cbxCargos.removeAllItems();
-            cbxCargos.addItem(new Cargo(0, "Selecione"));
-            CtrlCargo.PesquisarTodos().forEach(cargo -> {
-                cbxCargos.addItem(cargo);
-            });
+        try {
+            if (txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty()){
+                cbxCidades.removeAllItems();
+                cbxCidades.addItem(new Cidades(0, "Selecione"));
+                CtrlCidade.PesquisarTodos().forEach(cidade -> {
+                    cbxCidades.addItem(cidade);
+                });
+            }
+            if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty()){
+                cbxEstados.removeAllItems();
+                cbxEstados.addItem(new Estados(0, "Selecione"));
+                CtrlEstado.PesquisarTodos().forEach(estado -> {
+                    cbxEstados.addItem(estado);
+                });
+            }
+            if (txtCodCargo.getText() == null || txtCodCargo.getText().isEmpty()){
+                cbxCargos.removeAllItems();
+                cbxCargos.addItem(new Cargo(0, "Selecione"));
+                CtrlCargo.PesquisarTodos().forEach(cargo -> {
+                    cbxCargos.addItem(cargo);
+                });
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }
     
     private String trataDataParaDb(String prData) {
-        String dia = prData.substring(0, 2);
-        String mes = prData.substring(3, 5);
-        String ano = prData.substring(6, 10);
-        return ano + "-" + mes + "-" + dia;
+        try {
+            String dia = prData.substring(0, 2);
+            String mes = prData.substring(3, 5);
+            String ano = prData.substring(6, 10);
+            return ano + "-" + mes + "-" + dia;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
+            
     }
     
     private String trataDataDoDb(String prData) {
-        String ano = prData.substring(0, 4);
-        String mes = prData.substring(5, 7);
-        String dia = prData.substring(8, 10);
-        return dia + "/" + mes + "/" + ano;
+        try {
+            String ano = prData.substring(0, 4);
+            String mes = prData.substring(5, 7);
+            String dia = prData.substring(8, 10);
+            return dia + "/" + mes + "/" + ano;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private String trataEnderecoParaDb() {
-        String cep = txtCep.getText().replaceAll(",", " ");
-        String logradouro = txtLogradouro.getText().replaceAll(",", " ");
-        String numero = txtNumero.getText().replaceAll(",", " ");
-        String bairro = txtBairro.getText().replaceAll(",", " ");
-        return cep +","+ logradouro +","+ numero +","+ bairro;
+        try {
+            String cep = txtCep.getText().replaceAll(",", " ");
+            String logradouro = txtLogradouro.getText().replaceAll(",", " ");
+            String numero = txtNumero.getText().replaceAll(",", " ");
+            String bairro = txtBairro.getText().replaceAll(",", " ");
+            return cep +","+ logradouro +","+ numero +","+ bairro;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void trataEnderecoDoDb(String prEndereco) {
-        String [] enderecoSeparado = prEndereco.split(",");
-        if (enderecoSeparado.length > 0)
-            txtCep.setText(enderecoSeparado[0]);
-        if (enderecoSeparado.length > 1)
-            txtLogradouro.setText(enderecoSeparado[1]);
-        if (enderecoSeparado.length > 2)
-            txtNumero.setText(enderecoSeparado[2]);
-        if (enderecoSeparado.length > 3)
-            txtBairro.setText(enderecoSeparado[3]);
+        try {
+            String [] enderecoSeparado = prEndereco.split(",");
+            if (enderecoSeparado.length > 0)
+                txtCep.setText(enderecoSeparado[0]);
+            if (enderecoSeparado.length > 1)
+                txtLogradouro.setText(enderecoSeparado[1]);
+            if (enderecoSeparado.length > 2)
+                txtNumero.setText(enderecoSeparado[2]);
+            if (enderecoSeparado.length > 3)
+                txtBairro.setText(enderecoSeparado[3]);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

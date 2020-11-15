@@ -8,6 +8,7 @@ package visao;
 
 import controllers.CtrlFornecedor;
 import controllers.CtrlRelatorios;
+import excecoes.ExcecaoGenerica;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -178,20 +179,24 @@ public class FrmRelCompras extends javax.swing.JFrame {
             Erro.show("Datas inválidas");
             return;
         }
-        Map parametros = new HashMap();
-        parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
-        parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
-        if (ckFornecedor.isSelected()){
-            String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
-            parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);
-        }else 
-            parametros.put("prFornecedor", "1 = 1");                
-        JasperViewer jasperViewer = null;
-        if (ckRelDetalhado.isSelected())
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
-        else 
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
-        jasperViewer.setVisible(true);
+        try {
+            Map parametros = new HashMap();
+            parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
+            parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
+            if (ckFornecedor.isSelected()){
+                String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
+                parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);
+            }else 
+                parametros.put("prFornecedor", "1 = 1");                
+            JasperViewer jasperViewer = null;
+            if (ckRelDetalhado.isSelected())
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
+            else 
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
+            jasperViewer.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**
@@ -247,11 +252,15 @@ public class FrmRelCompras extends javax.swing.JFrame {
     }
     
     private void carregarCombobox(){
-        cbxFornecedor.removeAllItems();
-        cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
-        CtrlFornecedor.PesquisarTodos().forEach(fornecedor -> {
-            cbxFornecedor.addItem(fornecedor);
-        });
+        try {
+            cbxFornecedor.removeAllItems();
+            cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
+            CtrlFornecedor.PesquisarTodos().forEach(fornecedor -> {
+                cbxFornecedor.addItem(fornecedor);
+            });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }   
     
 }

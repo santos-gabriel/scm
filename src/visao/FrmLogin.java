@@ -7,6 +7,7 @@ package visao;
 
 import com.sun.glass.events.KeyEvent;
 import controllers.CtrlUsuario;
+import excecoes.ExcecaoGenerica;
 import java.awt.Toolkit;
 import mensagens.Erro;
 import modelo.Usuario;
@@ -161,19 +162,23 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String senha = Funcoes.getEncrypt(new String(txtSenha.getPassword()));
-        Usuario user = new Usuario();
-        user.setLogin(txtLogin.getText());
-        user.setSenha(senha);
-        UsuariosUtil.setUsuario(CtrlUsuario.PesquisarViaLoginSenha(user));
-        if (UsuariosUtil.getUsuario() != null){
-            FrmPrincipal principal = new FrmPrincipal();
-            principal.setExtendedState(MAXIMIZED_BOTH);
-            principal.setVisible(true);
-            this.dispose();
-        }    
-        else
-            Erro.show("Usuário ou senha inválidos ");
+        try {
+            String senha = Funcoes.getEncrypt(new String(txtSenha.getPassword()));
+            Usuario user = new Usuario();
+            user.setLogin(txtLogin.getText());
+            user.setSenha(senha);
+            UsuariosUtil.setUsuario(CtrlUsuario.PesquisarViaLoginSenha(user));
+            if (UsuariosUtil.getUsuario() != null){
+                FrmPrincipal principal = new FrmPrincipal();
+                principal.setExtendedState(MAXIMIZED_BOTH);
+                principal.setVisible(true);
+                this.dispose();
+            }    
+            else
+                Erro.show("Usuário ou senha inválidos ");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

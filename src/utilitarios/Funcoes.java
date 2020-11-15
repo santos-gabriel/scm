@@ -4,6 +4,7 @@
 package utilitarios;
 
 import excecoes.ExcecaoFiles;
+import excecoes.ExcecaoGenerica;
 import excecoes.ExcecaoNetWork;
 import java.io.FileInputStream;
 import java.math.BigInteger;
@@ -86,10 +87,14 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static String trataDataParaDb(String prData) {
-        String dia = prData.substring(0, 2);
-        String mes = prData.substring(3, 5);
-        String ano = prData.substring(6, 10);
-        return ano + "-" + mes + "-" + dia;
+        try {
+            String dia = prData.substring(0, 2);
+            String mes = prData.substring(3, 5);
+            String ano = prData.substring(6, 10);
+            return ano + "-" + mes + "-" + dia;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método para tratar data que está armazenada no banco de dados, ex.: yyyy-MM-dd passada como parâmetro será retornada como dd/MM/yyyy
@@ -98,10 +103,14 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static String trataDataDoDb(String prData) {
-        String ano = prData.substring(0, 4);
-        String mes = prData.substring(5, 7);
-        String dia = prData.substring(8, 10);
-        return dia + "/" + mes + "/" + ano;
+        try {
+            String ano = prData.substring(0, 4);
+            String mes = prData.substring(5, 7);
+            String dia = prData.substring(8, 10);
+            return dia + "/" + mes + "/" + ano;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método para tratar data e hora que será enviada para o banco de dados
@@ -110,12 +119,16 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static String trataDataHoraParaDb(String prDataHora){
-        String dia    = prDataHora.substring(0, 2);
-        String mes    = prDataHora.substring(3, 5);
-        String ano    = prDataHora.substring(6, 10);
-        String hora   = prDataHora.substring(11, 13);
-        String minuto = prDataHora.substring(14, 16);
-        return ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
+        try {
+            String dia    = prDataHora.substring(0, 2);
+            String mes    = prDataHora.substring(3, 5);
+            String ano    = prDataHora.substring(6, 10);
+            String hora   = prDataHora.substring(11, 13);
+            String minuto = prDataHora.substring(14, 16);
+            return ano + "-" + mes + "-" + dia + " " + hora + ":" + minuto;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método que trata data e hora do banco de dados
@@ -124,12 +137,16 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static String trataDataHoraDoDb(String prDataHora){
-        String ano    = prDataHora.substring(0, 4);
-        String mes    = prDataHora.substring(5, 7);
-        String dia    = prDataHora.substring(8, 10);
-        String hora   = prDataHora.substring(11, 13);
-        String minuto = prDataHora.substring(14, 16);
-        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minuto;
+        try {
+            String ano    = prDataHora.substring(0, 4);
+            String mes    = prDataHora.substring(5, 7);
+            String dia    = prDataHora.substring(8, 10);
+            String hora   = prDataHora.substring(11, 13);
+            String minuto = prDataHora.substring(14, 16);
+            return dia + "/" + mes + "/" + ano + " " + hora + ":" + minuto;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }    
     
     /**Método que verifica se a data passada como String é válida
@@ -138,14 +155,18 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static boolean validaData(String prData){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        df.setLenient(false);
         try {
-            df.parse(prData);
-            return true;
-        } catch (ParseException ex) {
-            return false;
-        }        
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            df.setLenient(false);
+            try {
+                df.parse(prData);
+                return true;
+            } catch (ParseException ex) {
+                return false;
+            }        
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método que compara duas datas passadas como String
@@ -155,20 +176,24 @@ public abstract class Funcoes {
      * @since v1.0
      */
     public static Integer comparaDatas(String prDataInicial, String prDataFinal){
-        Date dataInicial, dataFinal;
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            dataInicial = formato.parse(prDataInicial);
-            dataFinal   = formato.parse(prDataFinal);
-            if (dataInicial.compareTo(dataFinal) < 0)
-                return -1;
-            else if (dataInicial.compareTo(dataFinal) == 0)
-                return 0;
-            else 
-                return 1;
-        } catch (ParseException ex) {
-            return null;
-        }        
+            Date dataInicial, dataFinal;
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                dataInicial = formato.parse(prDataInicial);
+                dataFinal   = formato.parse(prDataFinal);
+                if (dataInicial.compareTo(dataFinal) < 0)
+                    return -1;
+                else if (dataInicial.compareTo(dataFinal) == 0)
+                    return 0;
+                else 
+                    return 1;
+            } catch (ParseException ex) {
+                return null;
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método que valida cpf

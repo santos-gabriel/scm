@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCargo;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -302,33 +303,37 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnBuscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCargoActionPerformed
-        JTable tabela = new JTable();
-        List<String[]> dados = new ArrayList<>();
-        Cargo cargo = new Cargo();
-        cargo.setDesc_Cargo(txtBuscarCargo.getText());
-        List<Cargo> cargoPesquisa = CtrlCargo.PesquisarViaDescricaoInicia(cargo);
-        for (Cargo c : cargoPesquisa){
-            dados.add(new String[]{String.valueOf(c.getCod_Cargo()), c.getDesc_Cargo()});
-        }
-        tabela.setModel(new DefaultTableModel(
-            dados.toArray(new String[dados.size()][]),
-            new String [] {"CODIGO", "DESCRICAO"}){
-                boolean[] canEdit = new boolean []{false, false};
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }                
-            });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        if (FRM_SELECIONA_REGISTRO == null)
-            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Cargos | Seleção ");
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodCargo.setText(registroSelecionado[0]);
-            txtDescCargo.setText(registroSelecionado[1]);
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
+            Cargo cargo = new Cargo();
+            cargo.setDesc_Cargo(txtBuscarCargo.getText());
+            List<Cargo> cargoPesquisa = CtrlCargo.PesquisarViaDescricaoInicia(cargo);
+            for (Cargo c : cargoPesquisa){
+                dados.add(new String[]{String.valueOf(c.getCod_Cargo()), c.getDesc_Cargo()});
+            }
+            tabela.setModel(new DefaultTableModel(
+                dados.toArray(new String[dados.size()][]),
+                new String [] {"CODIGO", "DESCRICAO"}){
+                    boolean[] canEdit = new boolean []{false, false};
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Cargos | Seleção ");
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodCargo.setText(registroSelecionado[0]);
+                txtDescCargo.setText(registroSelecionado[1]);
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_btnBuscarCargoActionPerformed
 
@@ -337,35 +342,43 @@ public class FrmCadCargo extends javax.swing.JFrame {
             Erro.show("Informe a descrição do cargo");
             return;
         }
-        if (CARGO == null)
-            CARGO = new Cargo();
-        CARGO.setDesc_Cargo(txtDescCargo.getText());
-        CARGO.setAtivo(true);
-        if (txtCodCargo.getText().isEmpty()){
-            
-            Integer codCargoSalvo = CtrlCargo.SalvarTodosCampos(CARGO);
-            if (codCargoSalvo != null){
-                Informacao.show("Cargo salvo com sucesso");
-                txtCodCargo.setText(Integer.toString(codCargoSalvo));
+        try {
+            if (CARGO == null)
+                CARGO = new Cargo();
+            CARGO.setDesc_Cargo(txtDescCargo.getText());
+            CARGO.setAtivo(true);
+            if (txtCodCargo.getText().isEmpty()){
+
+                Integer codCargoSalvo = CtrlCargo.SalvarTodosCampos(CARGO);
+                if (codCargoSalvo != null){
+                    Informacao.show("Cargo salvo com sucesso");
+                    txtCodCargo.setText(Integer.toString(codCargoSalvo));
+                }
+
+            } else{
+                CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
+                CtrlCargo.AtualizarTodosCampos(CARGO);
+                Informacao.show("Cargo atualizado com sucesso");
             }
-            
-        } else{
-            CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
-            CtrlCargo.AtualizarTodosCampos(CARGO);
-            Informacao.show("Cargo atualizado com sucesso");
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodCargo.getText() == null || txtCodCargo.getText().isEmpty())){
-            if (CARGO == null)
-                CARGO = new Cargo();
-            CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
-            CtrlCargo.Excluir(CARGO);
-            Informacao.show("Cargo inativado com sucesso");
-            limparCampos();
-            carregarRegistros();
+            try {
+                if (CARGO == null)
+                    CARGO = new Cargo();
+                CARGO.setCod_Cargo(Integer.parseInt(txtCodCargo.getText()));
+                CtrlCargo.Excluir(CARGO);
+                Informacao.show("Cargo inativado com sucesso");
+                limparCampos();
+                carregarRegistros();
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_btnInativarActionPerformed
 
@@ -376,9 +389,13 @@ public class FrmCadCargo extends javax.swing.JFrame {
 
     private void tblCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCargosMouseClicked
         if (tblCargos.getSelectedRow() != -1){
-            limparCampos();
-            txtCodCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 0)));
-            txtDescCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 1)));
+            try {
+                limparCampos();
+                txtCodCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 0)));
+                txtDescCargo.setText(String.valueOf(tblCargos.getModel().getValueAt(tblCargos.getSelectedRow(), 1)));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblCargosMouseClicked
 
@@ -471,14 +488,18 @@ public class FrmCadCargo extends javax.swing.JFrame {
     }
         
     private void carregarRegistros(){
-        DefaultTableModel modelo = (DefaultTableModel) tblCargos.getModel();
-        modelo.setNumRows(0);
-        CtrlCargo.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object []{
-                c.getCod_Cargo(),
-                c.getDesc_Cargo()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCargos.getModel();
+            modelo.setNumRows(0);
+            CtrlCargo.PesquisarTodos().forEach((c) -> {
+                modelo.addRow(new Object []{
+                    c.getCod_Cargo(),
+                    c.getDesc_Cargo()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

@@ -10,11 +10,13 @@ import controllers.CtrlFornecedor;
 import controllers.CtrlProduto;
 import controllers.CtrlProdutosCompra;
 import controllers.CtrlReferenciaProduto;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.Compras;
@@ -484,117 +486,131 @@ public class FrmCompras extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarMouseExited
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        calcularTotalLiquido();
-        if ((txtCodCompra.getText() == null) || txtCodCompra.getText().isEmpty()){
-            if (!inserirCompra())
-                return;
-        } else {
-            Compras compra = new Compras();
-            compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
-            compra.setTotalBruto(Double.parseDouble(txtTotalBruto.getText()));
-            compra.setDesconto(Double.parseDouble(txtTotalDesconto.getText()));
-            compra.setTotalLiquido(Double.parseDouble(txtTotalLiquido.getText()));
-            CtrlCompras.AtualizarTotais(compra);
+        if (!Confirmacao.show("Atenção\nAo salvar a compra a mesma será finalizada e não poderá mais ser editada\nDeseja salvar/finalizar a compra?"))
+            return;
+        try{
+            calcularTotalLiquido();
+            if ((txtCodCompra.getText() == null) || txtCodCompra.getText().isEmpty()){
+                if (!inserirCompra())
+                    return;
+            } else {
+                Compras compra = new Compras();
+                compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
+                compra.setTotalBruto(Double.parseDouble(txtTotalBruto.getText()));
+                compra.setDesconto(Double.parseDouble(txtTotalDesconto.getText()));
+                compra.setTotalLiquido(Double.parseDouble(txtTotalLiquido.getText()));
+                CtrlCompras.AtualizarTotais(compra);
+            }
+            limparCampos();
+            limpaTblProdutosCompra();
+            Informacao.show("Compra concluída/finalizada com sucesso ");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        limparCampos();
-        limpaTblProdutosCompra();
-        Informacao.show("Compra concluída/finalizada com sucesso ");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLocalizarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarFornecedorActionPerformed
-        JTable tabela = new JTable();
-        List<String[]> dados = new ArrayList<>();
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
 
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome_Fornecedor(txtDescFornecedor.getText());
-        List<Fornecedor> resultadoPesquisa = CtrlFornecedor.PesquisarViaDescricaoInicia(fornecedor);
+            Fornecedor fornecedor = new Fornecedor();
+            fornecedor.setNome_Fornecedor(txtDescFornecedor.getText());
+            List<Fornecedor> resultadoPesquisa = CtrlFornecedor.PesquisarViaDescricaoInicia(fornecedor);
 
-        for (Fornecedor f : resultadoPesquisa){
-        dados.add(new String[]{
-                                String.valueOf(f.getCod_Fornecedor()), 
-                                f.getNome_Fornecedor(),
-                                f.getCNPJ_Fornecedor(),
-                                f.getInscricao_Municipal(),
-                                f.getTelefone_Fornecedor(),
-                                f.getEndereco_Fornecedor(),
-                                String.valueOf(f.getEstado().getCodEstado()),
-                                f.getEstado().getDescricao(),
-                                String.valueOf(f.getCidade().getCodCidade()),
-                                f.getCidade().getDescricao()
-                              });
+            for (Fornecedor f : resultadoPesquisa){
+            dados.add(new String[]{
+                                    String.valueOf(f.getCod_Fornecedor()), 
+                                    f.getNome_Fornecedor(),
+                                    f.getCNPJ_Fornecedor(),
+                                    f.getInscricao_Municipal(),
+                                    f.getTelefone_Fornecedor(),
+                                    f.getEndereco_Fornecedor(),
+                                    String.valueOf(f.getEstado().getCodEstado()),
+                                    f.getEstado().getDescricao(),
+                                    String.valueOf(f.getCidade().getCodCidade()),
+                                    f.getCidade().getDescricao()
+                                  });
+            }
+
+            tabela.setModel(new DefaultTableModel(
+            dados.toArray(new String[dados.size()][]),
+            new String [] {"COD", "NOME/RAZÃO SOCIAL", "CNPJ", "INSCRIÇÃO MUNICP", "TELEFONE", "ENDEREÇO", 
+                           "COD ESTADO", "ESTADO", "COD CIDADE", "CIDADE"}){
+                boolean[] canEdit = new boolean []{false, false, false, false, false, false, false, false, false, false};
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }                
+            });
+            tabela.getTableHeader().setReorderingAllowed(false);
+
+            if (FRM_SELECIONA_REGISTRO == null)
+            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Fornecedores | Seleção ");
+
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodFornecedor.setText(registroSelecionado[0]);
+                txtDescFornecedor.setText(registroSelecionado[1]);
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-
-        tabela.setModel(new DefaultTableModel(
-        dados.toArray(new String[dados.size()][]),
-        new String [] {"COD", "NOME/RAZÃO SOCIAL", "CNPJ", "INSCRIÇÃO MUNICP", "TELEFONE", "ENDEREÇO", 
-                       "COD ESTADO", "ESTADO", "COD CIDADE", "CIDADE"}){
-            boolean[] canEdit = new boolean []{false, false, false, false, false, false, false, false, false, false};
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }                
-        });
-        tabela.getTableHeader().setReorderingAllowed(false);
-
-        if (FRM_SELECIONA_REGISTRO == null)
-        FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Fornecedores | Seleção ");
-
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodFornecedor.setText(registroSelecionado[0]);
-            txtDescFornecedor.setText(registroSelecionado[1]);
-        }        
     }//GEN-LAST:event_btnLocalizarFornecedorActionPerformed
 
     private void btnLocalizarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarProdutoActionPerformed
-        JTable tabela = new JTable();
-                List<String[]> dados = new ArrayList<>();
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
 
-                Produto produto = new Produto();
-                produto.setDesc_Produto(txtDescProduto.getText());
-                List<Produto> resultadoPesquisa = CtrlProduto.PesquisarViaDescricaoInicia(produto);
+            Produto produto = new Produto();
+            produto.setDesc_Produto(txtDescProduto.getText());
+            List<Produto> resultadoPesquisa = CtrlProduto.PesquisarViaDescricaoInicia(produto);
 
-                for (Produto p : resultadoPesquisa){
-                    dados.add(new String[]{
-                                            String.valueOf(p.getCod_Produto()), 
-                                            p.getDesc_Produto(),
-                                            String.valueOf(p.getCategoria_Produto().getCod_Categoria()),
-                                            p.getCategoria_Produto().getDesc_Categoria(),
-                                            String.valueOf(p.getValor_Custo()),
-                                            String.valueOf(p.getValor_Venda())
-                                          });
-                }
+            for (Produto p : resultadoPesquisa){
+                dados.add(new String[]{
+                                        String.valueOf(p.getCod_Produto()), 
+                                        p.getDesc_Produto(),
+                                        String.valueOf(p.getCategoria_Produto().getCod_Categoria()),
+                                        p.getCategoria_Produto().getDesc_Categoria(),
+                                        String.valueOf(p.getValor_Custo()),
+                                        String.valueOf(p.getValor_Venda())
+                                      });
+            }
 
-                tabela.setModel(new DefaultTableModel(
-                    dados.toArray(new String[dados.size()][]),
-                    new String [] {"CODIGO", "DESCRICAO", "COD. CATEGORIA", "CATEGORIA", "VALOR DE CUSTO", "VALOR DE VENDA"}){
-                        boolean[] canEdit = new boolean []{false, false, false, false, false, false};
-                        @Override
-                        public boolean isCellEditable(int rowIndex, int columnIndex) {
-                            return canEdit[columnIndex];
-                        }                
-                    });
-                tabela.getTableHeader().setReorderingAllowed(false);
+            tabela.setModel(new DefaultTableModel(
+                dados.toArray(new String[dados.size()][]),
+                new String [] {"CODIGO", "DESCRICAO", "COD. CATEGORIA", "CATEGORIA", "VALOR DE CUSTO", "VALOR DE VENDA"}){
+                    boolean[] canEdit = new boolean []{false, false, false, false, false, false};
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
 
-                if (FRM_SELECIONA_REGISTRO == null)
-                    FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-                FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-                FRM_SELECIONA_REGISTRO.setTitle("Produtos | Seleção ");
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Produtos | Seleção ");
 
-                FRM_SELECIONA_REGISTRO.setVisible(true);
+            FRM_SELECIONA_REGISTRO.setVisible(true);
 
-                String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-                if (registroSelecionado != null){
-                    txtCodProduto.setText(registroSelecionado[0]);
-                    txtDescProduto.setText(registroSelecionado[1]);
-                    txtValorCustoProduto.setText(registroSelecionado[4]);
-                    txtValorVendaProduto.setText(registroSelecionado[5]);
-                    txtQtdeProduto.setText("1");
-                }
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodProduto.setText(registroSelecionado[0]);
+                txtDescProduto.setText(registroSelecionado[1]);
+                txtValorCustoProduto.setText(registroSelecionado[4]);
+                txtValorVendaProduto.setText(registroSelecionado[5]);
+                txtQtdeProduto.setText("1");
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnLocalizarProdutoActionPerformed
 
     private void btnInserirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdutoActionPerformed
@@ -608,47 +624,51 @@ public class FrmCompras extends javax.swing.JFrame {
             Erro.show("Quantidade inválida");
         }
         
-        if ((txtCodCompra.getText() == null) || txtCodCompra.getText().isEmpty()){
-            if (!inserirCompra())
-                return;
-        }
-        
-        
-        Integer quantidade = Integer.parseInt(txtQtdeProduto.getText());
-        Produto produto = new Produto();
-        produto.setCod_Produto(Integer.parseInt(txtCodProduto.getText()));
-        produto.setValor_Custo(Double.parseDouble(txtValorCustoProduto.getText()));
-        produto.setValor_Venda(Double.parseDouble(txtValorVendaProduto.getText()));
-        ReferenciaProduto referencia = new ReferenciaProduto();
-        referencia.setProduto(produto);
-        Compras compra = new Compras();
-        double valoresProdutos = (produto.getValor_Custo() * quantidade);
-        compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
-        calcularTotalLiquido();
-        Double desconto = Double.parseDouble(txtTotalDesconto.getText());
-        Double bruto    = Double.parseDouble(txtTotalBruto.getText());
-        compra.setTotalBruto(bruto + valoresProdutos);
-        compra.setDesconto(desconto);        
-        compra.setTotalLiquido(bruto - desconto);        
-        for (int i = 0; i < quantidade; i++){
-            Integer codigoRastreio = CtrlReferenciaProduto.Inserir(referencia);
-            if (codigoRastreio <= 0){
-                Erro.show("Erro ao inserir item, procure o suporte do sistema");
-                return;
+        try {
+            if ((txtCodCompra.getText() == null) || txtCodCompra.getText().isEmpty()){
+                if (!inserirCompra())
+                    return;
             }
-            ProdutosCompra produtoCompra = new ProdutosCompra(compra, new ReferenciaProduto(codigoRastreio, produto));
-            CtrlProdutosCompra.Inserir(produtoCompra);
-        }        
-        
-        txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
-        carregarProdutosCompra();
-        txtCodProduto.setText("");
-        txtDescProduto.setText("");
-        txtQtdeProduto.setText("");
-        txtValorCustoProduto.setText("");
-        txtValorVendaProduto.setText("");
-        calcularTotalLiquido();
-        CtrlCompras.AtualizarTotais(compra);
+
+
+            Integer quantidade = Integer.parseInt(txtQtdeProduto.getText());
+            Produto produto = new Produto();
+            produto.setCod_Produto(Integer.parseInt(txtCodProduto.getText()));
+            produto.setValor_Custo(Double.parseDouble(txtValorCustoProduto.getText()));
+            produto.setValor_Venda(Double.parseDouble(txtValorVendaProduto.getText()));
+            ReferenciaProduto referencia = new ReferenciaProduto();
+            referencia.setProduto(produto);
+            Compras compra = new Compras();
+            double valoresProdutos = (produto.getValor_Custo() * quantidade);
+            compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
+            calcularTotalLiquido();
+            Double desconto = Double.parseDouble(txtTotalDesconto.getText());
+            Double bruto    = Double.parseDouble(txtTotalBruto.getText());
+            compra.setTotalBruto(bruto + valoresProdutos);
+            compra.setDesconto(desconto);        
+            compra.setTotalLiquido(bruto - desconto);        
+            for (int i = 0; i < quantidade; i++){
+                Integer codigoRastreio = CtrlReferenciaProduto.Inserir(referencia);
+                if (codigoRastreio <= 0){
+                    Erro.show("Erro ao inserir item, procure o suporte do sistema");
+                    return;
+                }
+                ProdutosCompra produtoCompra = new ProdutosCompra(compra, new ReferenciaProduto(codigoRastreio, produto));
+                CtrlProdutosCompra.Inserir(produtoCompra);
+            }        
+
+            txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
+            carregarProdutosCompra();
+            txtCodProduto.setText("");
+            txtDescProduto.setText("");
+            txtQtdeProduto.setText("");
+            txtValorCustoProduto.setText("");
+            txtValorVendaProduto.setText("");
+            calcularTotalLiquido();
+            CtrlCompras.AtualizarTotais(compra);
+        } catch (Exception e) {
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnInserirProdutoActionPerformed
 
     private void txtDescFornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescFornecedorKeyPressed
@@ -757,35 +777,43 @@ public class FrmCompras extends javax.swing.JFrame {
     }
     
     private boolean inserirCompra(){
-        if ((txtCodFornecedor.getText() == null) || txtCodFornecedor.getText().isEmpty()){
-            Erro.show("Informe o fornecedor ");
-            return false;
+        try{
+            if ((txtCodFornecedor.getText() == null) || txtCodFornecedor.getText().isEmpty()){
+                Erro.show("Informe o fornecedor ");
+                return false;
+            }
+            Fornecedor fornecedor = new Fornecedor();
+            fornecedor.setCod_Fornecedor(Integer.parseInt(txtCodFornecedor.getText()));
+            Compras compra = new Compras(0, fornecedor, UsuariosUtil.getUsuario(), "", 0.0, 0.0, 0.0, true);
+            Integer codigoInserido = CtrlCompras.Inserir(compra);
+            if (codigoInserido == null)
+                return false;
+            txtCodCompra.setText(Integer.toString(codigoInserido));
+            return true;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setCod_Fornecedor(Integer.parseInt(txtCodFornecedor.getText()));
-        Compras compra = new Compras(0, fornecedor, UsuariosUtil.getUsuario(), "", 0.0, 0.0, 0.0, true);
-        Integer codigoInserido = CtrlCompras.Inserir(compra);
-        if (codigoInserido == null)
-            return false;
-        txtCodCompra.setText(Integer.toString(codigoInserido));
-        return true;
     }
     
     private void carregarProdutosCompra(){
-        DefaultTableModel modelo = (DefaultTableModel) tblProdutosCompra.getModel();
-        modelo.setNumRows(0);
-        Compras compra = new Compras();
-        compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
-        CtrlCompras.PesquisarTodosProdutosDaCompra(compra).forEach((produto) -> {
-            modelo.addRow(new Object []{
-                produto.getCod_Produto(),
-                produto.getDesc_Produto(),
-                produto.getCategoria_Produto().getDesc_Categoria(),
-                produto.getValor_Custo(),
-                produto.getValor_Venda(),
-                produto.getAuxQuantidade()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblProdutosCompra.getModel();
+            modelo.setNumRows(0);
+            Compras compra = new Compras();
+            compra.setCodCompra(Integer.parseInt(txtCodCompra.getText()));
+            CtrlCompras.PesquisarTodosProdutosDaCompra(compra).forEach((produto) -> {
+                modelo.addRow(new Object []{
+                    produto.getCod_Produto(),
+                    produto.getDesc_Produto(),
+                    produto.getCategoria_Produto().getDesc_Categoria(),
+                    produto.getValor_Custo(),
+                    produto.getValor_Venda(),
+                    produto.getAuxQuantidade()
+                });
             });
-        });
+        } catch(Exception e ) {
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void limpaTblProdutosCompra(){
@@ -809,21 +837,25 @@ public class FrmCompras extends javax.swing.JFrame {
     }
     
     public void carregarCompra(Compras compra){
-        limpaTblProdutosCompra();
-        limparCampos();
-        txtDescProduto.setEditable(false);
-        txtQtdeProduto.setEditable(false);
-        txtDescFornecedor.setEditable(false);
-        txtDescUsuario.setEditable(false);
-        
-        txtCodCompra.setText(Integer.toString(compra.getCodCompra()));
-        txtCodFornecedor.setText(Integer.toString(compra.getFornecedor().getCod_Fornecedor()));
-        txtDescFornecedor.setText(compra.getFornecedor().getNome_Fornecedor());
-        txtDescUsuario.setText(compra.getUsuario().getLogin());
-        txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
-        txtTotalDesconto.setText(Double.toString(compra.getDesconto()));
-        txtTotalLiquido.setText(Double.toString(compra.getTotalLiquido()));
-        carregarProdutosCompra();
+        try {
+            limpaTblProdutosCompra();
+            limparCampos();
+            txtDescProduto.setEditable(false);
+            txtQtdeProduto.setEditable(false);
+            txtDescFornecedor.setEditable(false);
+            txtDescUsuario.setEditable(false);
+
+            txtCodCompra.setText(Integer.toString(compra.getCodCompra()));
+            txtCodFornecedor.setText(Integer.toString(compra.getFornecedor().getCod_Fornecedor()));
+            txtDescFornecedor.setText(compra.getFornecedor().getNome_Fornecedor());
+            txtDescUsuario.setText(compra.getUsuario().getLogin());
+            txtTotalBruto.setText(Double.toString(compra.getTotalBruto()));
+            txtTotalDesconto.setText(Double.toString(compra.getDesconto()));
+            txtTotalLiquido.setText(Double.toString(compra.getTotalLiquido()));
+            carregarProdutosCompra();
+        } catch (Exception e) {
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

@@ -7,6 +7,7 @@ package visao;
 
 import controllers.CtrlFuncionario;
 import controllers.CtrlVendas;
+import excecoes.ExcecaoGenerica;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
@@ -220,50 +221,54 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
         if (tblDadosVendas.getSelectedRow() == -1)
             return;
         if (evt.getClickCount() >= 2){
-            if (FRM_VENDAS == null)
-                FRM_VENDAS = new FrmVendas();
-            Vendas venda = new Vendas();
-            venda.setCodVenda((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 0));
-            
-            Cliente cliente = new Cliente();
-            cliente.setCod_Cliente((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 1));
-            cliente.setNome_Cliente(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 2)));
-            
-            Funcionario funcionario = new Funcionario();
-            funcionario.setCod_Funcionario((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 3));
-            funcionario.setNome_Funcionario(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 4)));
-            
-            venda.setDataVenda(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 5)));
-            venda.setValorBruto((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 6));
-            venda.setDesconto((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 7));
-            venda.setValorTotal((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 8));
-            
-            Comissoes comissao = null;
-            if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 5) != null) {
-                comissao = new Comissoes();
-                comissao.setCod_comissao((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 9));
-            }            
-            
-            TipoPagamento tipoPagamento = null;
-            if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 6) != null){
-                tipoPagamento = new TipoPagamento();
-                tipoPagamento.setCod_pagamento((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 10));
-            }            
-            
-            CondicaoPagamento condicaoPagamento = null;
-            if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 7) != null){
-                condicaoPagamento = new CondicaoPagamento();
-                condicaoPagamento.setCod_condicao_pagamento((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 11));
+            try {
+                if (FRM_VENDAS == null)
+                    FRM_VENDAS = new FrmVendas();
+                Vendas venda = new Vendas();
+                venda.setCodVenda((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 0));
+
+                Cliente cliente = new Cliente();
+                cliente.setCod_Cliente((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 1));
+                cliente.setNome_Cliente(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 2)));
+
+                Funcionario funcionario = new Funcionario();
+                funcionario.setCod_Funcionario((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 3));
+                funcionario.setNome_Funcionario(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 4)));
+
+                venda.setDataVenda(String.valueOf(tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 5)));
+                venda.setValorBruto((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 6));
+                venda.setDesconto((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 7));
+                venda.setValorTotal((Double)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 8));
+
+                Comissoes comissao = null;
+                if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 5) != null) {
+                    comissao = new Comissoes();
+                    comissao.setCod_comissao((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 9));
+                }            
+
+                TipoPagamento tipoPagamento = null;
+                if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 6) != null){
+                    tipoPagamento = new TipoPagamento();
+                    tipoPagamento.setCod_pagamento((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 10));
+                }            
+
+                CondicaoPagamento condicaoPagamento = null;
+                if (tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 7) != null){
+                    condicaoPagamento = new CondicaoPagamento();
+                    condicaoPagamento.setCod_condicao_pagamento((Integer)tblDadosVendas.getModel().getValueAt(tblDadosVendas.getSelectedRow(), 11));
+                }
+
+                venda.setCliente(cliente);
+                venda.setFuncionario(funcionario);                       
+                venda.setComissao(comissao);
+                venda.setTipoPagamento(tipoPagamento);
+                venda.setCondicaoPagamento(condicaoPagamento);            
+
+                FRM_VENDAS.carregarCampos(venda);
+                FRM_VENDAS.setVisible(true);
+            } catch (Exception e){
+                throw new ExcecaoGenerica(e);
             }
-            
-            venda.setCliente(cliente);
-            venda.setFuncionario(funcionario);                       
-            venda.setComissao(comissao);
-            venda.setTipoPagamento(tipoPagamento);
-            venda.setCondicaoPagamento(condicaoPagamento);            
-            
-            FRM_VENDAS.carregarCampos(venda);
-            FRM_VENDAS.setVisible(true);
         }
     }//GEN-LAST:event_tblDadosVendasMouseClicked
 
@@ -317,44 +322,51 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregarPesquisa(){
-        DefaultTableModel modelo = (DefaultTableModel) tblDadosVendas.getModel();
-        modelo.setNumRows(0);
-        
-        String dataInicial = Funcoes.trataDataParaDb(txtDataInicial.getText());
-        String dataFinal = Funcoes.trataDataParaDb(txtDataFinal.getText());    
-        List<Vendas> lista = null;
-        if (ckFiltroFuncionarios.isSelected()){
-            Funcionario funcionario = (Funcionario) cbxFiltroFuncionario.getSelectedItem();
-            lista = CtrlVendas.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, funcionario);
-        } else {
-            lista = CtrlVendas.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, null);
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblDadosVendas.getModel();
+            modelo.setNumRows(0);
+
+            String dataInicial = Funcoes.trataDataParaDb(txtDataInicial.getText());
+            String dataFinal = Funcoes.trataDataParaDb(txtDataFinal.getText());    
+            List<Vendas> lista = null;
+            if (ckFiltroFuncionarios.isSelected()){
+                Funcionario funcionario = (Funcionario) cbxFiltroFuncionario.getSelectedItem();
+                lista = CtrlVendas.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, funcionario);
+            } else {
+                lista = CtrlVendas.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, null);
+            }
+
+            for(Vendas venda : lista){
+                modelo.addRow(new Object [] {
+                    venda.getCodVenda(),
+                    venda.getCliente().getCod_Cliente(),
+                    venda.getCliente().getNome_Cliente(),
+                    venda.getFuncionario().getCod_Funcionario(),
+                    venda.getFuncionario().getNome_Funcionario(),
+                    venda.getDataVenda(),
+                    venda.getValorBruto(),
+                    venda.getDesconto(),
+                    venda.getValorTotal(),
+                    venda.getComissao().getCod_comissao(),
+                    venda.getTipoPagamento().getCod_pagamento(),
+                    venda.getCondicaoPagamento().getCod_condicao_pagamento()
+                });
+            }
+        } catch (Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        
-        for(Vendas venda : lista){
-            modelo.addRow(new Object [] {
-                venda.getCodVenda(),
-                venda.getCliente().getCod_Cliente(),
-                venda.getCliente().getNome_Cliente(),
-                venda.getFuncionario().getCod_Funcionario(),
-                venda.getFuncionario().getNome_Funcionario(),
-                venda.getDataVenda(),
-                venda.getValorBruto(),
-                venda.getDesconto(),
-                venda.getValorTotal(),
-                venda.getComissao().getCod_comissao(),
-                venda.getTipoPagamento().getCod_pagamento(),
-                venda.getCondicaoPagamento().getCod_condicao_pagamento()
-            });
-        }
-        
     }
     
     private void carregarCombobox(){
-        cbxFiltroFuncionario.removeAllItems();
-        cbxFiltroFuncionario.addItem(new Funcionario(0, "Selecione"));
-        CtrlFuncionario.PesquisarTodos().forEach(funcionario -> {
-            cbxFiltroFuncionario.addItem(funcionario);
-        });
+        try {
+            cbxFiltroFuncionario.removeAllItems();
+            cbxFiltroFuncionario.addItem(new Funcionario(0, "Selecione"));
+            CtrlFuncionario.PesquisarTodos().forEach(funcionario -> {
+                cbxFiltroFuncionario.addItem(funcionario);
+            });
+        } catch (Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

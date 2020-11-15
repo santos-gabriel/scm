@@ -8,6 +8,7 @@ package visao;
 import controllers.CtrlCidade;
 import controllers.CtrlEstado;
 import controllers.CtrlFornecedor;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -464,13 +465,17 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         if (TxtCodFornecedor.getText() == null || TxtCodFornecedor.getText().isEmpty())
             return;
         
-        if (FORNECEDOR == null)
-            FORNECEDOR = new Fornecedor();
-        FORNECEDOR.setCod_Fornecedor(Integer.parseInt(TxtCodFornecedor.getText()));
-        CtrlFornecedor.Excluir(FORNECEDOR);
-        Informacao.show("Fornecedor inativado com sucesso");
-        limparCamposTextos();
-        carregarRegistros();
+        try {
+            if (FORNECEDOR == null)
+                FORNECEDOR = new Fornecedor();
+            FORNECEDOR.setCod_Fornecedor(Integer.parseInt(TxtCodFornecedor.getText()));
+            CtrlFornecedor.Excluir(FORNECEDOR);
+            Informacao.show("Fornecedor inativado com sucesso");
+            limparCamposTextos();
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -486,39 +491,43 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
             Erro.show("Informe a cidade");
             return;
         }
-        String cnpj = null;
-        if (!TxtCnpj.getText().equals("  .   .   /    -  ")) {
-            cnpj = TxtCnpj.getText().replaceAll("\\D", "");
-            if (!Funcoes.validaCnpj(cnpj)){
-                Erro.show("CNPJ inválido");
-                return;                
-            }            
+        try {
+            String cnpj = null;
+            if (!TxtCnpj.getText().equals("  .   .   /    -  ")) {
+                cnpj = TxtCnpj.getText().replaceAll("\\D", "");
+                if (!Funcoes.validaCnpj(cnpj)){
+                    Erro.show("CNPJ inválido");
+                    return;                
+                }            
+            }
+
+            if (FORNECEDOR == null)
+                FORNECEDOR = new Fornecedor();
+
+            FORNECEDOR.setNome_Fornecedor(TxtNome.getText());
+
+
+            FORNECEDOR.setCNPJ_Fornecedor(cnpj);
+            FORNECEDOR.setInscricao_Municipal(TxtInscricaoMunicipal.getText());
+            FORNECEDOR.setTelefone_Fornecedor(TxtTelefone.getText());
+            FORNECEDOR.setEndereco_Fornecedor(trataEnderecoParaDb());
+            FORNECEDOR.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+            FORNECEDOR.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+            FORNECEDOR.setUsuario(new Usuario(UsuariosUtil.getUsuario().getCod_Usuario()));
+
+            if (TxtCodFornecedor.getText() == null || TxtCodFornecedor.getText().isEmpty()){
+                CtrlFornecedor.SalvarTodosCampos(FORNECEDOR);
+                Informacao.show("Fornecedor inserido com sucesso");
+            } else {
+                FORNECEDOR.setCod_Fornecedor(Integer.parseInt(TxtCodFornecedor.getText()));
+                CtrlFornecedor.AtualizarTodosCampos(FORNECEDOR);
+                Informacao.show("Fornecedor atualizado com sucesso");
+            }
+            limparCamposTextos();
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        
-        if (FORNECEDOR == null)
-            FORNECEDOR = new Fornecedor();
-        
-        FORNECEDOR.setNome_Fornecedor(TxtNome.getText());
-        
-        
-        FORNECEDOR.setCNPJ_Fornecedor(cnpj);
-        FORNECEDOR.setInscricao_Municipal(TxtInscricaoMunicipal.getText());
-        FORNECEDOR.setTelefone_Fornecedor(TxtTelefone.getText());
-        FORNECEDOR.setEndereco_Fornecedor(trataEnderecoParaDb());
-        FORNECEDOR.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-        FORNECEDOR.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
-        FORNECEDOR.setUsuario(new Usuario(UsuariosUtil.getUsuario().getCod_Usuario()));
-        
-        if (TxtCodFornecedor.getText() == null || TxtCodFornecedor.getText().isEmpty()){
-            CtrlFornecedor.SalvarTodosCampos(FORNECEDOR);
-            Informacao.show("Fornecedor inserido com sucesso");
-        } else {
-            FORNECEDOR.setCod_Fornecedor(Integer.parseInt(TxtCodFornecedor.getText()));
-            CtrlFornecedor.AtualizarTodosCampos(FORNECEDOR);
-            Informacao.show("Fornecedor atualizado com sucesso");
-        }
-        limparCamposTextos();
-        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void cbxEstadosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxEstadosItemStateChanged
@@ -537,22 +546,27 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
 
     private void tblFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFornecedoresMouseClicked
         if (tblFornecedores.getSelectedRow() != -1){
-            limparCamposTextos();
-            TxtCodFornecedor.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 0))));
-            TxtNome.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 1))));
-            TxtCnpj.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 2))));
-            TxtInscricaoMunicipal.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 3))));
-            TxtTelefone.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 4))));          
-            trataEnderecoDoDb((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 5))));
-            TxtCodEstado.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 6))));
-            cbxEstados.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
-            TxtCodCidade.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 8))));
-            cbxCidades.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+            try {
+                limparCamposTextos();
+                TxtCodFornecedor.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 0))));
+                TxtNome.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 1))));
+                TxtCnpj.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 2))));
+                TxtInscricaoMunicipal.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 3))));
+                TxtTelefone.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 4))));          
+                trataEnderecoDoDb((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 5))));
+                TxtCodEstado.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 6))));
+                cbxEstados.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+                TxtCodCidade.setText((String.valueOf(tblFornecedores.getModel().getValueAt(tblFornecedores.getSelectedRow(), 8))));
+                cbxCidades.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblFornecedoresMouseClicked
 
     private void btnBuscarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFornecedorActionPerformed
-        JTable tabela = new JTable();
+        try {
+            JTable tabela = new JTable();
             List<String[]> dados = new ArrayList<>();
 
             Fornecedor fornecedor = new Fornecedor();
@@ -606,6 +620,9 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
                 TxtCodCidade.setText(registroSelecionado[8]);
                 cbxCidades.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
             }  
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnBuscarFornecedorActionPerformed
 
     private void txtBuscarFornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarFornecedorKeyPressed
@@ -703,67 +720,83 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
     }
     
     private void carregarRegistros(){
-        DefaultTableModel modelo = (DefaultTableModel) tblFornecedores.getModel();
-        modelo.setNumRows(0);
-        CtrlFornecedor.PesquisarTodos().forEach((f) -> {
-            modelo.addRow(new Object []{
-                f.getCod_Fornecedor(),
-                f.getNome_Fornecedor(),
-                f.getCNPJ_Fornecedor(),
-                f.getInscricao_Municipal(),
-                f.getTelefone_Fornecedor(),
-                f.getEndereco_Fornecedor(),
-                f.getEstado().getCodEstado(),
-                f.getEstado().getDescricao(),
-                f.getCidade().getCodCidade(),
-                f.getCidade().getDescricao()                
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblFornecedores.getModel();
+            modelo.setNumRows(0);
+            CtrlFornecedor.PesquisarTodos().forEach((f) -> {
+                modelo.addRow(new Object []{
+                    f.getCod_Fornecedor(),
+                    f.getNome_Fornecedor(),
+                    f.getCNPJ_Fornecedor(),
+                    f.getInscricao_Municipal(),
+                    f.getTelefone_Fornecedor(),
+                    f.getEndereco_Fornecedor(),
+                    f.getEstado().getCodEstado(),
+                    f.getEstado().getDescricao(),
+                    f.getCidade().getCodCidade(),
+                    f.getCidade().getDescricao()                
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void carregarTodosCombobox(){   
-        if (TxtCodCidade.getText() == null || TxtCodCidade.getText().isEmpty()){
-            cbxCidades.removeAllItems();
-            cbxCidades.addItem(new Cidades(0, "Selecione"));
-            CtrlCidade.PesquisarTodos().forEach(cidade -> {
-                cbxCidades.addItem(cidade);
-            });
-        }
-        if (TxtCodEstado.getText() == null || TxtCodEstado.getText().isEmpty()){
-            cbxEstados.removeAllItems();
-            cbxEstados.addItem(new Estados(0, "Selecione"));
-            CtrlEstado.PesquisarTodos().forEach(estado -> {
-                cbxEstados.addItem(estado);
-            });
+        try {
+            if (TxtCodCidade.getText() == null || TxtCodCidade.getText().isEmpty()){
+                cbxCidades.removeAllItems();
+                cbxCidades.addItem(new Cidades(0, "Selecione"));
+                CtrlCidade.PesquisarTodos().forEach(cidade -> {
+                    cbxCidades.addItem(cidade);
+                });
+            }
+            if (TxtCodEstado.getText() == null || TxtCodEstado.getText().isEmpty()){
+                cbxEstados.removeAllItems();
+                cbxEstados.addItem(new Estados(0, "Selecione"));
+                CtrlEstado.PesquisarTodos().forEach(estado -> {
+                    cbxEstados.addItem(estado);
+                });
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }
     
     private String trataEnderecoParaDb() {
-        String cep = txtCep.getText().replaceAll(",", " ");
-        String logradouro = TxtLogradouro.getText().replaceAll(",", " ");
-        String numero = txtNumero.getText().replaceAll(",", " ");
-        String bairro = txtBairro.getText().replaceAll(",", " ");
-        return cep +","+ logradouro +","+ numero +","+ bairro;
+        try {
+            String cep = txtCep.getText().replaceAll(",", " ");
+            String logradouro = TxtLogradouro.getText().replaceAll(",", " ");
+            String numero = txtNumero.getText().replaceAll(",", " ");
+            String bairro = txtBairro.getText().replaceAll(",", " ");
+            return cep +","+ logradouro +","+ numero +","+ bairro;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void trataEnderecoDoDb(String prEndereco) {
-        String [] enderecoSeparado = prEndereco.split(",");
-        if (enderecoSeparado.length > 0 && (!enderecoSeparado[0].equals("null")))
-            txtCep.setText(enderecoSeparado[0]);
-        else 
-            txtCep.setText("");
-        if (enderecoSeparado.length > 1 && (!enderecoSeparado[1].equals("null")))
-            TxtLogradouro.setText(enderecoSeparado[1]);
-        else 
-            TxtLogradouro.setText("");
-        if (enderecoSeparado.length > 2 && (!enderecoSeparado[2].equals("null")))
-            txtNumero.setText(enderecoSeparado[2]);
-        else
-            txtNumero.setText("");
-        if (enderecoSeparado.length > 3 && (!enderecoSeparado[3].equals("null")))
-            txtBairro.setText(enderecoSeparado[3]);
-        else
-            txtBairro.setText("");
+        try {
+            String [] enderecoSeparado = prEndereco.split(",");
+            if (enderecoSeparado.length > 0 && (!enderecoSeparado[0].equals("null")))
+                txtCep.setText(enderecoSeparado[0]);
+            else 
+                txtCep.setText("");
+            if (enderecoSeparado.length > 1 && (!enderecoSeparado[1].equals("null")))
+                TxtLogradouro.setText(enderecoSeparado[1]);
+            else 
+                TxtLogradouro.setText("");
+            if (enderecoSeparado.length > 2 && (!enderecoSeparado[2].equals("null")))
+                txtNumero.setText(enderecoSeparado[2]);
+            else
+                txtNumero.setText("");
+            if (enderecoSeparado.length > 3 && (!enderecoSeparado[3].equals("null")))
+                txtBairro.setText(enderecoSeparado[3]);
+            else
+                txtBairro.setText("");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

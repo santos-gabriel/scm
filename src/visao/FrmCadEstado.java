@@ -7,6 +7,7 @@ package visao;
 
 import com.sun.glass.events.KeyEvent;
 import controllers.CtrlEstado;
+import excecoes.ExcecaoGenerica;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -321,73 +322,83 @@ public class FrmCadEstado extends javax.swing.JFrame {
             return;
         }
         
-        
-        if (ESTADO == null)
-            ESTADO = new Estados();
-        
-        ESTADO.setDescricao(txtDescEstado.getText());
-        ESTADO.setUf(txtUfEstado.getText());
-        ESTADO.setAtivo(true);
-        if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty()){
-            Integer codEstadoSalvo = CtrlEstado.SalvarTodosCampos(ESTADO);
-            Informacao.show("Estado salvo com sucesso");
-            txtCodEstado.setText(Integer.toString(codEstadoSalvo));
-        } else{
-            ESTADO.setCodEstado(Integer.parseInt(txtCodEstado.getText()));
-            CtrlEstado.AtualizarTodosCampos(ESTADO);
-            Informacao.show("Estado atualizado com sucesso");
+        try {
+            if (ESTADO == null)
+                ESTADO = new Estados();
+
+            ESTADO.setDescricao(txtDescEstado.getText());
+            ESTADO.setUf(txtUfEstado.getText());
+            ESTADO.setAtivo(true);
+            if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty()){
+                Integer codEstadoSalvo = CtrlEstado.SalvarTodosCampos(ESTADO);
+                Informacao.show("Estado salvo com sucesso");
+                txtCodEstado.setText(Integer.toString(codEstadoSalvo));
+            } else{
+                ESTADO.setCodEstado(Integer.parseInt(txtCodEstado.getText()));
+                CtrlEstado.AtualizarTodosCampos(ESTADO);
+                Informacao.show("Estado atualizado com sucesso");
+            }
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty())
             return;
-        
-        if (ESTADO == null)
-            ESTADO = new Estados();
-        ESTADO.setCodEstado(Integer.parseInt(txtCodEstado.getText()));
-        CtrlEstado.Excluir(ESTADO);
-        Informacao.show("Estado inativado com sucesso");
-        carregarRegistros();
-        limparCamposTexto();
+        try {
+            if (ESTADO == null)
+                ESTADO = new Estados();
+            ESTADO.setCodEstado(Integer.parseInt(txtCodEstado.getText()));
+            CtrlEstado.Excluir(ESTADO);
+            Informacao.show("Estado inativado com sucesso");
+            carregarRegistros();
+            limparCamposTexto();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void btnBuscaEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaEstadoActionPerformed
-        JTable tabela = new JTable();
-        List<String[]> dados = new ArrayList<>();
-        
-        Estados estado = new Estados();
-        estado.setDescricao(txtBuscaEstado.getText());
-        List<Estados> estadoPesquisa = CtrlEstado.PesquisarViaDescricaoInicia(estado);
-        
-        estadoPesquisa.forEach((e) -> {
-            dados.add(new String[]{String.valueOf(e.getCodEstado()), e.getDescricao(), e.getUf()});
-        });
-        
-        tabela.setModel(new DefaultTableModel(
-            dados.toArray(new String[dados.size()][]),
-            new String [] {"CODIGO", "DESCRICAO", "UF"}){
-                boolean[] canEdit = new boolean []{false, false, false};
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }                
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
+
+            Estados estado = new Estados();
+            estado.setDescricao(txtBuscaEstado.getText());
+            List<Estados> estadoPesquisa = CtrlEstado.PesquisarViaDescricaoInicia(estado);
+
+            estadoPesquisa.forEach((e) -> {
+                dados.add(new String[]{String.valueOf(e.getCodEstado()), e.getDescricao(), e.getUf()});
             });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        
-        if (FRM_SELECIONA_REGISTRO == null)
-            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Estados | Seleção ");
-        
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-        
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodEstado.setText(registroSelecionado[0]);
-            txtDescEstado.setText(registroSelecionado[1]);
-            txtUfEstado.setText(registroSelecionado[2]);
+
+            tabela.setModel(new DefaultTableModel(
+                dados.toArray(new String[dados.size()][]),
+                new String [] {"CODIGO", "DESCRICAO", "UF"}){
+                    boolean[] canEdit = new boolean []{false, false, false};
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
+
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Estados | Seleção ");
+
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodEstado.setText(registroSelecionado[0]);
+                txtDescEstado.setText(registroSelecionado[1]);
+                txtUfEstado.setText(registroSelecionado[2]);
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_btnBuscaEstadoActionPerformed
 
@@ -398,10 +409,14 @@ public class FrmCadEstado extends javax.swing.JFrame {
 
     private void tblEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstadosMouseClicked
         if (tblEstados.getSelectedRow() != -1){
-            limparCamposTexto();
-            txtCodEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 0)));
-            txtDescEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 1)));
-            txtUfEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 2)));
+            try {
+                limparCamposTexto();
+                txtCodEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 0)));
+                txtDescEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 1)));
+                txtUfEstado.setText(String.valueOf(tblEstados.getModel().getValueAt(tblEstados.getSelectedRow(), 2)));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblEstadosMouseClicked
 
@@ -494,14 +509,18 @@ public class FrmCadEstado extends javax.swing.JFrame {
     }
     
     private void carregarRegistros() {
-        DefaultTableModel modelo = (DefaultTableModel) tblEstados.getModel();
-        modelo.setNumRows(0);
-        CtrlEstado.PesquisarTodos().forEach((e) -> {
-            modelo.addRow(new Object []{
-                e.getCodEstado(),
-                e.getDescricao(),
-                e.getUf()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblEstados.getModel();
+            modelo.setNumRows(0);
+            CtrlEstado.PesquisarTodos().forEach((e) -> {
+                modelo.addRow(new Object []{
+                    e.getCodEstado(),
+                    e.getDescricao(),
+                    e.getUf()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 }

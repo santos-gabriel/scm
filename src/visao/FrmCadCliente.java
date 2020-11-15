@@ -8,6 +8,7 @@ package visao;
 import controllers.CtrlCidade;
 import controllers.CtrlCliente;
 import controllers.CtrlEstado;
+import excecoes.ExcecaoGenerica;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -467,16 +468,16 @@ public class FrmCadCliente extends javax.swing.JFrame {
 
     private void jCCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCCidadeItemStateChanged
         if (jCCidade.getSelectedIndex() > 0)
-        TxtCodCidade.setText(Integer.toString(((Cidades)jCCidade.getSelectedItem()).getCodCidade()));
+            TxtCodCidade.setText(Integer.toString(((Cidades)jCCidade.getSelectedItem()).getCodCidade()));
         else
-        TxtCodCidade.setText("");
+            TxtCodCidade.setText("");
     }//GEN-LAST:event_jCCidadeItemStateChanged
 
     private void jCEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCEstadoItemStateChanged
         if (jCEstado.getSelectedIndex() > 0)
-        TxtCodEstado.setText(Integer.toString(((Estados)jCEstado.getSelectedItem()).getCodEstado()));
+            TxtCodEstado.setText(Integer.toString(((Estados)jCEstado.getSelectedItem()).getCodEstado()));
         else
-        TxtCodEstado.setText("");
+            TxtCodEstado.setText("");
     }//GEN-LAST:event_jCEstadoItemStateChanged
 
     private void ButonSalvar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonSalvar1MouseExited
@@ -512,39 +513,43 @@ public class FrmCadCliente extends javax.swing.JFrame {
     private void TabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaClienteMouseClicked
         LimparCampos();
         if (TabelaCliente.getSelectedRow() != -1) {
-            CtrlCliente.PesquisarTodosPorCodigo(Integer.parseInt(String.valueOf(TabelaCliente.getModel().getValueAt(TabelaCliente.getSelectedRow(), 0)))).forEach((c) -> {
-                TxtCod.setText(Integer.toString(c.getCod_Cliente()));
-                TxtNome.setText(c.getNome_Cliente());
+            try {
+                CtrlCliente.PesquisarTodosPorCodigo(Integer.parseInt(String.valueOf(TabelaCliente.getModel().getValueAt(TabelaCliente.getSelectedRow(), 0)))).forEach((c) -> {
+                    TxtCod.setText(Integer.toString(c.getCod_Cliente()));
+                    TxtNome.setText(c.getNome_Cliente());
 
-                if (!(c.getData_Nascimento_Cliente() == null || c.getData_Nascimento_Cliente().isEmpty()))
-                    TxtDataNasc.setText(ConverteData(c.getData_Nascimento_Cliente()));
+                    if (!(c.getData_Nascimento_Cliente() == null || c.getData_Nascimento_Cliente().isEmpty()))
+                        TxtDataNasc.setText(ConverteData(c.getData_Nascimento_Cliente()));
 
-                TxtWhatsapp.setText(c.getWhatsApp_Cliente());
-                TxtTelefone.setText(c.getTelefone_Cliente());
-                TxtRG.setText(c.getRG_Cliente());
-                TxtCNPJ.setText(c.getCNPJ_Cliente());
-                TxtCPF.setText(c.getCPF_Cliente());
-                TxtCodCidade.setText(Integer.toString(c.getCidade().getCodCidade()));
-                jCCidade.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-                TxtCodEstado.setText(Integer.toString(c.getEstado().getCodEstado()));
-                jCEstado.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
-                String[] EnderecoSeparado = c.getEndereco_Cliente().split(",");
-                if (EnderecoSeparado.length > 0)
-                    TxtCep.setText(EnderecoSeparado[0]);
-                if (EnderecoSeparado.length > 1)
-                    TxtLogradouro.setText(EnderecoSeparado[1]);
-                if (EnderecoSeparado.length > 2)
-                    TxtNumero.setText(EnderecoSeparado[2]);
-                if (EnderecoSeparado.length > 3)
-                    TxtBairro.setText(EnderecoSeparado[3]);
+                    TxtWhatsapp.setText(c.getWhatsApp_Cliente());
+                    TxtTelefone.setText(c.getTelefone_Cliente());
+                    TxtRG.setText(c.getRG_Cliente());
+                    TxtCNPJ.setText(c.getCNPJ_Cliente());
+                    TxtCPF.setText(c.getCPF_Cliente());
+                    TxtCodCidade.setText(Integer.toString(c.getCidade().getCodCidade()));
+                    jCCidade.setSelectedItem(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+                    TxtCodEstado.setText(Integer.toString(c.getEstado().getCodEstado()));
+                    jCEstado.setSelectedItem(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+                    String[] EnderecoSeparado = c.getEndereco_Cliente().split(",");
+                    if (EnderecoSeparado.length > 0)
+                        TxtCep.setText(EnderecoSeparado[0]);
+                    if (EnderecoSeparado.length > 1)
+                        TxtLogradouro.setText(EnderecoSeparado[1]);
+                    if (EnderecoSeparado.length > 2)
+                        TxtNumero.setText(EnderecoSeparado[2]);
+                    if (EnderecoSeparado.length > 3)
+                        TxtBairro.setText(EnderecoSeparado[3]);
 
-            });
-            if (TxtCPF.getText().equals("   .   .   -  ")) {
-                jRJuridica.setSelected(true);
-                HabilitaCamposJuridica();
-            }else if(TxtCNPJ.getText().equals("  .   .   /    -  ")){
-                jRFisica.setSelected(true);
-                HabilitaCamposFisica();
+                });
+                if (TxtCPF.getText().equals("   .   .   -  ")) {
+                    jRJuridica.setSelected(true);
+                    HabilitaCamposJuridica();
+                }else if(TxtCNPJ.getText().equals("  .   .   /    -  ")){
+                    jRFisica.setSelected(true);
+                    HabilitaCamposFisica();
+                }
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
             }
         }
     }//GEN-LAST:event_TabelaClienteMouseClicked
@@ -615,16 +620,19 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }
 
     public void CarregarTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) TabelaCliente.getModel();
-        modelo.setNumRows(0);
-        CtrlCliente.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object[]{
-                c.getCod_Cliente(),
-                c.getNome_Cliente(),
-                c.getWhatsApp_Cliente()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) TabelaCliente.getModel();
+            modelo.setNumRows(0);
+            CtrlCliente.PesquisarTodos().forEach((c) -> {
+                modelo.addRow(new Object[]{
+                    c.getCod_Cliente(),
+                    c.getNome_Cliente(),
+                    c.getWhatsApp_Cliente()
+                });
             });
-        });
-
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 
     public void LimparCampos() {
@@ -677,169 +685,187 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }
 
     public void ClienteFisico() {
-        Date hoje = new Date();
-        SimpleDateFormat fomato = new SimpleDateFormat("dd/MM/yyyy");
-        String cpf = TxtCPF.getText().replaceAll("\\D", "");
-        if (TxtNome.getText().isEmpty()) {
-            Erro.show("Informe o Nome!");
-            return;
-        } else if (TxtDataNasc.getText().equals("  /  /    ")) {
-            Erro.show("Informe a Data de Nascimento!");
-            return;
-        } else if (!Funcoes.validaData(TxtDataNasc.getText())){
-            Erro.show("Data de nascimento inválida");
-            return;
-        } else if (Funcoes.comparaDatas(TxtDataNasc.getText(), fomato.format(hoje)) > 0){
-            Erro.show("Data de nascimento inválida");
-            return;
-        } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
-            Erro.show("Informe o WhatsApp!");
-            return;
-        } else if (TxtTelefone.getText().equals("   .   .   -  ")) {
-            Erro.show("Informe o Telefone!");
-            return;
-        } else if (TxtRG.getText().equals("       ")) {
-            Erro.show("Informe o RG!");
-            return;
-        } else if (TxtCPF.getText().equals("   .   .   -  ")) {
-            Erro.show("Informe o CPF!");
-            return;
-        } else if (!Funcoes.validaCpf(cpf)) {
-            Erro.show("CPF inválido");
-            return;
-        } else if (TxtCep.getText().isEmpty()) {
-            Erro.show("Informe o CEP!");
-            return;
-        } else if (TxtLogradouro.getText().isEmpty()) {
-            Erro.show("Informe o Logradouro!");
-            return;
-        } else if (TxtBairro.getText().isEmpty()) {
-            Erro.show("Informe o Bairro!");
-            return;
-        } else if (TxtCodCidade.getText().isEmpty()) {
-            Erro.show("Informe a Cidade!");
-            return;
-        } else if (TxtCodEstado.getText().isEmpty()) {
-            Erro.show("Informe o Estado");
-            return;
+        try {
+            Date hoje = new Date();
+            SimpleDateFormat fomato = new SimpleDateFormat("dd/MM/yyyy");
+            String cpf = TxtCPF.getText().replaceAll("\\D", "");
+            if (TxtNome.getText().isEmpty()) {
+                Erro.show("Informe o Nome!");
+                return;
+            } else if (TxtDataNasc.getText().equals("  /  /    ")) {
+                Erro.show("Informe a Data de Nascimento!");
+                return;
+            } else if (!Funcoes.validaData(TxtDataNasc.getText())){
+                Erro.show("Data de nascimento inválida");
+                return;
+            } else if (Funcoes.comparaDatas(TxtDataNasc.getText(), fomato.format(hoje)) > 0){
+                Erro.show("Data de nascimento inválida");
+                return;
+            } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
+                Erro.show("Informe o WhatsApp!");
+                return;
+            } else if (TxtTelefone.getText().equals("   .   .   -  ")) {
+                Erro.show("Informe o Telefone!");
+                return;
+            } else if (TxtRG.getText().equals("       ")) {
+                Erro.show("Informe o RG!");
+                return;
+            } else if (TxtCPF.getText().equals("   .   .   -  ")) {
+                Erro.show("Informe o CPF!");
+                return;
+            } else if (!Funcoes.validaCpf(cpf)) {
+                Erro.show("CPF inválido");
+                return;
+            } else if (TxtCep.getText().isEmpty()) {
+                Erro.show("Informe o CEP!");
+                return;
+            } else if (TxtLogradouro.getText().isEmpty()) {
+                Erro.show("Informe o Logradouro!");
+                return;
+            } else if (TxtBairro.getText().isEmpty()) {
+                Erro.show("Informe o Bairro!");
+                return;
+            } else if (TxtCodCidade.getText().isEmpty()) {
+                Erro.show("Informe a Cidade!");
+                return;
+            } else if (TxtCodEstado.getText().isEmpty()) {
+                Erro.show("Informe o Estado");
+                return;
+            }
+
+            if (CLIENTE == null) {
+                CLIENTE = new Cliente();
+            }
+            CLIENTE.setNome_Cliente(TxtNome.getText());
+            ConverteDataPISO();
+            CLIENTE.setData_Nascimento_Cliente(DataISO);
+            CLIENTE.setWhatsApp_Cliente(TxtWhatsapp.getText());
+            CLIENTE.setRG_Cliente(TxtRG.getText());
+            CLIENTE.setCPF_Cliente(TxtCPF.getText());
+            CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
+            CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+            CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
+
+            if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
+
+                Informacao.show("Cliente Físico salvo com sucesso!");
+                CtrlCliente.SalvarTodosCamposFisica(CLIENTE);
+
+            } else {
+
+                CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
+                CtrlCliente.AtualizarTodosCamposFisica(CLIENTE);
+                Informacao.show("Cliente Físico atualizado com sucesso!");
+            }
+            CarregarTabela();
+            LimparCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-
-        if (CLIENTE == null) {
-            CLIENTE = new Cliente();
-        }
-        CLIENTE.setNome_Cliente(TxtNome.getText());
-        ConverteDataPISO();
-        CLIENTE.setData_Nascimento_Cliente(DataISO);
-        CLIENTE.setWhatsApp_Cliente(TxtWhatsapp.getText());
-        CLIENTE.setRG_Cliente(TxtRG.getText());
-        CLIENTE.setCPF_Cliente(TxtCPF.getText());
-        CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
-        CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
-        CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
-
-        if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
-
-            Informacao.show("Cliente Físico salvo com sucesso!");
-            CtrlCliente.SalvarTodosCamposFisica(CLIENTE);
-
-        } else {
-
-            CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
-            CtrlCliente.AtualizarTodosCamposFisica(CLIENTE);
-            Informacao.show("Cliente Físico atualizado com sucesso!");
-        }
-        CarregarTabela();
-        LimparCampos();
     }
 
     public void ClienteJuridico() {
-        String validaCnpj = TxtCNPJ.getText().replaceAll("\\D", "");
-        if (TxtNome.getText().isEmpty()) {
-            Erro.show("Informe o Nome!");
-            return;
-        } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
-            Erro.show("Informe o WhatsApp!");
-            return;
-        } else if (TxtCNPJ.getText().equals("  .   .   /    -  ")) {
-            Erro.show("Informe o CNPJ!");
-            return;
-        } else if (!Funcoes.validaCnpj(validaCnpj)) {
-            Erro.show("CNPJ inválido");
-            return;
-        } else if (TxtCep.getText().isEmpty()) {
-            Erro.show("Informe o CEP!");
-            return;
-        } else if (TxtLogradouro.getText().isEmpty()) {
-            Erro.show("Informe o Logradouro!");
-            return;
-        } else if (TxtBairro.getText().isEmpty()) {
-            Erro.show("Informe o Bairro!");
-            return;
-        } else if (TxtCodCidade.getText().isEmpty()) {
-            Erro.show("Informe a Cidade!");
-            return;
-        } else if (TxtCodEstado.getText().isEmpty()) {
-            Erro.show("Informe o Estado");
-            return;
-        }
+        try {
+            String validaCnpj = TxtCNPJ.getText().replaceAll("\\D", "");
+            if (TxtNome.getText().isEmpty()) {
+                Erro.show("Informe o Nome!");
+                return;
+            } else if (TxtWhatsapp.getText().equals("(  )      -    ")) {
+                Erro.show("Informe o WhatsApp!");
+                return;
+            } else if (TxtCNPJ.getText().equals("  .   .   /    -  ")) {
+                Erro.show("Informe o CNPJ!");
+                return;
+            } else if (!Funcoes.validaCnpj(validaCnpj)) {
+                Erro.show("CNPJ inválido");
+                return;
+            } else if (TxtCep.getText().isEmpty()) {
+                Erro.show("Informe o CEP!");
+                return;
+            } else if (TxtLogradouro.getText().isEmpty()) {
+                Erro.show("Informe o Logradouro!");
+                return;
+            } else if (TxtBairro.getText().isEmpty()) {
+                Erro.show("Informe o Bairro!");
+                return;
+            } else if (TxtCodCidade.getText().isEmpty()) {
+                Erro.show("Informe a Cidade!");
+                return;
+            } else if (TxtCodEstado.getText().isEmpty()) {
+                Erro.show("Informe o Estado");
+                return;
+            }
 
-        if (CLIENTE == null) {
-            CLIENTE = new Cliente();
-        }
-        CLIENTE.setNome_Cliente(TxtNome.getText());
-        CLIENTE.setWhatsApp_Cliente(TxtWhatsapp.getText());
-        String cnpj = TxtCNPJ.getText().replaceAll("\\D", "");
-        CLIENTE.setCNPJ_Cliente(cnpj);
-        CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
-        CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
-        CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-        CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
-        if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
+            if (CLIENTE == null) {
+                CLIENTE = new Cliente();
+            }
+            CLIENTE.setNome_Cliente(TxtNome.getText());
+            CLIENTE.setWhatsApp_Cliente(TxtWhatsapp.getText());
+            String cnpj = TxtCNPJ.getText().replaceAll("\\D", "");
+            CLIENTE.setCNPJ_Cliente(cnpj);
+            CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
+            CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
+            CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
+            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
+            if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 
-            Informacao.show("Cliente Jurídico salvo com sucesso!");
-            CtrlCliente.SalvarTodosCamposJuridica(CLIENTE);
+                Informacao.show("Cliente Jurídico salvo com sucesso!");
+                CtrlCliente.SalvarTodosCamposJuridica(CLIENTE);
 
-        } else {
-            
-            CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
-            CtrlCliente.AtualizarTodosCamposJuridica(CLIENTE);
-            Informacao.show("Cliente Jurídico atualizado com sucesso!");
+            } else {
+
+                CLIENTE.setCod_Cliente(Integer.parseInt(TxtCod.getText()));
+                CtrlCliente.AtualizarTodosCamposJuridica(CLIENTE);
+                Informacao.show("Cliente Jurídico atualizado com sucesso!");
+            }
+            CarregarTabela();
+            LimparCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        CarregarTabela();
-        LimparCampos();
     }
 
     public void ConverteDataPISO() {
-        String dia = TxtDataNasc.getText().substring(0, 2);
-        String mes = TxtDataNasc.getText().substring(3, 5);
-        String ano = TxtDataNasc.getText().substring(6, 10);
-
-        DataISO = ano + "-" + mes + "-" + dia;
-
+        try {
+            String dia = TxtDataNasc.getText().substring(0, 2);
+            String mes = TxtDataNasc.getText().substring(3, 5);
+            String ano = TxtDataNasc.getText().substring(6, 10);
+            DataISO = ano + "-" + mes + "-" + dia;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     public String ConverteData(String prData) {
-        String ano = prData.substring(0, 4);
-        String mes = prData.substring(5, 7);
-        String dia = prData.substring(8, 10);
-        return dia + "/" + mes + "/" + ano;
+        try {
+            String ano = prData.substring(0, 4);
+            String mes = prData.substring(5, 7);
+            String dia = prData.substring(8, 10);
+            return dia + "/" + mes + "/" + ano;
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void carregarTodosCombobox(){   
-        if (TxtCodCidade.getText() == null || TxtCodCidade.getText().isEmpty()){
-            jCCidade.removeAllItems();
-            jCCidade.addItem(new Cidades(0, "Selecione"));
-            CtrlCidade.PesquisarTodos().forEach(cidade -> {
-                jCCidade.addItem(cidade);
-            });
-        }
-        if (TxtCodEstado.getText() == null || TxtCodEstado.getText().isEmpty()){
-            jCEstado.removeAllItems();
-            jCEstado.addItem(new Estados(0, "Selecione"));
-            CtrlEstado.PesquisarTodos().forEach(estado -> {
-                jCEstado.addItem(estado);
-            });
+        try {
+            if (TxtCodCidade.getText() == null || TxtCodCidade.getText().isEmpty()){
+                jCCidade.removeAllItems();
+                jCCidade.addItem(new Cidades(0, "Selecione"));
+                CtrlCidade.PesquisarTodos().forEach(cidade -> {
+                    jCCidade.addItem(cidade);
+                });
+            }
+            if (TxtCodEstado.getText() == null || TxtCodEstado.getText().isEmpty()){
+                jCEstado.removeAllItems();
+                jCEstado.addItem(new Estados(0, "Selecione"));
+                CtrlEstado.PesquisarTodos().forEach(estado -> {
+                    jCEstado.addItem(estado);
+                });
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }
 
