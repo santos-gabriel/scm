@@ -5,6 +5,7 @@
  */
 package visao;
 
+import excecoes.ExcecaoGenerica;
 import java.util.TimerTask;
 import java.util.Timer;
 import javax.swing.ImageIcon;
@@ -123,43 +124,51 @@ public class SplashScreen extends javax.swing.JFrame {
     
     
     private void loadSplash() {
-        progress.setMaximum(5000);
-        progress.setMinimum(0);
-        
-        Timer timer = new Timer();
-        TimerTask tk = new TimerTask() {
-            @Override
-            public void run() {
-                if (progress.getValue() == 0)
-                    progress.setValue(1000);
-                else
-                    progress.setValue(progress.getValue() * 2);
-                
-                if (progress.getValue() >= 5000){
-                    timer.cancel();
-                    closeSplash();
+        try {
+            progress.setMaximum(5000);
+            progress.setMinimum(0);
+
+            Timer timer = new Timer();
+            TimerTask tk = new TimerTask() {
+                @Override
+                public void run() {
+                    if (progress.getValue() == 0)
+                        progress.setValue(1000);
+                    else
+                        progress.setValue(progress.getValue() * 2);
+
+                    if (progress.getValue() >= 5000){
+                        timer.cancel();
+                        closeSplash();
+                    }
+
+                    if(progress.getValue() < 2000)
+                        trocaImg(1);
+                    else if (progress.getValue() >= 2000 && progress.getValue() < 4000)
+                        trocaImg(2);
+                    else if (progress.getValue() >= 4000)
+                        trocaImg(1);
+
                 }
-                
-                if(progress.getValue() < 2000)
-                    trocaImg(1);
-                else if (progress.getValue() >= 2000 && progress.getValue() < 4000)
-                    trocaImg(2);
-                else if (progress.getValue() >= 4000)
-                    trocaImg(1);
-                
-            }
-        };
-        timer.scheduleAtFixedRate(tk, 0, 1000);
+            };
+            timer.scheduleAtFixedRate(tk, 0, 1000);
+        } catch (Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void trocaImg(int pImg){
-        ImageIcon image;
-        if (pImg == 1)
-            image = new ImageIcon(getClass().getResource("/img/logo-sistema-150-75.png"));
-        else
-            image = new ImageIcon(getClass().getResource("/img/logo-emporio-cardoso.png"));
+        try {
+            ImageIcon image;
+            if (pImg == 1)
+                image = new ImageIcon(getClass().getResource("/img/logo-sistema-150-75.png"));
+            else
+                image = new ImageIcon(getClass().getResource("/img/logo-emporio-cardoso.png"));
             
-        img.setIcon(image);
+            img.setIcon(image);
+        }catch(Exception e) {
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void closeSplash(){

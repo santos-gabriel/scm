@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlTipoPagamento;
+import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
 import mensagens.Informacao;
@@ -242,37 +243,49 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
             Erro.show("Informe a descrição");
             return;
         }
-        if (TIPO_PAGAMENTO == null)
-            TIPO_PAGAMENTO = new TipoPagamento();
-        TIPO_PAGAMENTO.setDesc_pagamento(txtDescricao.getText());
-        if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()){
-            CtrlTipoPagamento.SalvarTodosCampos(TIPO_PAGAMENTO);
-            Informacao.show("Tipo de pagamento salvo com sucesso");
-        } else {
-            TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
-            CtrlTipoPagamento.AtualizarTodosCampos(TIPO_PAGAMENTO);
-            Informacao.show("Tipo de pagamento atualizado com sucesso");
+        try {
+            if (TIPO_PAGAMENTO == null)
+                TIPO_PAGAMENTO = new TipoPagamento();
+            TIPO_PAGAMENTO.setDesc_pagamento(txtDescricao.getText());
+            if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()){
+                CtrlTipoPagamento.SalvarTodosCampos(TIPO_PAGAMENTO);
+                Informacao.show("Tipo de pagamento salvo com sucesso");
+            } else {
+                TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
+                CtrlTipoPagamento.AtualizarTodosCampos(TIPO_PAGAMENTO);
+                Informacao.show("Tipo de pagamento atualizado com sucesso");
+            }
+            carregarRegistros();
+            limparTodosCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
-        limparTodosCampos();
     }//GEN-LAST:event_ButonSalvarMouseClicked
 
     private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty())
             return;
-        if (TIPO_PAGAMENTO == null)
-            TIPO_PAGAMENTO = new TipoPagamento();
-        TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
-        CtrlTipoPagamento.Excluir(TIPO_PAGAMENTO);
-        carregarRegistros();
-        limparTodosCampos();
+        try {
+            if (TIPO_PAGAMENTO == null)
+                TIPO_PAGAMENTO = new TipoPagamento();
+            TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));
+            CtrlTipoPagamento.Excluir(TIPO_PAGAMENTO);
+            carregarRegistros();
+            limparTodosCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblTiposPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTiposPagamentosMouseClicked
         if (tblTiposPagamentos.getSelectedRow() != -1){
-            limparTodosCampos();
-            txtCodigo.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 0))));
-            txtDescricao.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 1))));
+            try {
+                limparTodosCampos();
+                txtCodigo.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 0))));
+                txtDescricao.setText((String.valueOf(tblTiposPagamentos.getModel().getValueAt(tblTiposPagamentos.getSelectedRow(), 1))));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblTiposPagamentosMouseClicked
 
@@ -335,14 +348,18 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
     }
     
     private void carregarRegistros() {
-        DefaultTableModel modelo = (DefaultTableModel) tblTiposPagamentos.getModel();
-        modelo.setNumRows(0);
-        CtrlTipoPagamento.PesquisarTodos().forEach((tp) -> {
-            modelo.addRow(new Object []{
-                tp.getCod_pagamento(),
-                tp.getDesc_pagamento()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblTiposPagamentos.getModel();
+            modelo.setNumRows(0);
+            CtrlTipoPagamento.PesquisarTodos().forEach((tp) -> {
+                modelo.addRow(new Object []{
+                    tp.getCod_pagamento(),
+                    tp.getDesc_pagamento()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

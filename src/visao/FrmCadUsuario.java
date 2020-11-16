@@ -5,7 +5,9 @@
  */
 package visao;
 
+import controllers.CtrlFuncionario;
 import controllers.CtrlUsuario;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import modelo.Usuario;
 import utilitarios.Funcoes;
 import mensagens.Erro;
 import mensagens.Informacao;
+import modelo.Funcionario;
 
 /**
  *
@@ -37,6 +40,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
         carregarPermissoes();
         carregarRegistros();
+        carregarCombobox();
     }
     
     public FrmCadUsuario(String prInserir, String prAtualizar, String prInativar, String prConsultar) {
@@ -44,6 +48,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
         carregarPermissoes();
         carregarRegistros();
+        carregarCombobox();
     }
 
     /**
@@ -68,8 +73,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnExibirSenha = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtFuncionario = new javax.swing.JTextField();
-        btnBuscarFuncionario = new javax.swing.JButton();
+        cbxFuncionario = new javax.swing.JComboBox<>();
         pnlOpcoes = new javax.swing.JPanel();
         btnInserir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -120,22 +124,13 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
         jLabel5.setText("Funcionário");
 
-        btnBuscarFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
-        btnBuscarFuncionario.setText("Buscar Funcionário");
-        btnBuscarFuncionario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscarFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarFuncionarioActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlDadosCadastraisLayout = new javax.swing.GroupLayout(pnlDadosCadastrais);
         pnlDadosCadastrais.setLayout(pnlDadosCadastraisLayout);
         pnlDadosCadastraisLayout.setHorizontalGroup(
             pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
                         .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,11 +147,8 @@ public class FrmCadUsuario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExibirSenha))))
                     .addComponent(jLabel5)
-                    .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
-                        .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarFuncionario)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbxFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         pnlDadosCadastraisLayout.setVerticalGroup(
             pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,10 +169,8 @@ public class FrmCadUsuario extends javax.swing.JFrame {
                             .addComponent(btnExibirSenha))))
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarFuncionario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -307,11 +297,11 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Login", "Funcionário"
+                "Código", "Login", "Cód. Funcionário", "Funcionário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -358,51 +348,55 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioActionPerformed
-    // ROTINA PARA ENVIAR REGISTROS DA PESQUISA PARA O FORMULÁRIO DE SELEÇÃO DE REGISTRO
-        JTable tabela = new JTable();
-        // variavel que recebe os dados da query tratados sendo somente os que serão apresentados para o usuário
-        List<String[]> dados = new ArrayList<>();
-        
-        Usuario usuario = new Usuario();
-        usuario.setLogin(txtBuscarUsuario.getText());
-        List<Usuario> usuarioPesquisa = CtrlUsuario.PesquisarViaLoginInicia(usuario);
-        
-        // tratando os dados para visualização
-        for (Usuario u : usuarioPesquisa){
-            dados.add(new String[]{String.valueOf(u.getCod_Usuario()), u.getLogin()});
-        }
-        
-        // criando modelo para a jtable
-        tabela.setModel(new DefaultTableModel(
-            // linhas com os contaúdos(dados) da jtable
-            dados.toArray(new String[dados.size()][]),
-            // colunas da jtable    
-            new String [] {"CODIGO", "LOGIN"}){
-                // guardando as colunas que podem ou não ser editáveis (obs.: atualmente [04/09/2020] não existe tratamento para edição no formulário de seleção de registro)
-                boolean[] canEdit = new boolean []{false, false};
-                // sobrescrevendo o método isCellEditable para settar a edição das células com os valores do array canEdit
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }                
-            });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        
-        if (FRM_SELECIONA_REGISTRO == null)
-            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        // preenchendo a tabela do formulário de seleção de registro, passando o modelo e a tabela criados acima
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Usuários | Seleção ");
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-        // obs.: com o formulário de seleção de registro sendo modal, o código a baixo só será executado após o fechamento do formulário de seleção de registro
-        
-        // pegando os dados do registro selecionado pelo usuário, caso usuário cancelar a seleção retornará null
-        // os registros retornarão na mesma sequência de ídice que foram enviados
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodUsuario.setText(registroSelecionado[0]);
-            txtLoginUsuario.setText(registroSelecionado[1]);
-            txtSenhaUsuario.setText("");
+            // ROTINA PARA ENVIAR REGISTROS DA PESQUISA PARA O FORMULÁRIO DE SELEÇÃO DE REGISTRO
+        try {
+            JTable tabela = new JTable();
+            // variavel que recebe os dados da query tratados sendo somente os que serão apresentados para o usuário
+            List<String[]> dados = new ArrayList<>();
+
+            Usuario usuario = new Usuario();
+            usuario.setLogin(txtBuscarUsuario.getText());
+            List<Usuario> usuarioPesquisa = CtrlUsuario.PesquisarViaLoginInicia(usuario);
+
+            // tratando os dados para visualização
+            for (Usuario u : usuarioPesquisa){
+                dados.add(new String[]{String.valueOf(u.getCod_Usuario()), u.getLogin()});
+            }
+
+            // criando modelo para a jtable
+            tabela.setModel(new DefaultTableModel(
+                // linhas com os contaúdos(dados) da jtable
+                dados.toArray(new String[dados.size()][]),
+                // colunas da jtable    
+                new String [] {"CODIGO", "LOGIN"}){
+                    // guardando as colunas que podem ou não ser editáveis (obs.: atualmente [04/09/2020] não existe tratamento para edição no formulário de seleção de registro)
+                    boolean[] canEdit = new boolean []{false, false};
+                    // sobrescrevendo o método isCellEditable para settar a edição das células com os valores do array canEdit
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
+
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            // preenchendo a tabela do formulário de seleção de registro, passando o modelo e a tabela criados acima
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Usuários | Seleção ");
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+            // obs.: com o formulário de seleção de registro sendo modal, o código a baixo só será executado após o fechamento do formulário de seleção de registro
+
+            // pegando os dados do registro selecionado pelo usuário, caso usuário cancelar a seleção retornará null
+            // os registros retornarão na mesma sequência de ídice que foram enviados
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodUsuario.setText(registroSelecionado[0]);
+                txtLoginUsuario.setText(registroSelecionado[1]);
+                txtSenhaUsuario.setText("");
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
 
@@ -410,11 +404,6 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)
             btnBuscarUsuarioActionPerformed(null);
     }//GEN-LAST:event_txtBuscarUsuarioKeyPressed
-
-    private void btnBuscarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncionarioActionPerformed
-        if (txtFuncionario.getText().equals("") || txtFuncionario.getText() == null)
-            return;
-    }//GEN-LAST:event_btnBuscarFuncionarioActionPerformed
 
     private void btnExibirSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirSenhaActionPerformed
         if (txtSenhaUsuario.getEchoChar() == '*')
@@ -425,6 +414,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         limparEntradasDeDados();
+        carregarCombobox();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -437,35 +427,48 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             Erro.show("Informe uma senha por favor");
             return;
         }
-        
-        if (USUARIO == null)
-            USUARIO = new Usuario();
-        
-        USUARIO.setLogin(txtLoginUsuario.getText());
-        USUARIO.setSenha(Funcoes.getEncrypt(new String(txtSenhaUsuario.getPassword())));
-        if (CtrlUsuario.PesquisarViaLogin(USUARIO) != null){
-            Erro.show("Login indisponível, por favor tente outro");
-            return;
-        }
-        if (txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null || txtCodUsuario.getText().isEmpty()){
-            CtrlUsuario.SalvarTodosCampos(USUARIO);
-            USUARIO = CtrlUsuario.PesquisarViaLogin(USUARIO);
-            txtCodUsuario.setText(Integer.toString(USUARIO.getCod_Usuario()));
-            Informacao.show("Usuário salvo com sucesso");
-        } else{
-            if (!isATUALIZAR()){
-                Erro.show("Você não tem permissão para atualizar");
-                return;
+        try {
+            if (USUARIO == null)
+                USUARIO = new Usuario();
+
+            USUARIO.setLogin(txtLoginUsuario.getText());
+            USUARIO.setSenha(Funcoes.getEncrypt(new String(txtSenhaUsuario.getPassword())));
+            if (cbxFuncionario.getSelectedIndex() > 0)
+                USUARIO.setFuncionario((Funcionario)cbxFuncionario.getSelectedItem());            
+            if (txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null || txtCodUsuario.getText().isEmpty()){
+                Usuario user = USUARIO;
+                user.setCod_Usuario(0);
+                if (CtrlUsuario.VerificaDisponibilidadeLogin(user) != null){
+                    Erro.show("Login indisponível, por favor tente outro");
+                    return;
+                }
+                CtrlUsuario.SalvarTodosCampos(USUARIO);
+                USUARIO = CtrlUsuario.PesquisarViaLogin(USUARIO);
+                txtCodUsuario.setText(Integer.toString(USUARIO.getCod_Usuario()));
+                Informacao.show("Usuário salvo com sucesso");
+            } else{
+                if (!isATUALIZAR()){
+                    Erro.show("Você não tem permissão para atualizar");
+                    return;
+                }
+                USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
+                if (CtrlUsuario.VerificaDisponibilidadeLogin(USUARIO) != null){
+                    Erro.show("Login indisponível, por favor tente outro");
+                    return;
+                }
+                CtrlUsuario.AtualizarTodosCampos(USUARIO);
+                Informacao.show("Usuário atualizado com sucesso");
             }
-            USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
-            CtrlUsuario.AtualizarTodosCampos(USUARIO);
-            Informacao.show("Usuário atualizado com sucesso");
+            carregarRegistros();
+            limparEntradasDeDados();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null)){ 
+            try {
             if (USUARIO == null)
                 USUARIO = new Usuario();
             USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
@@ -473,19 +476,28 @@ public class FrmCadUsuario extends javax.swing.JFrame {
             Informacao.show("Usuário inativado com sucesso");
             limparEntradasDeDados();
             carregarRegistros();
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_btnInativarActionPerformed
 
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
         limparEntradasDeDados();
         if (tblUsuarios.getSelectedRow() != -1){
-            txtCodUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 0)));
-            txtLoginUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 1)));
-            
-            if (tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2) == null)
-                txtFuncionario.setText("");
-            else
-                txtFuncionario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2)));
+            try {
+                txtCodUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 0)));
+                txtLoginUsuario.setText(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 1)));
+
+                if (tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2) == null)
+                    cbxFuncionario.setSelectedItem(new Funcionario(0, "Selecione"));
+                else {
+                    cbxFuncionario.setSelectedItem(CtrlFuncionario.PesquisarViaCodigo(new Funcionario(Integer.parseInt(String.valueOf(tblUsuarios.getModel().getValueAt(tblUsuarios.getSelectedRow(), 2))))));
+                    
+                }   
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblUsuariosMouseClicked
 
@@ -549,12 +561,12 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarFuncionario;
     private javax.swing.JButton btnBuscarUsuario;
     private javax.swing.JButton btnExibirSenha;
     private javax.swing.JButton btnInativar;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<Funcionario> cbxFuncionario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -568,14 +580,13 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtBuscarUsuario;
     private javax.swing.JTextField txtCodUsuario;
-    private javax.swing.JTextField txtFuncionario;
     private javax.swing.JTextField txtLoginUsuario;
     private javax.swing.JPasswordField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 
     private void limparEntradasDeDados() {
         txtCodUsuario.setText("");
-        txtFuncionario.setText("");
+        cbxFuncionario.setSelectedItem(new Funcionario(0, "Selecione"));
         txtLoginUsuario.setText("");
         txtSenhaUsuario.setText("");
         USUARIO = null;
@@ -621,15 +632,32 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     }
     
     public void carregarRegistros(){
-        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
-        modelo.setNumRows(0);
-        CtrlUsuario.PesquisarTodos().forEach((u) -> {
-            modelo.addRow(new Object []{
-                u.getCod_Usuario(),
-                u.getLogin(),
-                u.getFuncionario().getNome_Funcionario()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+            modelo.setNumRows(0);
+            CtrlUsuario.PesquisarTodos().forEach((u) -> {
+                modelo.addRow(new Object []{
+                    u.getCod_Usuario(),
+                    u.getLogin(),
+                    u.getFuncionario().getCod_Funcionario(),
+                    u.getFuncionario().getNome_Funcionario()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
+    }
+    
+    private void carregarCombobox(){
+        try {
+            cbxFuncionario.removeAllItems();
+            cbxFuncionario.addItem(new Funcionario(0, "Selecione"));
+            CtrlFuncionario.PesquisarTodos().forEach(funcionario -> {
+                cbxFuncionario.addItem(funcionario);
+            });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

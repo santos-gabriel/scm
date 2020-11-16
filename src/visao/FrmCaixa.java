@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCaixa;
+import excecoes.ExcecaoGenerica;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -276,18 +277,21 @@ public class FrmCaixa extends javax.swing.JFrame {
             return;
         }
         
-        Caixa caixa = new Caixa();
-        caixa.setAtivo(true);
-        caixa.setFechamentoData(Funcoes.trataDataParaDb(txtFechamentoData.getText()));
-        caixa.setUsuario(UsuariosUtil.getUsuario());
-        caixa.setValor(Double.parseDouble(txtValor.getText()));
-        
-        CtrlCaixa.Inserir(caixa);
-        
-        limparEntradasDeDados();
-        carregarCaixas();
-        Informacao.show("Caixa salvo com sucesso");
-       
+        try {
+            Caixa caixa = new Caixa();
+            caixa.setAtivo(true);
+            caixa.setFechamentoData(Funcoes.trataDataParaDb(txtFechamentoData.getText()));
+            caixa.setUsuario(UsuariosUtil.getUsuario());
+            caixa.setValor(Double.parseDouble(txtValor.getText()));
+
+            CtrlCaixa.Inserir(caixa);
+
+            limparEntradasDeDados();
+            carregarCaixas();
+            Informacao.show("Caixa salvo com sucesso");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
@@ -351,24 +355,32 @@ public class FrmCaixa extends javax.swing.JFrame {
     }
     
     private void preencheDados(){
-        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date data = new Date();
-        txtFechamentoData.setText(formato.format(data));
-        txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());        
-        txtValor.setText(Double.toString(CtrlCaixa.PesquisaSaldoAtual()));
+        try {
+            DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date data = new Date();
+            txtFechamentoData.setText(formato.format(data));
+            txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());        
+            txtValor.setText(Double.toString(CtrlCaixa.PesquisaSaldoAtual()));
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void carregarCaixas(){
-        DefaultTableModel modelo = (DefaultTableModel) tblCaixas.getModel();
-        modelo.setNumRows(0);
-        CtrlCaixa.PesquisaTodos().forEach((caixa) -> {
-            modelo.addRow(new Object []{
-                caixa.getCodCaixa(),
-                caixa.getValor(),
-                caixa.getFechamentoData(),
-                caixa.getUsuario().getLogin()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCaixas.getModel();
+            modelo.setNumRows(0);
+            CtrlCaixa.PesquisaTodos().forEach((caixa) -> {
+                modelo.addRow(new Object []{
+                    caixa.getCodCaixa(),
+                    caixa.getValor(),
+                    caixa.getFechamentoData(),
+                    caixa.getUsuario().getLogin()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

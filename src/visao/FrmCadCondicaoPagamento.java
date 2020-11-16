@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCondicaoPagamento;
+import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Informacao;
 import modelo.CondicaoPagamento;
@@ -264,40 +265,52 @@ public class FrmCadCondicaoPagamento extends javax.swing.JFrame {
             Informacao.show("Informe a quantidade de parcelas");
             return;
         }
-        if (CONDICAO_PAGAMENTO == null)
-            CONDICAO_PAGAMENTO = new CondicaoPagamento();
-        CONDICAO_PAGAMENTO.setAtivo(true);
-        CONDICAO_PAGAMENTO.setDesc_condicao_pagamento(txtDescricao.getText());
-        CONDICAO_PAGAMENTO.setQuantidade_parcelas(Integer.parseInt(txtQtdParcelas.getText()));
-        if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()){
-            CtrlCondicaoPagamento.SalvarTodosCampos(CONDICAO_PAGAMENTO);
-            Informacao.show("Condição de pagamento salva com sucesso ");
-        } else {
-            CONDICAO_PAGAMENTO.setCod_condicao_pagamento(Integer.parseInt(txtCodigo.getText()));
-            CtrlCondicaoPagamento.AtualizarTodosCampos(CONDICAO_PAGAMENTO);
-            Informacao.show("Condição de pagamento atualizada com sucesso ");
+        try {
+            if (CONDICAO_PAGAMENTO == null)
+                CONDICAO_PAGAMENTO = new CondicaoPagamento();
+            CONDICAO_PAGAMENTO.setAtivo(true);
+            CONDICAO_PAGAMENTO.setDesc_condicao_pagamento(txtDescricao.getText());
+            CONDICAO_PAGAMENTO.setQuantidade_parcelas(Integer.parseInt(txtQtdParcelas.getText()));
+            if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()){
+                CtrlCondicaoPagamento.SalvarTodosCampos(CONDICAO_PAGAMENTO);
+                Informacao.show("Condição de pagamento salva com sucesso ");
+            } else {
+                CONDICAO_PAGAMENTO.setCod_condicao_pagamento(Integer.parseInt(txtCodigo.getText()));
+                CtrlCondicaoPagamento.AtualizarTodosCampos(CONDICAO_PAGAMENTO);
+                Informacao.show("Condição de pagamento atualizada com sucesso ");
+            }
+            carregarRegistros();
+            limparTodosCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
-        limparTodosCampos();
     }//GEN-LAST:event_ButonSalvar1MouseClicked
 
     private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty())
             return;
-        if (CONDICAO_PAGAMENTO == null)
-            CONDICAO_PAGAMENTO = new CondicaoPagamento();
-        CONDICAO_PAGAMENTO.setCod_condicao_pagamento(Integer.parseInt(txtCodigo.getText()));
-        CtrlCondicaoPagamento.Excluir(CONDICAO_PAGAMENTO);
-        carregarRegistros();
-        limparTodosCampos();
+        try {
+            if (CONDICAO_PAGAMENTO == null)
+                CONDICAO_PAGAMENTO = new CondicaoPagamento();
+            CONDICAO_PAGAMENTO.setCod_condicao_pagamento(Integer.parseInt(txtCodigo.getText()));
+            CtrlCondicaoPagamento.Excluir(CONDICAO_PAGAMENTO);
+            carregarRegistros();
+            limparTodosCampos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void tblCondicoesPagamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCondicoesPagamentosMouseClicked
         if (tblCondicoesPagamentos.getSelectedRow() != -1){
-            limparTodosCampos();
-            txtCodigo.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 0))));
-            txtDescricao.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 1))));
-            txtQtdParcelas.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 2))));
+            try {
+                limparTodosCampos();
+                txtCodigo.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 0))));
+                txtDescricao.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 1))));
+                txtQtdParcelas.setText((String.valueOf(tblCondicoesPagamentos.getModel().getValueAt(tblCondicoesPagamentos.getSelectedRow(), 2))));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblCondicoesPagamentosMouseClicked
 
@@ -367,15 +380,19 @@ public class FrmCadCondicaoPagamento extends javax.swing.JFrame {
     }
     
     private void carregarRegistros() {
-        DefaultTableModel modelo = (DefaultTableModel) tblCondicoesPagamentos.getModel();
-        modelo.setNumRows(0);
-        CtrlCondicaoPagamento.PesquisarTodos().forEach((cp) -> {
-            modelo.addRow(new Object []{
-                cp.getCod_condicao_pagamento(),
-                cp.getDesc_condicao_pagamento(),
-                cp.getQuantidade_parcelas()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCondicoesPagamentos.getModel();
+            modelo.setNumRows(0);
+            CtrlCondicaoPagamento.PesquisarTodos().forEach((cp) -> {
+                modelo.addRow(new Object []{
+                    cp.getCod_condicao_pagamento(),
+                    cp.getDesc_condicao_pagamento(),
+                    cp.getQuantidade_parcelas()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }

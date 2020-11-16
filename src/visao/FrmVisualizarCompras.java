@@ -7,6 +7,7 @@ package visao;
 
 import controllers.CtrlCompras;
 import controllers.CtrlFornecedor;
+import excecoes.ExcecaoGenerica;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
@@ -191,13 +192,23 @@ public class FrmVisualizarCompras extends javax.swing.JFrame {
         if(txtDataInicial.getText() == null || txtDataInicial.getText().isEmpty() || txtDataInicial.getText().equals("  /  /    ")){
             Erro.show("Informe a data inicial ");
             return;
+        } else if (!Funcoes.validaData(txtDataInicial.getText())){
+            Erro.show("Data inicial inválida");
+            return;
         }
         if (txtDataFinal.getText() == null || txtDataFinal.getText().isEmpty() || txtDataFinal.getText().equals("  /  /    ")){
             Erro.show("Informe a data final ");
             return;
-        }
+        } else if (!Funcoes.validaData(txtDataFinal.getText())) {
+            Erro.show("Data final inválida");
+            return;
+        }        
         if (ckFiltrarFornecedor.isSelected() && (cbxFornecedor.getSelectedIndex() == -1 || cbxFornecedor.getSelectedIndex() == 0)){
             Erro.show("Informe o fornecedor");
+            return;
+        }
+        if (Funcoes.comparaDatas(txtDataInicial.getText(), txtDataFinal.getText()) > 0) {
+            Erro.show("Datas inválidas");
             return;
         }
         carregarPesquisa();
@@ -207,21 +218,25 @@ public class FrmVisualizarCompras extends javax.swing.JFrame {
         if (tblDadosCompras.getSelectedRow() == -1)
             return;
         if (evt.getClickCount() >= 2){
-            if (FRM_COMPRAS == null)
-                FRM_COMPRAS = new FrmCompras();
-            
-            Compras compra = new Compras();
-            
-            compra.setCodCompra((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 0));
-            compra.setFornecedor(new Fornecedor((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 1), String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 2))));
-            compra.setUsuario(new Usuario((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 3), String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 4))));
-            compra.setData(String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 5)));
-            compra.setTotalBruto((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 6));
-            compra.setDesconto((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 7));
-            compra.setTotalLiquido((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 8));
-            
-            FRM_COMPRAS.carregarCompra(compra);
-            FRM_COMPRAS.setVisible(true);
+            try {
+                if (FRM_COMPRAS == null)
+                    FRM_COMPRAS = new FrmCompras();
+
+                Compras compra = new Compras();
+
+                compra.setCodCompra((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 0));
+                compra.setFornecedor(new Fornecedor((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 1), String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 2))));
+                compra.setUsuario(new Usuario((Integer)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 3), String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 4))));
+                compra.setData(String.valueOf(tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 5)));
+                compra.setTotalBruto((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 6));
+                compra.setDesconto((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 7));
+                compra.setTotalLiquido((Double)tblDadosCompras.getModel().getValueAt(tblDadosCompras.getSelectedRow(), 8));
+
+                FRM_COMPRAS.carregarCompra(compra);
+                FRM_COMPRAS.setVisible(true);
+            } catch (Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }    
     }//GEN-LAST:event_tblDadosComprasMouseClicked
 
@@ -275,39 +290,47 @@ public class FrmVisualizarCompras extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregarCombobox(){
-        cbxFornecedor.removeAllItems();
-        cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
-        CtrlFornecedor.PesquisarTodos().forEach(funcionario -> {
-            cbxFornecedor.addItem(funcionario);
-        });
+        try {    
+            cbxFornecedor.removeAllItems();
+            cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
+            CtrlFornecedor.PesquisarTodos().forEach(funcionario -> {
+                cbxFornecedor.addItem(funcionario);
+            });
+        } catch (Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private void carregarPesquisa(){
-        DefaultTableModel modelo = (DefaultTableModel) tblDadosCompras.getModel();
-        modelo.setNumRows(0);
-        
-        String dataInicial = Funcoes.trataDataParaDb(txtDataInicial.getText());
-        String dataFinal = Funcoes.trataDataParaDb(txtDataFinal.getText());    
-        List<Compras> lista = null;
-        if (ckFiltrarFornecedor.isSelected()){
-            Fornecedor fornecedor = (Fornecedor) cbxFornecedor.getSelectedItem();
-            lista = CtrlCompras.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, fornecedor);
-        } else {
-            lista = CtrlCompras.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, null);
-        }
-        
-        for(Compras compra : lista){
-            modelo.addRow(new Object [] {
-                compra.getCodCompra(),
-                compra.getFornecedor().getCod_Fornecedor(),
-                compra.getFornecedor().getNome_Fornecedor(),
-                compra.getUsuario().getCod_Usuario(),
-                compra.getUsuario().getLogin(),
-                compra.getData(),
-                compra.getTotalBruto(),
-                compra.getDesconto(),
-                compra.getTotalLiquido()
-            });
+        try { 
+            DefaultTableModel modelo = (DefaultTableModel) tblDadosCompras.getModel();
+            modelo.setNumRows(0);
+
+            String dataInicial = Funcoes.trataDataParaDb(txtDataInicial.getText());
+            String dataFinal = Funcoes.trataDataParaDb(txtDataFinal.getText());    
+            List<Compras> lista = null;
+            if (ckFiltrarFornecedor.isSelected()){
+                Fornecedor fornecedor = (Fornecedor) cbxFornecedor.getSelectedItem();
+                lista = CtrlCompras.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, fornecedor);
+            } else {
+                lista = CtrlCompras.PesquisarVendasPorPeriodoFuncionario(dataInicial, dataFinal, null);
+            }
+
+            for(Compras compra : lista){
+                modelo.addRow(new Object [] {
+                    compra.getCodCompra(),
+                    compra.getFornecedor().getCod_Fornecedor(),
+                    compra.getFornecedor().getNome_Fornecedor(),
+                    compra.getUsuario().getCod_Usuario(),
+                    compra.getUsuario().getLogin(),
+                    compra.getData(),
+                    compra.getTotalBruto(),
+                    compra.getDesconto(),
+                    compra.getTotalLiquido()
+                });
+            }
+        } catch (Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }
     
