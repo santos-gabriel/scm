@@ -7,6 +7,7 @@ package visao;
 
 import controllers.CtrlCaixa;
 import controllers.CtrlRelatorios;
+import excecoes.ExcecaoGenerica;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -699,9 +700,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuVisualizarComprasActionPerformed
 
     private void subMenuRelatorioClientesFisicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesFisicosAtivosActionPerformed
-        String src = "src/relatorios/rel-clientes-fisicos-ativos.jasper";        
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-clientes-fisicos-ativos.jasper";        
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioClientesFisicosAtivosActionPerformed
 
     private void subMenuRelatorioVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioVendasActionPerformed
@@ -711,15 +716,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuRelatorioVendasActionPerformed
 
     private void subMenuRelatorioClientesJuridicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesJuridicosAtivosActionPerformed
-        String src = "src/relatorios/rel-clientes-juridicos-ativos.jasper";        
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-clientes-juridicos-ativos.jasper";        
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioClientesJuridicosAtivosActionPerformed
 
     private void subMenuRelatorioProdutosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioProdutosAtivosActionPerformed
-        String src = "src/relatorios/rel-produtos-ativos.jasper";        
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-produtos-ativos.jasper";        
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioProdutosAtivosActionPerformed
 
     private void subMenuRelatorioComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioComprasActionPerformed
@@ -729,36 +742,56 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuRelatorioComprasActionPerformed
 
     private void subMenuRelatorioEstoqueProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioEstoqueProdutosActionPerformed
-        String src = "src/relatorios/rel-estoque-produtos.jasper";        
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-estoque-produtos.jasper";        
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioEstoqueProdutosActionPerformed
 
     private void subMenuRelatorioCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioCaixaActionPerformed
-        String src = "src/relatorios/rel-caixa.jasper";        
-        Caixa caixa = CtrlCaixa.PesquisaUltimoCaixaComTimesTamp();
-        Map parametros = new HashMap();
-        parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-caixa.jasper";        
+            Caixa caixa = CtrlCaixa.PesquisaUltimoCaixaComTimesTamp();
+            Map parametros = new HashMap();
+            parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioCaixaActionPerformed
 
     private void subMenuRelatorioFechamentosCaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFechamentosCaixasActionPerformed
-        String src = "src/relatorios/rel-fechamentos-caixas.jasper";
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-fechamentos-caixas.jasper";
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioFechamentosCaixasActionPerformed
 
     private void subMenuRelatorioFuncionariosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
-        String src = "src/relatorios/rel-funcionarios-ativos.jasper";
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try { 
+            String src = "src/relatorios/rel-funcionarios-ativos.jasper";
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
 
     private void subMenuRelatoriosFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatoriosFornecedoresActionPerformed
-        String src = "src/relatorios/rel-fornecedores-ativos.jasper";
-        JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-        view.setVisible(true);
+        try {
+            String src = "src/relatorios/rel-fornecedores-ativos.jasper";
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            view.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_subMenuRelatoriosFornecedoresActionPerformed
 
     /**

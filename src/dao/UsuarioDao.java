@@ -142,11 +142,11 @@ public abstract class UsuarioDao {
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT u.cod_usuario AS codigo, u.login AS login, f.nome_funcionario AS funcionario "
-                   + "FROM usuarios u                                                                     "
-                   + "LEFT JOIN funcionarios f ON                                                         "
-                   + "  u.cod_funcionario = f.cod_funcionario                                             "
-                   + "WHERE u.ativo = true;                                                               ";
+        String sql = "SELECT u.cod_usuario AS codigo, u.login AS login, COALESCE(u.cod_funcionario, '') AS cod_funcionario, COALESCE(f.nome_funcionario, '') AS funcionario "
+                   + "FROM usuarios u                                                                                                                                       "
+                   + "LEFT JOIN funcionarios f ON                                                                                                                           "
+                   + "  u.cod_funcionario = f.cod_funcionario                                                                                                               "
+                   + "WHERE u.ativo = true;                                                                                                                                 ";
         try {
             
             
@@ -154,7 +154,7 @@ public abstract class UsuarioDao {
             rs = stmt.executeQuery();
             List <Usuario> usuarios = new ArrayList<>();
             while(rs.next()){
-                    usuarios.add(new Usuario(rs.getInt("codigo"), rs.getString("login"), new Funcionario(rs.getString("funcionario"))));
+                    usuarios.add(new Usuario(rs.getInt("codigo"), rs.getString("login"), new Funcionario(rs.getInt("cod_funcionario"), rs.getString("funcionario"))));
                     
             }
             return usuarios;
@@ -208,6 +208,29 @@ public abstract class UsuarioDao {
             FecharConexoes(conexao, stmt, rs);
         }
     }
+    
+    
+    public static Usuario PesquisarViaLoginExceto(Usuario prUsuario){
+        CriarConexoes();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM usuarios u WHERE UPPER(u.login) = UPPER(?) AND u.cod_usuario <> ? ";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, prUsuario.getLogin());
+            stmt.setInt(2, prUsuario.getCod_Usuario());
+            rs = stmt.executeQuery();
+            if (rs.next())
+                return new Usuario(rs.getInt("cod_usuario"), rs.getString("login"), rs.getString("senha"));
+            else
+                return null;
+        } catch (Exception e) {
+            throw new ExcecaoDB(e, "Falha ao localizar usuario pelo login, entre em contato com o suporte do sistema ");
+        }finally{
+            FecharConexoes(conexao, stmt, rs);
+        }
+    }
+    
     
     public static List<String> PesquisaPermissoesUsuarioModulo(String prDescricaoModulo, int prCodUsuario){
         CriarConexoes();

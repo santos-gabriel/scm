@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCategoriasProdutos;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -299,39 +300,43 @@ public class FrmCadCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaActionPerformed
-        JTable tabela = new JTable();
-        List<String[]> dados = new ArrayList<>();
-        
-        CategoriasProdutos categoria = new CategoriasProdutos();
-        categoria.setDesc_Categoria(txtBuscarCategoria.getText());
-        List<CategoriasProdutos> categoriaPesquisa = CtrlCategoriasProdutos.PesquisarViaDescricaoInicia(categoria);
-        
-        categoriaPesquisa.forEach((c) -> {
-            dados.add(new String[]{String.valueOf(c.getCod_Categoria()), c.getDesc_Categoria()});
-        });
-        
-        tabela.setModel(new DefaultTableModel(
-            dados.toArray(new String[dados.size()][]),
-            new String [] {"CODIGO", "DESCRICAO"}){
-                boolean[] canEdit = new boolean []{false, false};
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }                
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
+
+            CategoriasProdutos categoria = new CategoriasProdutos();
+            categoria.setDesc_Categoria(txtBuscarCategoria.getText());
+            List<CategoriasProdutos> categoriaPesquisa = CtrlCategoriasProdutos.PesquisarViaDescricaoInicia(categoria);
+
+            categoriaPesquisa.forEach((c) -> {
+                dados.add(new String[]{String.valueOf(c.getCod_Categoria()), c.getDesc_Categoria()});
             });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        
-        if (FRM_SELECIONA_REGISTRO == null)
-            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Categorias | Seleção ");
-        
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-        
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodCategoria.setText(registroSelecionado[0]);
-            txtDescCategoria.setText(registroSelecionado[1]);
+
+            tabela.setModel(new DefaultTableModel(
+                dados.toArray(new String[dados.size()][]),
+                new String [] {"CODIGO", "DESCRICAO"}){
+                    boolean[] canEdit = new boolean []{false, false};
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
+
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Categorias | Seleção ");
+
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodCategoria.setText(registroSelecionado[0]);
+                txtDescCategoria.setText(registroSelecionado[1]);
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_btnBuscarCategoriaActionPerformed
 
@@ -344,34 +349,42 @@ public class FrmCadCategoria extends javax.swing.JFrame {
             Erro.show("Informe a descrição da categoria");
             return;
         }
-        if (CATEGORIA == null)
-            CATEGORIA = new CategoriasProdutos();
-        CATEGORIA.setDesc_Categoria(txtDescCategoria.getText());
-        CATEGORIA.setAtivo(true);
-        if (txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty()){
-            Integer codCategoriaSalva = CtrlCategoriasProdutos.SalvarTodosCampos(CATEGORIA);
-            if (codCategoriaSalva != null){
-                Informacao.show("Categoria salva com sucesso");
-                txtCodCategoria.setText(Integer.toString(codCategoriaSalva));
+        try {
+            if (CATEGORIA == null)
+                CATEGORIA = new CategoriasProdutos();
+            CATEGORIA.setDesc_Categoria(txtDescCategoria.getText());
+            CATEGORIA.setAtivo(true);
+            if (txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty()){
+                Integer codCategoriaSalva = CtrlCategoriasProdutos.SalvarTodosCampos(CATEGORIA);
+                if (codCategoriaSalva != null){
+                    Informacao.show("Categoria salva com sucesso");
+                    txtCodCategoria.setText(Integer.toString(codCategoriaSalva));
+                }
+            } else{
+                CATEGORIA.setCod_Categoria(Integer.parseInt(txtCodCategoria.getText()));
+                CtrlCategoriasProdutos.AtualizarTodosCampos(CATEGORIA);
+                Informacao.show("Categoria atualizada com sucesso");
             }
-        } else{
-            CATEGORIA.setCod_Categoria(Integer.parseInt(txtCodCategoria.getText()));
-            CtrlCategoriasProdutos.AtualizarTodosCampos(CATEGORIA);
-            Informacao.show("Categoria atualizada com sucesso");
+            carregarRegistros();
+            limparCamposTextos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
-        limparCamposTextos();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty())){
-            if (CATEGORIA == null)
-                CATEGORIA = new CategoriasProdutos();
-            CATEGORIA.setCod_Categoria(Integer.parseInt(txtCodCategoria.getText()));
-            CtrlCategoriasProdutos.Excluir(CATEGORIA);
-            Informacao.show("Cargo inativado com sucesso");
-            limparCamposTextos();
-            carregarRegistros();
+            try {
+                if (CATEGORIA == null)
+                    CATEGORIA = new CategoriasProdutos();
+                CATEGORIA.setCod_Categoria(Integer.parseInt(txtCodCategoria.getText()));
+                CtrlCategoriasProdutos.Excluir(CATEGORIA);
+                Informacao.show("Cargo inativado com sucesso");
+                limparCamposTextos();
+                carregarRegistros();
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_btnInativarActionPerformed
 
@@ -382,9 +395,13 @@ public class FrmCadCategoria extends javax.swing.JFrame {
 
     private void tblCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMouseClicked
         if (tblCategorias.getSelectedRow() != -1){
-            limparCamposTextos();
-            txtCodCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 0)));
-            txtDescCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 1)));
+            try {
+                limparCamposTextos();
+                txtCodCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 0)));
+                txtDescCategoria.setText(String.valueOf(tblCategorias.getModel().getValueAt(tblCategorias.getSelectedRow(), 1)));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblCategoriasMouseClicked
 
@@ -472,13 +489,17 @@ public class FrmCadCategoria extends javax.swing.JFrame {
     }
 
     private void carregarRegistros() {
-        DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
-        modelo.setNumRows(0);
-        CtrlCategoriasProdutos.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object []{
-                c.getCod_Categoria(),
-                c.getDesc_Categoria()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
+            modelo.setNumRows(0);
+            CtrlCategoriasProdutos.PesquisarTodos().forEach((c) -> {
+                modelo.addRow(new Object []{
+                    c.getCod_Categoria(),
+                    c.getDesc_Categoria()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 }

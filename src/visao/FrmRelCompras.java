@@ -8,6 +8,7 @@ package visao;
 
 import controllers.CtrlFornecedor;
 import controllers.CtrlRelatorios;
+import excecoes.ExcecaoGenerica;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -157,9 +158,15 @@ public class FrmRelCompras extends javax.swing.JFrame {
         if (txtDataInicial.getText() == null || txtDataInicial.getText().isEmpty() || txtDataInicial.getText().equals("  /  /    ")){
             Erro.show("Informe a data inicial ");
             return;
+        } else if (!Funcoes.validaData(txtDataInicial.getText())){
+            Erro.show("Data inicial inválida");
+            return;
         }
         if (txtDataFinal.getText() == null || txtDataFinal.getText().isEmpty() || txtDataFinal.getText().equals("  /  /    ")){
             Erro.show("Informe a data final ");
+            return;
+        } else if (!Funcoes.validaData(txtDataFinal.getText())){
+            Erro.show("Data final inválida");
             return;
         }
         if (ckFornecedor.isSelected()){
@@ -167,21 +174,29 @@ public class FrmRelCompras extends javax.swing.JFrame {
                 Erro.show("Informe o funcionário ");
                 return;
             }
-        }        
-        Map parametros = new HashMap();
-        parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
-        parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
-        if (ckFornecedor.isSelected()){
-            String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
-            parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);
-        }else 
-            parametros.put("prFornecedor", "1 = 1");                
-        JasperViewer jasperViewer = null;
-        if (ckRelDetalhado.isSelected())
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
-        else 
-            jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
-        jasperViewer.setVisible(true);
+        }
+        if (Funcoes.comparaDatas(txtDataInicial.getText(), txtDataFinal.getText()) > 0){
+            Erro.show("Datas inválidas");
+            return;
+        }
+        try {
+            Map parametros = new HashMap();
+            parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
+            parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
+            if (ckFornecedor.isSelected()){
+                String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
+                parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);
+            }else 
+                parametros.put("prFornecedor", "1 = 1");                
+            JasperViewer jasperViewer = null;
+            if (ckRelDetalhado.isSelected())
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
+            else 
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
+            jasperViewer.setVisible(true);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
     /**
@@ -237,11 +252,15 @@ public class FrmRelCompras extends javax.swing.JFrame {
     }
     
     private void carregarCombobox(){
-        cbxFornecedor.removeAllItems();
-        cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
-        CtrlFornecedor.PesquisarTodos().forEach(fornecedor -> {
-            cbxFornecedor.addItem(fornecedor);
-        });
+        try {
+            cbxFornecedor.removeAllItems();
+            cbxFornecedor.addItem(new Fornecedor(0, "Selecione"));
+            CtrlFornecedor.PesquisarTodos().forEach(fornecedor -> {
+                cbxFornecedor.addItem(fornecedor);
+            });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }   
     
 }

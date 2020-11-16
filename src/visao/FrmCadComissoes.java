@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlComissoes;
+import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
 import mensagens.Informacao;
@@ -257,13 +258,17 @@ public class FrmCadComissoes extends javax.swing.JFrame {
     private void ButtonExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonExcluirMouseClicked
         if (TxtCodigo.getText() == null || TxtCodigo.getText().isEmpty())
             return;
-        if (COMISSAO == null)
-            COMISSAO = new Comissoes();
-        COMISSAO.setCod_comissao(Integer.parseInt(TxtCodigo.getText()));
-        CtrlComissoes.Excluir(COMISSAO);
-        limpaCamposTextos();
-        carregarRegistros();
-        Informacao.show("Comissão inativada com sucesso! ");
+        try {
+            if (COMISSAO == null)
+                COMISSAO = new Comissoes();
+            COMISSAO.setCod_comissao(Integer.parseInt(TxtCodigo.getText()));
+            CtrlComissoes.Excluir(COMISSAO);
+            limpaCamposTextos();
+            carregarRegistros();
+            Informacao.show("Comissão inativada com sucesso! ");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }//GEN-LAST:event_ButtonExcluirMouseClicked
 
     private void ButonSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonSalvarMouseClicked
@@ -272,23 +277,26 @@ public class FrmCadComissoes extends javax.swing.JFrame {
             Erro.show("Informe o valor! ");
             return;
         }
-        
-        if (COMISSAO == null)
-            COMISSAO = new Comissoes();
-        COMISSAO.setAtivo(true);
-        COMISSAO.setUnidade_medida(undMedida.getSelectedItem().toString());
-        COMISSAO.setValor_comisssao(trataValor(TxtValor.getText()));
-        
-        if (TxtCodigo.getText() == null || TxtCodigo.getText().isEmpty()){
-            CtrlComissoes.SalvarTodosCampos(COMISSAO);
-            Informacao.show("Comissão salva com sucesso! ");
-        } else {
-            COMISSAO.setCod_comissao(Integer.parseInt(TxtCodigo.getText()));
-            CtrlComissoes.AtualizarTodosCampos(COMISSAO);
-            Informacao.show("Comissão atualizada com sucesso! ");
+        try {
+            if (COMISSAO == null)
+                COMISSAO = new Comissoes();
+            COMISSAO.setAtivo(true);
+            COMISSAO.setUnidade_medida(undMedida.getSelectedItem().toString());
+            COMISSAO.setValor_comisssao(trataValor(TxtValor.getText()));
+
+            if (TxtCodigo.getText() == null || TxtCodigo.getText().isEmpty()){
+                CtrlComissoes.SalvarTodosCampos(COMISSAO);
+                Informacao.show("Comissão salva com sucesso! ");
+            } else {
+                COMISSAO.setCod_comissao(Integer.parseInt(TxtCodigo.getText()));
+                CtrlComissoes.AtualizarTodosCampos(COMISSAO);
+                Informacao.show("Comissão atualizada com sucesso! ");
+            }
+            carregarRegistros();
+            limpaCamposTextos();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        carregarRegistros();
-        limpaCamposTextos();
     }//GEN-LAST:event_ButonSalvarMouseClicked
 
     private void undMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undMedidaActionPerformed
@@ -297,13 +305,17 @@ public class FrmCadComissoes extends javax.swing.JFrame {
 
     private void tblComissoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblComissoesMouseClicked
         if (tblComissoes.getSelectedRow() != -1){
-            limpaCamposTextos();
-            TxtCodigo.setText(String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 0)));
-            if (String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 1)).equals("R$"))
-                undMedida.setSelectedIndex(0);
-            else if (String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 1)).equals("U$"))
-                undMedida.setSelectedIndex(1);
-            TxtValor.setText(String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 2)));
+            try {
+                limpaCamposTextos();
+                TxtCodigo.setText(String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 0)));
+                if (String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 1)).equals("R$"))
+                    undMedida.setSelectedIndex(0);
+                else if (String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 1)).equals("U$"))
+                    undMedida.setSelectedIndex(1);
+                TxtValor.setText(String.valueOf(tblComissoes.getModel().getValueAt(tblComissoes.getSelectedRow(), 2)));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblComissoesMouseClicked
 
@@ -363,23 +375,35 @@ public class FrmCadComissoes extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregarRegistros(){
-        DefaultTableModel modelo = (DefaultTableModel) tblComissoes.getModel();
-        modelo.setNumRows(0);
-        CtrlComissoes.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object []{
-                c.getCod_comissao(),
-                c.getUnidade_medida(),
-                c.getValor_comisssao()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblComissoes.getModel();
+            modelo.setNumRows(0);
+            CtrlComissoes.PesquisarTodos().forEach((c) -> {
+                modelo.addRow(new Object []{
+                    c.getCod_comissao(),
+                    c.getUnidade_medida(),
+                    c.getValor_comisssao()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     private Double trataValor(String prValor){
-        return Double.parseDouble(prValor.replaceAll(",", "."));
+        try {
+            return Double.parseDouble(prValor.replaceAll(",", "."));
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 
     private String formataValor(Double prValor){
-        return Double.toString(prValor).replaceAll(".", ",");
+        try {    
+            return Double.toString(prValor).replaceAll(".", ",");
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 
     private void limpaCamposTextos() {
