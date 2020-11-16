@@ -6,7 +6,8 @@ import javax.swing.JOptionPane;
 public abstract class Confirmacao {
     
     public static boolean show(String pMensagem){
-        return JOptionPane.showConfirmDialog(null, pMensagem, "Confirmação", 3, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;        
+        Object[] options = { "Confirmar", "Cancelar" };
+        return JOptionPane.showOptionDialog(null, pMensagem, "Confirmação", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]) == 0;        
     }
     
 }

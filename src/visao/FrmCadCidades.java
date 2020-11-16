@@ -6,6 +6,7 @@
 package visao;
 
 import controllers.CtrlCidade;
+import excecoes.ExcecaoGenerica;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -304,39 +305,43 @@ public class FrmCadCidades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCidadeActionPerformed
-        JTable tabela = new JTable();
-        List<String[]> dados = new ArrayList<>();
-        
-        Cidades cidade = new Cidades();
-        cidade.setDescricao(txtBuscarCidade.getText());
-        List<Cidades> cidadePesquisa = CtrlCidade.PesquisarViaDescricaoInicia(cidade);
-        
-        for (Cidades c : cidadePesquisa){
-            dados.add(new String[]{String.valueOf(c.getCodCidade()), c.getDescricao()});
-        }
-        
-        tabela.setModel(new DefaultTableModel(
-            dados.toArray(new String[dados.size()][]),
-            new String [] {"CODIGO", "DESCRICAO"}){
-                boolean[] canEdit = new boolean []{false, false};
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }                
-            });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        
-        if (FRM_SELECIONA_REGISTRO == null)
-            FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
-        FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
-        FRM_SELECIONA_REGISTRO.setTitle("Cidades | Seleção ");
-        
-        FRM_SELECIONA_REGISTRO.setVisible(true);
-        
-        String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
-        if (registroSelecionado != null){
-            txtCodCidade.setText(registroSelecionado[0]);
-            txtDescCidade.setText(registroSelecionado[1]);
+        try {
+            JTable tabela = new JTable();
+            List<String[]> dados = new ArrayList<>();
+
+            Cidades cidade = new Cidades();
+            cidade.setDescricao(txtBuscarCidade.getText());
+            List<Cidades> cidadePesquisa = CtrlCidade.PesquisarViaDescricaoInicia(cidade);
+
+            for (Cidades c : cidadePesquisa){
+                dados.add(new String[]{String.valueOf(c.getCodCidade()), c.getDescricao()});
+            }
+
+            tabela.setModel(new DefaultTableModel(
+                dados.toArray(new String[dados.size()][]),
+                new String [] {"CODIGO", "DESCRICAO"}){
+                    boolean[] canEdit = new boolean []{false, false};
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }                
+                });
+            tabela.getTableHeader().setReorderingAllowed(false);
+
+            if (FRM_SELECIONA_REGISTRO == null)
+                FRM_SELECIONA_REGISTRO = new FrmSelecionaRegistro(this, true);
+            FRM_SELECIONA_REGISTRO.preencheTabela(tabela.getModel(), tabela);
+            FRM_SELECIONA_REGISTRO.setTitle("Cidades | Seleção ");
+
+            FRM_SELECIONA_REGISTRO.setVisible(true);
+
+            String[] registroSelecionado = FRM_SELECIONA_REGISTRO.getDadosSelecao();
+            if (registroSelecionado != null){
+                txtCodCidade.setText(registroSelecionado[0]);
+                txtDescCidade.setText(registroSelecionado[1]);
+            }
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_btnBuscarCidadeActionPerformed
 
@@ -350,42 +355,52 @@ public class FrmCadCidades extends javax.swing.JFrame {
             Erro.show("Informe a descrição da cidade");
             return;
         }
-        
-        if (CIDADE == null)
-            CIDADE = new Cidades();
-        CIDADE.setDescricao(txtDescCidade.getText());
-        CIDADE.setAtivo(true);
-        if (txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty()){
-            Integer codCidadeSalva = CtrlCidade.SalvarTodosCampos(CIDADE);
-            Informacao.show("Cidade salva com sucesso");
-            txtCodCidade.setText(Integer.toString(codCidadeSalva));
-        } else {
-            CIDADE.setCodCidade(Integer.parseInt(txtCodCidade.getText()));
-            CtrlCidade.AtualizarTodosCampos(CIDADE);
-            Informacao.show("Cidade atualizada com sucesso");
+        try {
+            if (CIDADE == null)
+                CIDADE = new Cidades();
+            CIDADE.setDescricao(txtDescCidade.getText());
+            CIDADE.setAtivo(true);
+            if (txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty()){
+                Integer codCidadeSalva = CtrlCidade.SalvarTodosCampos(CIDADE);
+                Informacao.show("Cidade salva com sucesso");
+                txtCodCidade.setText(Integer.toString(codCidadeSalva));
+            } else {
+                CIDADE.setCodCidade(Integer.parseInt(txtCodCidade.getText()));
+                CtrlCidade.AtualizarTodosCampos(CIDADE);
+                Informacao.show("Cidade atualizada com sucesso");
+            }
+
+            carregarRegistros();
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
         }
-        
-        carregarRegistros();
-        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnInvativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvativarActionPerformed
         if (!(txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty())){
-            if (CIDADE == null)
-                CIDADE = new Cidades();
-            CIDADE.setCodCidade(Integer.parseInt(txtCodCidade.getText()));
-            CtrlCidade.Excluir(CIDADE);
-            Informacao.show("Cargo inativado com sucesso");
-            limpaCamposTextos();
-            carregarRegistros();
+            try {
+                if (CIDADE == null)
+                    CIDADE = new Cidades();
+                CIDADE.setCodCidade(Integer.parseInt(txtCodCidade.getText()));
+                CtrlCidade.Excluir(CIDADE);
+                Informacao.show("Cargo inativado com sucesso");
+                limpaCamposTextos();
+                carregarRegistros();
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_btnInvativarActionPerformed
 
     private void tblCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseClicked
         if (tblCidades.getSelectedRow() != -1){
-            limpaCamposTextos();
-            txtCodCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 0)));
-            txtDescCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 1)));
+            try {
+                limpaCamposTextos();
+                txtCodCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 0)));
+                txtDescCidade.setText(String.valueOf(tblCidades.getModel().getValueAt(tblCidades.getSelectedRow(), 1)));
+            } catch(Exception e){
+                throw new ExcecaoGenerica(e);
+            }
         }
     }//GEN-LAST:event_tblCidadesMouseClicked
 
@@ -478,14 +493,18 @@ public class FrmCadCidades extends javax.swing.JFrame {
     }
 
     private void carregarRegistros() {
-        DefaultTableModel modelo = (DefaultTableModel) tblCidades.getModel();
-        modelo.setNumRows(0);
-        CtrlCidade.PesquisarTodos().forEach((c) -> {
-            modelo.addRow(new Object []{
-                c.getCodCidade(),
-                c.getDescricao()
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblCidades.getModel();
+            modelo.setNumRows(0);
+            CtrlCidade.PesquisarTodos().forEach((c) -> {
+                modelo.addRow(new Object []{
+                    c.getCodCidade(),
+                    c.getDescricao()
+                });
             });
-        });
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
 
 }

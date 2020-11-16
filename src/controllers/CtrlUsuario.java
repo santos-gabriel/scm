@@ -39,6 +39,17 @@ public abstract class CtrlUsuario {
         return UsuarioDao.PesquisarViaLogin(prUsuario);
     }    
     
+    public static Usuario PesquisarViaLoginExceto(Usuario prUsuario){
+        return UsuarioDao.PesquisarViaLoginExceto(prUsuario);
+    }
+    
+    public static Usuario VerificaDisponibilidadeLogin(Usuario prUsuario){
+        if (prUsuario.getCod_Usuario() == 0)
+            return PesquisarViaLogin(prUsuario);
+        else 
+            return PesquisarViaLoginExceto(prUsuario);
+    }
+    
     public static List<String> PesquisaPermissoesUsuarioModulo (String prDescricaoModulo, int prCodUsuario){
         return UsuarioDao.PesquisaPermissoesUsuarioModulo(prDescricaoModulo, prCodUsuario);
     }

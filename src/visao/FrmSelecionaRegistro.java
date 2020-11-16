@@ -6,6 +6,7 @@
 
 package visao;
 
+import excecoes.ExcecaoGenerica;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -220,8 +221,12 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
      * @param tabela objeto tabela
      */
     public void preencheTabela(DefaultTableModel modelo, JTable tabela) {
-        tbRegistros.setModel(modelo);
-        tbRegistros.add(new JScrollPane(tabela), BorderLayout.CENTER);
+        try {
+            tbRegistros.setModel(modelo);
+            tbRegistros.add(new JScrollPane(tabela), BorderLayout.CENTER);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
         // new JScrollPane(tabela), BorderLayout.CENTER
     }
     
@@ -232,8 +237,12 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
      * @param tabela objeto tabela
      */
     public void preencheTabela(TableModel modelo, JTable tabela) {
-        tbRegistros.setModel(modelo);
-        tbRegistros.add(new JScrollPane(tabela), BorderLayout.CENTER);
+        try {
+            tbRegistros.setModel(modelo);
+            tbRegistros.add(new JScrollPane(tabela), BorderLayout.CENTER);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
         // new JScrollPane(tabela), BorderLayout.CENTER
     }
     
@@ -250,17 +259,25 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
      * @since v1.0
      */
     public void setDadosSelecao(){
-        linha = new String[tbRegistros.getColumnCount()];
-        for (int i = 0; i < tbRegistros.getColumnCount(); i++){
-            linha[i] = String.valueOf(tbRegistros.getModel().getValueAt(tbRegistros.getSelectedRow(), i));
-        }        
+        try {
+            linha = new String[tbRegistros.getColumnCount()];
+            for (int i = 0; i < tbRegistros.getColumnCount(); i++){
+                linha[i] = String.valueOf(tbRegistros.getModel().getValueAt(tbRegistros.getSelectedRow(), i));
+            }        
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
     /**Método responsável por limpar a jtable que contém os registros da pesquisa
      * @since v1.0
      */
     public void limpaTabela () {
-        ((DefaultTableModel) tbRegistros.getModel()).setRowCount(0);
+        try {
+            ((DefaultTableModel) tbRegistros.getModel()).setRowCount(0);
+        } catch(Exception e){
+            throw new ExcecaoGenerica(e);
+        }
     }
     
 }
