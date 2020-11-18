@@ -82,8 +82,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblTime = new javax.swing.JLabel();
         panelHeader = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
-        btnCadastroFuncionarios = new javax.swing.JButton();
-        btnCadastroClientes = new javax.swing.JButton();
         menuSuperior = new javax.swing.JMenuBar();
         menuCadastros = new javax.swing.JMenu();
         subMenuCadastroClientes = new javax.swing.JMenuItem();
@@ -154,7 +152,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelFooterLayout.setHorizontalGroup(
             panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFooterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(1048, Short.MAX_VALUE)
                 .addComponent(lblUsuario)
                 .addGap(65, 65, 65)
                 .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,49 +172,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo-sistema-150-75.png"))); // NOI18N
 
-        btnCadastroFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/funcionario.png"))); // NOI18N
-        btnCadastroFuncionarios.setBorderPainted(false);
-        btnCadastroFuncionarios.setContentAreaFilled(false);
-        btnCadastroFuncionarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCadastroFuncionarios.setFocusPainted(false);
-        btnCadastroFuncionarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastroFuncionariosActionPerformed(evt);
-            }
-        });
-
-        btnCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Clientes.png"))); // NOI18N
-        btnCadastroClientes.setBorderPainted(false);
-        btnCadastroClientes.setContentAreaFilled(false);
-        btnCadastroClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCadastroClientes.setFocusPainted(false);
-        btnCadastroClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastroClientesActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCadastroFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCadastroClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 957, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(imgLogo)
                 .addContainerGap())
         );
         panelHeaderLayout.setVerticalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCadastroClientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHeaderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCadastroFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelBodyLayout = new javax.swing.GroupLayout(panelBody);
@@ -619,10 +586,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAD_CIDADE.setVisible(true);
     }//GEN-LAST:event_subMenuCadastroCidadesActionPerformed
 
-    private void btnCadastroFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroFuncionariosActionPerformed
-        subMenuCadastroFuncionariosActionPerformed(null);
-    }//GEN-LAST:event_btnCadastroFuncionariosActionPerformed
-
     private void subMenuCadastroEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroEstadosActionPerformed
         if (FRM_CAD_ESTADO == null)
             FRM_CAD_ESTADO = new FrmCadEstado();
@@ -634,10 +597,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             FRM_CAD_PRODUTO = new FrmCadProduto();
         FRM_CAD_PRODUTO.setVisible(true);
     }//GEN-LAST:event_subMenuProdutosActionPerformed
-
-    private void btnCadastroClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroClientesActionPerformed
-        subMenuCadastroClientesActionPerformed(null);
-    }//GEN-LAST:event_btnCadastroClientesActionPerformed
 
     private void subMenuCadastroFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCadastroFornecedoresActionPerformed
         if (FRM_CAD_FORNECEDOR == null)
@@ -830,8 +789,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastroClientes;
-    private javax.swing.JButton btnCadastroFuncionarios;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel imgPrincipalCenter;
     private javax.swing.JLabel lblTime;

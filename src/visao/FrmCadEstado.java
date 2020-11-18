@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.Estados;
@@ -51,7 +52,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtDescEstado = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtUfEstado = new javax.swing.JTextField();
+        txtUfEstado = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         txtBuscaEstado = new javax.swing.JTextField();
         btnBuscaEstado = new javax.swing.JButton();
@@ -77,11 +78,17 @@ public class FrmCadEstado extends javax.swing.JFrame {
 
         jLabel4.setText("UF");
 
+        try {
+            txtUfEstado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UU")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout pnlDadosCadastraisLayout = new javax.swing.GroupLayout(pnlDadosCadastrais);
         pnlDadosCadastrais.setLayout(pnlDadosCadastraisLayout);
         pnlDadosCadastraisLayout.setHorizontalGroup(
             pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDadosCadastraisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -348,6 +355,8 @@ public class FrmCadEstado extends javax.swing.JFrame {
         if (txtCodEstado.getText() == null || txtCodEstado.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (ESTADO == null)
                 ESTADO = new Estados();
             ESTADO.setCodEstado(Integer.parseInt(txtCodEstado.getText()));
@@ -499,7 +508,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscaEstado;
     private javax.swing.JTextField txtCodEstado;
     private javax.swing.JTextField txtDescEstado;
-    private javax.swing.JTextField txtUfEstado;
+    private javax.swing.JFormattedTextField txtUfEstado;
     // End of variables declaration//GEN-END:variables
 
     private void limparCamposTexto() {
