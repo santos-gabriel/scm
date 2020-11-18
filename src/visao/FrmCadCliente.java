@@ -33,11 +33,12 @@ public class FrmCadCliente extends javax.swing.JFrame {
 
     public FrmCadCliente() {
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
-        jRFisica.setSelected(true);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());        
         VerificarTipoPessoa();
         CarregarTabela();
         carregarTodosCombobox();
+        LimparCampos();
+        desabilitaTodosCampos();        
     }
 
     @SuppressWarnings("unchecked")
@@ -506,6 +507,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
         } else if (jRJuridica.isSelected()) {
             ClienteJuridico();
         }
+        LimparCampos();
+        desabilitaTodosCampos();
     }//GEN-LAST:event_ButonSalvar1MouseClicked
 
     private void jRJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRJuridicaActionPerformed
@@ -719,6 +722,9 @@ public class FrmCadCliente extends javax.swing.JFrame {
         TxtLogradouro.setEnabled(false);
         TxtNumero.setEnabled(false);
         TxtTelefone.setEnabled(false);
+        
+        jRFisica.setSelected(false);
+        jRJuridica.setSelected(false);
         
         TxtCNPJ.setEditable(false);
         TxtCNPJ.setEnabled(false);

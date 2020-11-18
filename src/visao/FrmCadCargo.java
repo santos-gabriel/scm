@@ -18,7 +18,7 @@ import mensagens.Informacao;
 import modelo.Cargo;
 
 /**
- *
+ * 
  * @author Gabriel
  */
 public class FrmCadCargo extends javax.swing.JFrame {
