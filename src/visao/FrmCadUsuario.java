@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import modelo.Usuario;
 import utilitarios.Funcoes;
 import mensagens.Erro;
@@ -469,13 +470,15 @@ public class FrmCadUsuario extends javax.swing.JFrame {
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodUsuario.getText().equals("") || txtCodUsuario.getText() == null)){ 
             try {
-            if (USUARIO == null)
-                USUARIO = new Usuario();
-            USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
-            CtrlUsuario.Excluir(USUARIO);
-            Informacao.show("Usuário inativado com sucesso");
-            limparEntradasDeDados();
-            carregarRegistros();
+                if (!Confirmacao.show("Deseja excluir este registro? "))
+                    return;
+                if (USUARIO == null)
+                    USUARIO = new Usuario();
+                USUARIO.setCod_Usuario(Integer.parseInt(txtCodUsuario.getText()));
+                CtrlUsuario.Excluir(USUARIO);
+                Informacao.show("Usuário inativado com sucesso");
+                limparEntradasDeDados();
+                carregarRegistros();
             } catch(Exception e){
                 throw new ExcecaoGenerica(e);
             }

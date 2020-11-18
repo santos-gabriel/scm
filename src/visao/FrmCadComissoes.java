@@ -8,6 +8,7 @@ package visao;
 import controllers.CtrlComissoes;
 import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.Comissoes;
@@ -259,6 +260,8 @@ public class FrmCadComissoes extends javax.swing.JFrame {
         if (TxtCodigo.getText() == null || TxtCodigo.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (COMISSAO == null)
                 COMISSAO = new Comissoes();
             COMISSAO.setCod_comissao(Integer.parseInt(TxtCodigo.getText()));
