@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.Cidades;
@@ -378,6 +379,8 @@ public class FrmCadCidades extends javax.swing.JFrame {
 
     private void btnInvativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvativarActionPerformed
         if (!(txtCodCidade.getText() == null || txtCodCidade.getText().isEmpty())){
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;            
             try {
                 if (CIDADE == null)
                     CIDADE = new Cidades();

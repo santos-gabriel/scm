@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.CategoriasProdutos;
@@ -374,6 +375,8 @@ public class FrmCadCategoria extends javax.swing.JFrame {
 
     private void btnInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInativarActionPerformed
         if (!(txtCodCategoria.getText() == null || txtCodCategoria.getText().isEmpty())){
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;            
             try {
                 if (CATEGORIA == null)
                     CATEGORIA = new CategoriasProdutos();
