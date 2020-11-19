@@ -8,6 +8,7 @@ package visao;
 import controllers.CtrlTipoPagamento;
 import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.TipoPagamento;
@@ -266,6 +267,8 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (TIPO_PAGAMENTO == null)
                 TIPO_PAGAMENTO = new TipoPagamento();
             TIPO_PAGAMENTO.setCod_pagamento(Integer.parseInt(txtCodigo.getText()));

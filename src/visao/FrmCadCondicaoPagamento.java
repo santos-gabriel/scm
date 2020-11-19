@@ -8,6 +8,7 @@ package visao;
 import controllers.CtrlCondicaoPagamento;
 import excecoes.ExcecaoGenerica;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Informacao;
 import modelo.CondicaoPagamento;
 
@@ -290,6 +291,8 @@ public class FrmCadCondicaoPagamento extends javax.swing.JFrame {
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (CONDICAO_PAGAMENTO == null)
                 CONDICAO_PAGAMENTO = new CondicaoPagamento();
             CONDICAO_PAGAMENTO.setCod_condicao_pagamento(Integer.parseInt(txtCodigo.getText()));

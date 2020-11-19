@@ -13,6 +13,7 @@ import excecoes.ExcecaoGenerica;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.Funcionario;
@@ -64,7 +65,6 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtWhatsapp = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtCep = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -74,7 +74,6 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
         txtCodCidade = new javax.swing.JTextField();
         txtCodEstado = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtCodCargo = new javax.swing.JTextField();
         cbxCargos = new javax.swing.JComboBox<>();
@@ -86,6 +85,8 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
         ButonNovo = new javax.swing.JLabel();
         ButonSalvar1 = new javax.swing.JLabel();
         ButtonExcluir = new javax.swing.JLabel();
+        txtCep = new javax.swing.JFormattedTextField();
+        txtNumero = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastros | Funcionários");
@@ -144,12 +145,6 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel7.setText("CEP");
-
-        txtCep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCepActionPerformed(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel8.setText("Estado");
@@ -295,6 +290,18 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
+        try {
+            txtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -439,10 +446,6 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCepActionPerformed
-
     private void txtLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLogradouroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLogradouroActionPerformed
@@ -581,6 +584,8 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
         if (txtCod.getText() == null || txtCod.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (FUNCIONARIO == null)
                 FUNCIONARIO = new Funcionario();
             FUNCIONARIO.setCod_Funcionario(Integer.parseInt(txtCod.getText()));
@@ -676,7 +681,7 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblFuncionarios;
     private javax.swing.JTextField txtBairro;
-    private javax.swing.JTextField txtCep;
+    private javax.swing.JFormattedTextField txtCep;
     private javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtCodCargo;
     private javax.swing.JTextField txtCodCidade;
@@ -685,7 +690,7 @@ public class FrmCadFuncionario extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtDataNasc;
     private javax.swing.JTextField txtLogradouro;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNumero;
+    private javax.swing.JFormattedTextField txtNumero;
     private javax.swing.JFormattedTextField txtRg;
     private javax.swing.JFormattedTextField txtWhatsapp;
     // End of variables declaration//GEN-END:variables

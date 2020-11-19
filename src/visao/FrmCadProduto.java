@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mensagens.Confirmacao;
 import mensagens.Erro;
 import mensagens.Informacao;
 import modelo.CategoriasProdutos;
@@ -373,6 +374,8 @@ public class FrmCadProduto extends javax.swing.JFrame {
         if (txtCodProduto.getText() == null || txtCodProduto.getText().isEmpty())
             return;
         try {
+            if (!Confirmacao.show("Deseja excluir este registro? "))
+                return;
             if (PRODUTO == null)
                 PRODUTO = new Produto();
             PRODUTO.setCod_Produto(Integer.parseInt(txtCodProduto.getText()));
