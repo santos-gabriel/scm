@@ -723,8 +723,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
         TxtNumero.setEnabled(false);
         TxtTelefone.setEnabled(false);
         
-        jRFisica.setSelected(false);
-        jRJuridica.setSelected(false);
+        BGTipoPessoa.clearSelection();
         
         TxtCNPJ.setEditable(false);
         TxtCNPJ.setEnabled(false);
@@ -805,7 +804,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
             CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
             CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
             CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText());
+            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + "," + TxtNumero.getText() + "," + TxtBairro.getText());
 
             if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 
@@ -867,7 +866,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
             CLIENTE.setTelefone_Cliente(TxtTelefone.getText());
             CLIENTE.setEstado(new Estados(Integer.parseInt(TxtCodEstado.getText())));
             CLIENTE.setCidade(new Cidades(Integer.parseInt(TxtCodCidade.getText())));
-            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + ", " + TxtNumero.getText() + ", " + TxtBairro.getText() + ", " + jCCidade.getToolTipText() + ", " + jCEstado.getToolTipText());
+            CLIENTE.setEndereco_Cliente(TxtCep.getText() + "," + TxtLogradouro.getText() + "," + TxtNumero.getText() + "," + TxtBairro.getText());
             if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
 
                 Informacao.show("Cliente Jurídico salvo com sucesso!");

@@ -30,7 +30,7 @@ public abstract class ComprasDao {
     
     public static Integer Inserir (Compras prCompra){
         CriarConexoes();
-        String sql = "INSERT INTO comppras(cod_fornecedor, cod_usuario, data, total_bruto, desconto, total_liquido, ativo) VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?, ?, true)";
+        String sql = "INSERT INTO compras(cod_fornecedor, cod_usuario, data, total_bruto, desconto, total_liquido, ativo) VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?, ?, true)";
         PreparedStatement stmt = null;
         try {
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

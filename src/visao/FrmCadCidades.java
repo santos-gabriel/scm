@@ -372,6 +372,7 @@ public class FrmCadCidades extends javax.swing.JFrame {
             }
 
             carregarRegistros();
+            limpaCamposTextos();
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
