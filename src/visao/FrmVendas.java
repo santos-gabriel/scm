@@ -157,9 +157,15 @@ public class FrmVendas extends javax.swing.JFrame {
 
         jLabel5.setText("Cód. Funcionário");
 
+        cbxTipoPagamento.setEnabled(false);
+
         jLabel6.setText("Tipo Pagamento");
 
+        cbxCondicaoPagamento.setEnabled(false);
+
         jLabel7.setText("Condição Pagamento");
+
+        cbxComissao.setEnabled(false);
 
         jLabel11.setText("Comissão");
 
@@ -454,6 +460,7 @@ public class FrmVendas extends javax.swing.JFrame {
 
         txtTotalBruto.setEditable(false);
 
+        txtTotalDesconto.setEditable(false);
         txtTotalDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTotalDescontoKeyPressed(evt);
@@ -549,14 +556,7 @@ public class FrmVendas extends javax.swing.JFrame {
         limparTodosCamposTextos();
         limpaTblProdutosVenda();
         carregarTodosCombobox();
-        btnLocalizarCliente.setEnabled(true);
-        txtNomeCliente.setEditable(true);
-        btnLocalizarFuncionario.setEnabled(true);
-        txtNomeFuncionario.setEditable(true);
-        btnLocalizarProduto.setEnabled(true);
-        txtProduto.setEditable(true);
-        txtQtdeProduto.setEditable(true);
-        btnInserirProduto.setEnabled(true);
+        habilitaDesabilitaCampos(true);
         txtTotalBruto.setText("0");
         txtTotalDesconto.setText("0");
         txtTotalLiquido.setText("0");        
@@ -590,11 +590,7 @@ public class FrmVendas extends javax.swing.JFrame {
             limpaTblProdutosVenda();
             carregarTodosCombobox();
             Informacao.show("Venda concluída/finalizada com sucesso ");
-
-            btnLocalizarCliente.setEnabled(false);
-            btnLocalizarFuncionario.setEnabled(false);
-            btnLocalizarProduto.setEnabled(false);
-            btnInserirProduto.setEnabled(false);
+            habilitaDesabilitaCampos(false);
         } catch (Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -999,23 +995,28 @@ public class FrmVendas extends javax.swing.JFrame {
             Erro.show("Informe o funcionário");
             return false;
         }
-        if (!(cbxComissao.getSelectedIndex() > 0)){
-            Erro.show("Informe a comissão");
-            return false;
-        }
-        if (!(cbxCondicaoPagamento.getSelectedIndex() > 0)){
-            Erro.show("Informe a condição de pagamento");
-            return false;
-        }
-        if (!(cbxTipoPagamento.getSelectedIndex() > 0)){
-            Erro.show("Informe o tipo de pagamento");
-            return false;
-        }
         try {        
-            Vendas venda = new Vendas(0, new Cliente(Integer.parseInt(txtCodCliente.getText())), new Funcionario(Integer.parseInt(txtCodFuncionario.getText())), 
-                ((CondicaoPagamento)cbxCondicaoPagamento.getSelectedItem()), ((TipoPagamento)cbxTipoPagamento.getSelectedItem()), 
-                ((Comissoes)cbxComissao.getSelectedItem()), Integer.parseInt(txtTotalBruto.getText()), Integer.parseInt(txtTotalDesconto.getText()), Integer.parseInt(txtTotalLiquido.getText()), 
-                "", false, true);
+            Vendas venda = new Vendas();
+            if (!(cbxTipoPagamento.getSelectedIndex() > 0))
+                venda.setTipoPagamento(null);
+            else
+                venda.setTipoPagamento(((TipoPagamento)cbxTipoPagamento.getSelectedItem()));
+            if (!(cbxCondicaoPagamento.getSelectedIndex() > 0))
+                venda.setCondicaoPagamento(null);
+            else
+                venda.setCondicaoPagamento(((CondicaoPagamento)cbxCondicaoPagamento.getSelectedItem()));
+            if (!(cbxComissao.getSelectedIndex() > 0))
+                venda.setComissao(null);
+            else
+                venda.setComissao(((Comissoes)cbxComissao.getSelectedItem()));
+            venda.setCliente(new Cliente(Integer.parseInt(txtCodCliente.getText())));
+            venda.setFuncionario(new Funcionario(Integer.parseInt(txtCodFuncionario.getText())));
+            venda.setValorBruto(Integer.parseInt(txtTotalBruto.getText()));
+            venda.setDesconto(Integer.parseInt(txtTotalDesconto.getText()));
+            venda.setValorTotal(Integer.parseInt(txtTotalLiquido.getText()));
+            venda.setDataVenda("");
+            venda.setFinalizada(false);
+            venda.setAtivo(true);
             Integer codigoInserido = CtrlVendas.Inserir(venda);
             if (codigoInserido == null)
                 return false;
@@ -1068,14 +1069,7 @@ public class FrmVendas extends javax.swing.JFrame {
             limpaTblProdutosVenda();
             limparTodosCamposTextos();
             carregarTodosCombobox();
-            txtNomeCliente.setEditable(false);
-            txtNomeFuncionario.setEditable(false);
-            txtProduto.setEditable(false);
-            txtQtdeProduto.setEditable(false);
-            btnInserirProduto.setEnabled(false);
-            btnLocalizarCliente.setEnabled(false);
-            btnLocalizarFuncionario.setEnabled(false);
-            btnLocalizarProduto.setEnabled(false);
+            habilitaDesabilitaCampos(false);
 
             txtCodVenda.setText(Integer.toString(prVenda.getCodVenda()));
             txtCodFuncionario.setText(Integer.toString(prVenda.getFuncionario().getCod_Funcionario()));
@@ -1092,10 +1086,25 @@ public class FrmVendas extends javax.swing.JFrame {
             txtTotalBruto.setText(Double.toString(prVenda.getValorBruto()));
             txtTotalDesconto.setText(Double.toString(prVenda.getDesconto()));
             txtTotalLiquido.setText(Double.toString(prVenda.getValorTotal()));
-            carregarProdutosVenda();
+            carregarProdutosVenda();            
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
+    }
+    
+    private void habilitaDesabilitaCampos(boolean prHabilitarDesabilitar){
+        txtNomeCliente.setEditable(prHabilitarDesabilitar);
+        txtNomeFuncionario.setEditable(prHabilitarDesabilitar);
+        txtProduto.setEditable(prHabilitarDesabilitar);
+        txtQtdeProduto.setEditable(prHabilitarDesabilitar);
+        txtTotalDesconto.setEditable(prHabilitarDesabilitar);
+        btnLocalizarCliente.setEnabled(prHabilitarDesabilitar);
+        btnLocalizarFuncionario.setEnabled(prHabilitarDesabilitar);
+        btnLocalizarProduto.setEnabled(prHabilitarDesabilitar);
+        btnInserirProduto.setEnabled(prHabilitarDesabilitar);
+        cbxComissao.setEnabled(prHabilitarDesabilitar);
+        cbxCondicaoPagamento.setEnabled(prHabilitarDesabilitar);
+        cbxTipoPagamento.setEnabled(prHabilitarDesabilitar);
     }
     
 }
