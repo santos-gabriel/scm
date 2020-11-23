@@ -24,7 +24,7 @@ public abstract class CtrlCaixa {
     }
     
     public static Double PesquisaSaldoAtual(){        
-        return CaixaDao.PesquisaSaldoAtual(PesquisaUltimoCaixa());
+        return CaixaDao.PesquisaSaldoAtual(PesquisaUltimoCaixaComTimesTamp());
     }
     
     public static List<Caixa> PesquisaTodos(){

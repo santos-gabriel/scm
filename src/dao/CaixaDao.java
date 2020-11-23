@@ -39,37 +39,42 @@ public abstract class CaixaDao {
             FecharConexoes(conexao, stmt, null);
         }
     }
-    
+            
     public static Double PesquisaSaldoAtual(Caixa prCaixa){
         CriarConexoes();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = 
-                  "SELECT COALESCE(SUM(cp.total_liquido), 0) AS COMPRA, COALESCE(SUM(vd.valor_total), 0) AS VENDA, ((COALESCE(SUM(vd.valor_total), 0)) - (COALESCE(cp.total_liquido, 0))) AS SALDO "
-                + "FROM      referencia_produto 	ref                     "
-                + "LEFT JOIN produtos_venda 		prvd 	ON              "
-                + "     prvd.cod_rastreio_produto = ref.cod_rastreio_produto    "
-                + "LEFT JOIN vendas 			vd 	ON              "
-                + "     vd.cod_venda = prvd.cod_venda                           "
-                + "LEFT JOIN produto_compra 		prcp 	ON              "
-                + "     prcp.cod_rastreio_produto = ref.cod_rastreio_produto    "
-                + "LEFT JOIN compras 			cp 	ON              "
-                + "     cp.cod_compra = prcp.cod_compra                         ";
-        if (!(prCaixa == null || prCaixa.getFechamentoData() == null || prCaixa.getFechamentoData().isEmpty())){
-            sql+="WHERE vd.data_venda > ?                                       ";
-            sql+="AND   cp.data       > ?                                       ";
-        }
+                  "SELECT                                                           " +
+                  "       (SELECT COALESCE(SUM(cp.total_liquido), 0)                " +
+                  "	   FROM   referencia_produto ref1                           " +
+                  "        INNER JOIN produto_compra pc ON                          " +
+                  "		pc.cod_rastreio_produto = ref1.cod_rastreio_produto " +
+                  "	   INNER JOIN compras cp ON                                 " +
+                  "		cp.cod_compra = pc.cod_compra                       ";
+        if (!(prCaixa == null || prCaixa.getAuxFechamentoData() == null))
+            sql += "	   WHERE cp.data > ?                                        ";        
+        sql += "       ) AS COMPRAS, " +
+                  "       (SELECT COALESCE(SUM(vd.valor_total), 0)                  " +
+                  "        FROM   referencia_produto ref2                           " +
+                  "        INNER JOIN produtos_venda pv ON                          " +
+                  "		pv.cod_rastreio_produto = ref2.cod_rastreio_produto " +
+                  "	   INNER JOIN vendas vd ON                                  " +
+                  "		vd.cod_venda = pv.cod_venda                         ";
+        if (!(prCaixa == null || prCaixa.getAuxFechamentoData() == null))
+            sql += "	   WHERE vd.data_venda > ?                                  ";                  
+        sql += "       ) AS VENDAS                                                  ";        
         try {
             stmt = conexao.prepareStatement(sql);
-            if (!(prCaixa == null || prCaixa.getFechamentoData() == null || prCaixa.getFechamentoData().isEmpty())){
-                stmt.setString(1, prCaixa.getFechamentoData());
-                stmt.setString(2, prCaixa.getFechamentoData());
+            if (!(prCaixa == null || prCaixa.getAuxFechamentoData()== null)){
+                stmt.setTimestamp(1, prCaixa.getAuxFechamentoData());
+                stmt.setTimestamp(2, prCaixa.getAuxFechamentoData());
             }
             rs = stmt.executeQuery();            
-            if(rs.next())
-                return rs.getDouble("SALDO");
-            else 
-                return null;
+            if(rs.next())            
+                return ((rs.getDouble("VENDAS")) - (rs.getDouble("COMPRAS")));
+            else
+                return null;            
         } catch (Exception e) {
             throw new ExcecaoDB(e, "Falha ao localizar saldo, entre em contato com o suporte do sistema ");
         }finally{

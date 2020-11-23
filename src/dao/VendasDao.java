@@ -42,9 +42,18 @@ public abstract class VendasDao {
             stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, prVenda.getCliente().getCod_Cliente());
             stmt.setInt(2, prVenda.getFuncionario().getCod_Funcionario());
-            stmt.setInt(3, prVenda.getCondicaoPagamento().getCod_condicao_pagamento());
-            stmt.setInt(4, prVenda.getTipoPagamento().getCod_pagamento());
-            stmt.setInt(5, prVenda.getComissao().getCod_comissao());            
+            if (prVenda.getCondicaoPagamento() != null)
+                stmt.setInt(3, prVenda.getCondicaoPagamento().getCod_condicao_pagamento());
+            else 
+                stmt.setObject(3, null);
+            if (prVenda.getTipoPagamento() != null)
+                stmt.setInt(4, prVenda.getTipoPagamento().getCod_pagamento());
+            else 
+                stmt.setObject(4, null);
+            if (prVenda.getComissao() != null)
+                stmt.setInt(5, prVenda.getComissao().getCod_comissao());
+            else 
+                stmt.setObject(5, null);
             stmt.setDouble(6, prVenda.getValorBruto());
             stmt.setDouble(7, prVenda.getDesconto());
             stmt.setDouble(8, prVenda.getValorTotal());
