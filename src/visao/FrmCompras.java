@@ -110,11 +110,14 @@ public class FrmCompras extends javax.swing.JFrame {
 
         txtCodProduto.setEditable(false);
 
+        txtDescProduto.setEditable(false);
         txtDescProduto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDescProdutoKeyPressed(evt);
             }
         });
+
+        txtQtdeProduto.setEditable(false);
 
         btnLocalizarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/magnifier.png"))); // NOI18N
         btnLocalizarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -214,6 +217,9 @@ public class FrmCompras extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        txtDescUsuario.setEditable(false);
+
+        txtDescFornecedor.setEditable(false);
         txtDescFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDescFornecedorKeyPressed(evt);
@@ -382,6 +388,7 @@ public class FrmCompras extends javax.swing.JFrame {
 
         jLabel9.setText("Total de Desconto");
 
+        txtTotalDesconto.setEditable(false);
         txtTotalDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTotalDescontoKeyPressed(evt);
@@ -468,13 +475,12 @@ public class FrmCompras extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         limparCampos();
+        habilitaDesabilitaCampos(true);
         txtDescUsuario.setText(UsuariosUtil.getUsuario().getLogin());
-        txtTotalBruto.setText("0");
-        txtTotalDesconto.setText("0");
-        txtTotalLiquido.setText("0");
-        btnLocalizarFornecedor.setEnabled(true);
-        btnLocalizarProduto.setEnabled(true);
-        btnInserirProduto.setEnabled(true);
+        txtTotalBruto.setText("0");        
+        txtTotalDesconto.setText("0");        
+        txtTotalLiquido.setText("0");  
+        limpaProdutosCompras();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
@@ -502,6 +508,7 @@ public class FrmCompras extends javax.swing.JFrame {
                 CtrlCompras.AtualizarTotais(compra);
             }
             limparCampos();
+            habilitaDesabilitaCampos(false);
             limpaTblProdutosCompra();
             Informacao.show("Compra concluída/finalizada com sucesso ");
         } catch(Exception e){
@@ -840,10 +847,7 @@ public class FrmCompras extends javax.swing.JFrame {
         try {
             limpaTblProdutosCompra();
             limparCampos();
-            txtDescProduto.setEditable(false);
-            txtQtdeProduto.setEditable(false);
-            txtDescFornecedor.setEditable(false);
-            txtDescUsuario.setEditable(false);
+            habilitaDesabilitaCampos(false);
 
             txtCodCompra.setText(Integer.toString(compra.getCodCompra()));
             txtCodFornecedor.setText(Integer.toString(compra.getFornecedor().getCod_Fornecedor()));
@@ -856,6 +860,21 @@ public class FrmCompras extends javax.swing.JFrame {
         } catch (Exception e) {
             throw new ExcecaoGenerica(e);
         }
+    }
+    
+    private void habilitaDesabilitaCampos(boolean prHabilitarDesbilitar){
+        txtTotalDesconto.setEditable(prHabilitarDesbilitar);
+        txtDescFornecedor.setEditable(prHabilitarDesbilitar);
+        btnLocalizarFornecedor.setEnabled(prHabilitarDesbilitar);
+        txtDescProduto.setEditable(prHabilitarDesbilitar);
+        txtQtdeProduto.setEditable(prHabilitarDesbilitar);
+        btnLocalizarProduto.setEnabled(prHabilitarDesbilitar);
+        btnInserirProduto.setEnabled(prHabilitarDesbilitar);
+    }
+    
+    private void limpaProdutosCompras(){
+        DefaultTableModel modelo = (DefaultTableModel) tblProdutosCompra.getModel();
+        modelo.setNumRows(0);
     }
     
 }

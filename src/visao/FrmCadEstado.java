@@ -346,6 +346,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
                 Informacao.show("Estado atualizado com sucesso");
             }
             carregarRegistros();
+            limparCamposTexto();
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
