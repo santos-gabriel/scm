@@ -502,13 +502,10 @@ public class FrmCadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_ButonSalvar1MouseEntered
 
     private void ButonSalvar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButonSalvar1MouseClicked
-        if (jRFisica.isSelected()) {
-            ClienteFisico();
-        } else if (jRJuridica.isSelected()) {
-            ClienteJuridico();
-        }
-        LimparCampos();
-        desabilitaTodosCampos();
+        if (jRFisica.isSelected())
+            ClienteFisico();            
+        else if (jRJuridica.isSelected())
+            ClienteJuridico();                           
     }//GEN-LAST:event_ButonSalvar1MouseClicked
 
     private void jRJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRJuridicaActionPerformed
@@ -818,7 +815,8 @@ public class FrmCadCliente extends javax.swing.JFrame {
                 Informacao.show("Cliente Físico atualizado com sucesso!");
             }
             CarregarTabela();
-            LimparCampos();
+            LimparCampos();            
+            desabilitaTodosCampos();
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -880,6 +878,7 @@ public class FrmCadCliente extends javax.swing.JFrame {
             }
             CarregarTabela();
             LimparCampos();
+            desabilitaTodosCampos();
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
