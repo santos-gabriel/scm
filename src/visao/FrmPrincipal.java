@@ -663,7 +663,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-clientes-fisicos-ativos.jasper";        
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páginas");
+            else
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -679,7 +682,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-clientes-juridicos-ativos.jasper";        
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else 
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -689,7 +695,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-produtos-ativos.jasper";        
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else 
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -705,7 +714,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-estoque-produtos.jasper";        
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -722,9 +734,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
                 JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
                 if (view == null)
-                Informacao.show("Relatório sem páinas");
-            else 
-                view.setVisible(true);
+                    Informacao.show("Relatório sem páinas");
+                else 
+                    view.setVisible(true);
             }            
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
@@ -735,7 +747,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-fechamentos-caixas.jasper";
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else
+                view.setVisible(true);            
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -745,7 +760,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try { 
             String src = "src/relatorios/rel-funcionarios-ativos.jasper";
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
@@ -755,7 +773,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         try {
             String src = "src/relatorios/rel-fornecedores-ativos.jasper";
             JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
-            view.setVisible(true);
+            if (view == null)
+                Informacao.show("Relatório sem páinas");
+            else
+                view.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }

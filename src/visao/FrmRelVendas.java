@@ -11,6 +11,7 @@ import excecoes.ExcecaoGenerica;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
+import mensagens.Informacao;
 import modelo.Funcionario;
 import net.sf.jasperreports.view.JasperViewer;
 import utilitarios.Funcoes;
@@ -194,7 +195,10 @@ public class FrmRelVendas extends javax.swing.JFrame {
                 jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas-detalhado.jasper", parametros);            
             else 
                 jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas.jasper", parametros);        
-            jasperViewer.setVisible(true);
+            if (jasperViewer == null)
+                Informacao.show("Relatório sem páinas");
+            else
+                jasperViewer.setVisible(true);
         } catch(Exception e){
             throw new ExcecaoGenerica(e);
         }
