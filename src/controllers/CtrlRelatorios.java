@@ -35,7 +35,10 @@ public abstract class CtrlRelatorios {
         try{
             conexao = Conexao.conectar();
             jasperPrint = JasperFillManager.fillReport(caminhoArquivo, parametros, conexao);
-            return new JasperViewer(jasperPrint, false);
+            if (jasperPrint.getPages().size() == 0)
+                return null;
+            else 
+                return new JasperViewer(jasperPrint, false);
         }catch (JRException ex){
             throw new ExcecaoFiles(ex, "Erro ao emitir relatório, entre em contato com o suporte do sistema");
         }finally{
