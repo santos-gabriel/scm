@@ -191,9 +191,9 @@ public class FrmRelCompras extends javax.swing.JFrame {
                 parametros.put("prFornecedor", "1 = 1");                
             JasperViewer jasperViewer = null;
             if (ckRelDetalhado.isSelected())
-                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros);            
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras-detalhado.jasper", parametros, "Relatório Detalhado de Compras");            
             else 
-                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros);        
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-compras.jasper", parametros, "Relatório de Compras");        
             if (jasperViewer == null)
                 Informacao.show("Relatório sem páinas");
             else

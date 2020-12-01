@@ -123,6 +123,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelCaixa = new javax.swing.JMenu();
         subMenuRelatorioCaixa = new javax.swing.JMenuItem();
         subMenuRelatorioFechamentosCaixas = new javax.swing.JMenuItem();
+        menuOpcoes = new javax.swing.JMenu();
+        subMenuTrocarUsuario = new javax.swing.JMenuItem();
+        subMenuSair = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -513,6 +516,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuSuperior.add(menuRelatorio);
 
+        menuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/wrench.png"))); // NOI18N
+        menuOpcoes.setText("Opções");
+
+        subMenuTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_go.png"))); // NOI18N
+        subMenuTrocarUsuario.setText("Trocar Usuário");
+        subMenuTrocarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuTrocarUsuarioActionPerformed(evt);
+            }
+        });
+        menuOpcoes.add(subMenuTrocarUsuario);
+
+        subMenuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/door_in.png"))); // NOI18N
+        subMenuSair.setText("Sair");
+        subMenuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuSairActionPerformed(evt);
+            }
+        });
+        menuOpcoes.add(subMenuSair);
+
+        menuSuperior.add(menuOpcoes);
+
         menuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/information.png"))); // NOI18N
         menuSobre.setText("Sobre");
         menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -662,7 +688,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioClientesFisicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesFisicosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-clientes-fisicos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Clientes Físicos");
             if (view == null)
                 Informacao.show("Relatório sem páginas");
             else
@@ -681,7 +707,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioClientesJuridicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesJuridicosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-clientes-juridicos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Clientes Jurídicos");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else 
@@ -694,7 +720,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioProdutosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioProdutosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-produtos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Produtos");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else 
@@ -713,7 +739,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioEstoqueProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioEstoqueProdutosActionPerformed
         try {
             String src = "src/relatorios/rel-estoque-produtos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Estoque");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -732,7 +758,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             else {
                 Map parametros = new HashMap();
                 parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
-                JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
+                JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros, "Relatório de Caixa");
                 if (view == null)
                     Informacao.show("Relatório sem páinas");
                 else 
@@ -746,7 +772,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioFechamentosCaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFechamentosCaixasActionPerformed
         try {
             String src = "src/relatorios/rel-fechamentos-caixas.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Fechamentos de Caixa");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -759,7 +785,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioFuncionariosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
         try { 
             String src = "src/relatorios/rel-funcionarios-ativos.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Funcionários");                        
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -772,7 +798,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatoriosFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatoriosFornecedoresActionPerformed
         try {
             String src = "src/relatorios/rel-fornecedores-ativos.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Fornecedores");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -781,6 +807,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_subMenuRelatoriosFornecedoresActionPerformed
+
+    private void subMenuTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuTrocarUsuarioActionPerformed
+        new FrmLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_subMenuTrocarUsuarioActionPerformed
+
+    private void subMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_subMenuSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -827,6 +862,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuFinanceiro;
     private javax.swing.JMenu menuFuncionarios;
     private javax.swing.JMenu menuMovimentacoes;
+    private javax.swing.JMenu menuOpcoes;
     private javax.swing.JMenu menuProdutos;
     private javax.swing.JMenu menuRelCaixa;
     private javax.swing.JMenu menuRelClientes;
@@ -863,6 +899,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subMenuRelatorioProdutosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioVendas;
     private javax.swing.JMenuItem subMenuRelatoriosFornecedores;
+    private javax.swing.JMenuItem subMenuSair;
+    private javax.swing.JMenuItem subMenuTrocarUsuario;
     private javax.swing.JMenuItem subMenuVendas;
     private javax.swing.JMenuItem subMenuVisualizarCompras;
     private javax.swing.JMenuItem subMenuVisualizarVendas;
