@@ -55,7 +55,7 @@ public class FrmVisualizarCompras extends javax.swing.JFrame {
         tblDadosCompras = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Compras | Visualizar");
+        setTitle("Movimentações | Visualizar Compras");
 
         jLabel1.setText("Data Inicial");
 

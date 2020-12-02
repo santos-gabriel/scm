@@ -63,7 +63,7 @@ public class FrmCadCategoria extends javax.swing.JFrame {
         tblCategorias = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Categorias");
+        setTitle("Produtos | Cadastro de Categorias");
         setResizable(false);
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));

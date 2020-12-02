@@ -64,7 +64,7 @@ public class FrmCadCidades extends javax.swing.JFrame {
         tblCidades = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Cidades");
+        setTitle("Localidades | Cadastro de Cidades");
         setResizable(false);
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));

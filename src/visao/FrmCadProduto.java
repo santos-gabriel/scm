@@ -76,7 +76,7 @@ public class FrmCadProduto extends javax.swing.JFrame {
         tblProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Produtos");
+        setTitle("Produtos | Cadastro");
         setResizable(false);
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));

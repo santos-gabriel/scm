@@ -57,7 +57,7 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
         tblDadosVendas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vendas | Visualizar");
+        setTitle("Movimentações | Visualizar Vendas");
 
         try {
             txtDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));

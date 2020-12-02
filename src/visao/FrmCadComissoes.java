@@ -55,7 +55,7 @@ public class FrmCadComissoes extends javax.swing.JFrame {
         ButtonExcluir = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Comissões");
+        setTitle("Financeiro | Cadastro de Comissões");
         setResizable(false);
 
         jLabel1.setText("Código");

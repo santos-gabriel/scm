@@ -49,7 +49,7 @@ public class FrmRelCompras extends javax.swing.JFrame {
         ckRelDetalhado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Stock Control Manager | Relatório de Compras");
+        setTitle("Relatórios | Relatório de Compras");
         setResizable(false);
 
         jLabel1.setText("Data Inicial");
