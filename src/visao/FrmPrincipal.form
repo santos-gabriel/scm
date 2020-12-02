@@ -9,125 +9,46 @@
         </Property>
       </Properties>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuCadastros">
+        <Menu class="javax.swing.JMenu" name="menuClientes">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/iconsUtils/application_add.png"/>
+              <Image iconType="3" name="/img/iconsUtils/user_green.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cadastros"/>
+            <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroClientes">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/user_green.png"/>
+                  <Image iconType="3" name="/img/iconsUtils/add.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Clientes"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Clientes"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroClientesActionPerformed"/>
               </Events>
             </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuFornecedores">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/iconsUtils/user_gray.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Fornecedores"/>
+          </Properties>
+          <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroFornecedores">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/user_gray.png"/>
+                  <Image iconType="3" name="/img/iconsUtils/add.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Fornecedores"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Fornecedores"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroFornecedoresActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroUsuarios">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/user_orange.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroUsuariosActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroCidades">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/building.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cidades"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroCidadesActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroEstados">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/building.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Estados"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroEstadosActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="menuFinanceiro">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/iconsUtils/money.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Financeiro"/>
-          </Properties>
-          <SubComponents>
-            <Menu class="javax.swing.JMenu" name="subMenuCadastrosFinanceiros">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/application_add.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cadastros"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroComissoes">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Comiss&#xf5;es"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroComissoesActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroTiposPagamentos">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Tipos de Pagamentos"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroTiposPagamentosActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroCondicoesPagamentos">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Condi&#xe7;&#xf5;es de Pagamentos"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroCondicoesPagamentosActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuFuncionarios">
@@ -143,7 +64,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/vcard.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cargos"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Cargos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroCargosActionPerformed"/>
@@ -154,7 +75,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/user_suit.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Funcion&#xe1;rios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroFuncionariosActionPerformed"/>
@@ -175,7 +96,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/layers.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Categorias"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Categorias"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCategoriasActionPerformed"/>
@@ -186,7 +107,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/package.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Produto"/>
+                <Property name="text" type="java.lang.String" value="Cadastro de Produtos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuProdutosActionPerformed"/>
@@ -266,6 +187,59 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuFinanceiro">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/iconsUtils/money.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Financeiro"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="subMenuCadastrosFinanceiros">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/iconsUtils/application_add.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastros"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroComissoes">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Comiss&#xf5;es"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroComissoesActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroTiposPagamentos">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tipos de Pagamentos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroTiposPagamentosActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroCondicoesPagamentos">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/money_dollar.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Condi&#xe7;&#xf5;es de Pagamentos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroCondicoesPagamentosActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuCaixa">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -292,7 +266,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/user_green.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Clientes"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Clientes"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="subMenuRelatorioClientesFisicosAtivos">
@@ -300,7 +274,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/user_green.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Clientes F&#xed;sicos"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Clientes F&#xed;sicos"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioClientesFisicosAtivosActionPerformed"/>
@@ -311,7 +285,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/user_green.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Clientes Jur&#xed;dicos"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Clientes Jur&#xed;dicos"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioClientesJuridicosAtivosActionPerformed"/>
@@ -324,7 +298,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/user_suit.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Funcion&#xe1;rios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioFuncionariosAtivosActionPerformed"/>
@@ -335,7 +309,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/user_gray.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Fornecedores"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Fornecedores"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatoriosFornecedoresActionPerformed"/>
@@ -346,7 +320,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/box.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Produtos"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Produtos"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="subMenuRelatorioProdutosAtivos">
@@ -354,7 +328,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/box.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Produtos Ativos"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Produtos Ativos"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioProdutosAtivosActionPerformed"/>
@@ -365,7 +339,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/box.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Estoque de Produtos"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Estoque de Produtos"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioEstoqueProdutosActionPerformed"/>
@@ -378,7 +352,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/money.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Vendas"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Vendas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioVendasActionPerformed"/>
@@ -389,7 +363,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/money.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Compras"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Compras"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioComprasActionPerformed"/>
@@ -400,7 +374,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconsUtils/money.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Caixa"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Caixa"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="subMenuRelatorioCaixa">
@@ -408,7 +382,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/money.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Caixa Atual"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Caixa Atual"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioCaixaActionPerformed"/>
@@ -419,7 +393,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/iconsUtils/money.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Fechamentos de Caixas"/>
+                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Fechamentos de Caixas"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRelatorioFechamentosCaixasActionPerformed"/>
@@ -434,42 +408,98 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/img/iconsUtils/wrench.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Op&#xe7;&#xf5;es"/>
+            <Property name="text" type="java.lang.String" value="Sistema"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuTrocarUsuario">
+            <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/user_go.png"/>
+                  <Image iconType="3" name="/img/iconsUtils/user_orange.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Trocar Usu&#xe1;rio"/>
+                <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuTrocarUsuarioActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="subMenuSair">
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroUsuarios">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/add.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Cadastro de Usu&#xe1;rios"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroUsuariosActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="menuCadastros">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconsUtils/door_in.png"/>
+                  <Image iconType="3" name="/img/iconsUtils/building.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Sair"/>
+                <Property name="text" type="java.lang.String" value="Localidades"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroCidades">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/building_add.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Cadastro de Cidades"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroCidadesActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="subMenuCadastroEstados">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/iconsUtils/building_add.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Cadastro de Estados"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuCadastroEstadosActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="subMenuSobre">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/iconsUtils/information.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Sobre"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuSairActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuSobreActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuSobre">
+        <Menu class="javax.swing.JMenu" name="subMenuTrocarUsuario">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/iconsUtils/information.png"/>
+              <Image iconType="3" name="/img/iconsUtils/user_go.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Sobre"/>
+            <Property name="text" type="java.lang.String" value="Trocar Usu&#xe1;rio"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuSobreMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuTrocarUsuarioMouseClicked"/>
+          </Events>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="subMenuSair">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/iconsUtils/door_in.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Sair"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuSairMouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>
