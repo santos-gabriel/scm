@@ -84,17 +84,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelHeader = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
         menuSuperior = new javax.swing.JMenuBar();
-        menuCadastros = new javax.swing.JMenu();
+        menuClientes = new javax.swing.JMenu();
         subMenuCadastroClientes = new javax.swing.JMenuItem();
+        menuFornecedores = new javax.swing.JMenu();
         subMenuCadastroFornecedores = new javax.swing.JMenuItem();
-        subMenuCadastroUsuarios = new javax.swing.JMenuItem();
-        subMenuCadastroCidades = new javax.swing.JMenuItem();
-        subMenuCadastroEstados = new javax.swing.JMenuItem();
-        menuFinanceiro = new javax.swing.JMenu();
-        subMenuCadastrosFinanceiros = new javax.swing.JMenu();
-        subMenuCadastroComissoes = new javax.swing.JMenuItem();
-        subMenuCadastroTiposPagamentos = new javax.swing.JMenuItem();
-        subMenuCadastroCondicoesPagamentos = new javax.swing.JMenuItem();
         menuFuncionarios = new javax.swing.JMenu();
         subMenuCadastroCargos = new javax.swing.JMenuItem();
         subMenuCadastroFuncionarios = new javax.swing.JMenuItem();
@@ -108,6 +101,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuCompras = new javax.swing.JMenu();
         subMenuCompras = new javax.swing.JMenuItem();
         subMenuVisualizarCompras = new javax.swing.JMenuItem();
+        menuFinanceiro = new javax.swing.JMenu();
+        subMenuCadastrosFinanceiros = new javax.swing.JMenu();
+        subMenuCadastroComissoes = new javax.swing.JMenuItem();
+        subMenuCadastroTiposPagamentos = new javax.swing.JMenuItem();
+        subMenuCadastroCondicoesPagamentos = new javax.swing.JMenuItem();
         subMenuCaixa = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
         menuRelClientes = new javax.swing.JMenu();
@@ -123,7 +121,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelCaixa = new javax.swing.JMenu();
         subMenuRelatorioCaixa = new javax.swing.JMenuItem();
         subMenuRelatorioFechamentosCaixas = new javax.swing.JMenuItem();
-        menuSobre = new javax.swing.JMenu();
+        menuOpcoes = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        subMenuCadastroUsuarios = new javax.swing.JMenuItem();
+        menuCadastros = new javax.swing.JMenu();
+        subMenuCadastroCidades = new javax.swing.JMenuItem();
+        subMenuCadastroEstados = new javax.swing.JMenuItem();
+        subMenuSobre = new javax.swing.JMenuItem();
+        subMenuTrocarUsuario = new javax.swing.JMenu();
+        subMenuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Stock Control Manager");
@@ -209,99 +215,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuSuperior.setBackground(new java.awt.Color(255, 255, 255));
 
-        menuCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/application_add.png"))); // NOI18N
-        menuCadastros.setText("Cadastros");
+        menuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
+        menuClientes.setText("Clientes");
 
-        subMenuCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
-        subMenuCadastroClientes.setText("Clientes");
+        subMenuCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/add.png"))); // NOI18N
+        subMenuCadastroClientes.setText("Cadastro de Clientes");
         subMenuCadastroClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuCadastroClientesActionPerformed(evt);
             }
         });
-        menuCadastros.add(subMenuCadastroClientes);
+        menuClientes.add(subMenuCadastroClientes);
 
-        subMenuCadastroFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_gray.png"))); // NOI18N
-        subMenuCadastroFornecedores.setText("Fornecedores");
+        menuSuperior.add(menuClientes);
+
+        menuFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_gray.png"))); // NOI18N
+        menuFornecedores.setText("Fornecedores");
+
+        subMenuCadastroFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/add.png"))); // NOI18N
+        subMenuCadastroFornecedores.setText("Cadastro de Fornecedores");
         subMenuCadastroFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuCadastroFornecedoresActionPerformed(evt);
             }
         });
-        menuCadastros.add(subMenuCadastroFornecedores);
+        menuFornecedores.add(subMenuCadastroFornecedores);
 
-        subMenuCadastroUsuarios.setBackground(new java.awt.Color(255, 255, 255));
-        subMenuCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_orange.png"))); // NOI18N
-        subMenuCadastroUsuarios.setText("Usuários");
-        subMenuCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroUsuariosActionPerformed(evt);
-            }
-        });
-        menuCadastros.add(subMenuCadastroUsuarios);
-
-        subMenuCadastroCidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building.png"))); // NOI18N
-        subMenuCadastroCidades.setText("Cidades");
-        subMenuCadastroCidades.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroCidadesActionPerformed(evt);
-            }
-        });
-        menuCadastros.add(subMenuCadastroCidades);
-
-        subMenuCadastroEstados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building.png"))); // NOI18N
-        subMenuCadastroEstados.setText("Estados");
-        subMenuCadastroEstados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroEstadosActionPerformed(evt);
-            }
-        });
-        menuCadastros.add(subMenuCadastroEstados);
-
-        menuSuperior.add(menuCadastros);
-
-        menuFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        menuFinanceiro.setText("Financeiro");
-
-        subMenuCadastrosFinanceiros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/application_add.png"))); // NOI18N
-        subMenuCadastrosFinanceiros.setText("Cadastros");
-
-        subMenuCadastroComissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
-        subMenuCadastroComissoes.setText("Comissões");
-        subMenuCadastroComissoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroComissoesActionPerformed(evt);
-            }
-        });
-        subMenuCadastrosFinanceiros.add(subMenuCadastroComissoes);
-
-        subMenuCadastroTiposPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
-        subMenuCadastroTiposPagamentos.setText("Tipos de Pagamentos");
-        subMenuCadastroTiposPagamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroTiposPagamentosActionPerformed(evt);
-            }
-        });
-        subMenuCadastrosFinanceiros.add(subMenuCadastroTiposPagamentos);
-
-        subMenuCadastroCondicoesPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
-        subMenuCadastroCondicoesPagamentos.setText("Condições de Pagamentos");
-        subMenuCadastroCondicoesPagamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subMenuCadastroCondicoesPagamentosActionPerformed(evt);
-            }
-        });
-        subMenuCadastrosFinanceiros.add(subMenuCadastroCondicoesPagamentos);
-
-        menuFinanceiro.add(subMenuCadastrosFinanceiros);
-
-        menuSuperior.add(menuFinanceiro);
+        menuSuperior.add(menuFornecedores);
 
         menuFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
         menuFuncionarios.setText("Funcionários");
 
         subMenuCadastroCargos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/vcard.png"))); // NOI18N
-        subMenuCadastroCargos.setText("Cargos");
+        subMenuCadastroCargos.setText("Cadastro de Cargos");
         subMenuCadastroCargos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuCadastroCargosActionPerformed(evt);
@@ -310,7 +256,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuFuncionarios.add(subMenuCadastroCargos);
 
         subMenuCadastroFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
-        subMenuCadastroFuncionarios.setText("Funcionários");
+        subMenuCadastroFuncionarios.setText("Cadastro de Funcionários");
         subMenuCadastroFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuCadastroFuncionariosActionPerformed(evt);
@@ -324,7 +270,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuProdutos.setText("Produtos");
 
         subMenuCategorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/layers.png"))); // NOI18N
-        subMenuCategorias.setText("Categorias");
+        subMenuCategorias.setText("Cadastro de Categorias");
         subMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuCategoriasActionPerformed(evt);
@@ -333,7 +279,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuProdutos.add(subMenuCategorias);
 
         subMenuProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/package.png"))); // NOI18N
-        subMenuProdutos.setText("Produto");
+        subMenuProdutos.setText("Cadastro de Produtos");
         subMenuProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuProdutosActionPerformed(evt);
@@ -392,6 +338,43 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuMovimentacoes.add(menuCompras);
 
+        menuSuperior.add(menuMovimentacoes);
+
+        menuFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
+        menuFinanceiro.setText("Financeiro");
+
+        subMenuCadastrosFinanceiros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/application_add.png"))); // NOI18N
+        subMenuCadastrosFinanceiros.setText("Cadastros");
+
+        subMenuCadastroComissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
+        subMenuCadastroComissoes.setText("Comissões");
+        subMenuCadastroComissoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroComissoesActionPerformed(evt);
+            }
+        });
+        subMenuCadastrosFinanceiros.add(subMenuCadastroComissoes);
+
+        subMenuCadastroTiposPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
+        subMenuCadastroTiposPagamentos.setText("Tipos de Pagamentos");
+        subMenuCadastroTiposPagamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroTiposPagamentosActionPerformed(evt);
+            }
+        });
+        subMenuCadastrosFinanceiros.add(subMenuCadastroTiposPagamentos);
+
+        subMenuCadastroCondicoesPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
+        subMenuCadastroCondicoesPagamentos.setText("Condições de Pagamentos");
+        subMenuCadastroCondicoesPagamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroCondicoesPagamentosActionPerformed(evt);
+            }
+        });
+        subMenuCadastrosFinanceiros.add(subMenuCadastroCondicoesPagamentos);
+
+        menuFinanceiro.add(subMenuCadastrosFinanceiros);
+
         subMenuCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money_dollar.png"))); // NOI18N
         subMenuCaixa.setText("Caixa");
         subMenuCaixa.addActionListener(new java.awt.event.ActionListener() {
@@ -399,18 +382,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 subMenuCaixaActionPerformed(evt);
             }
         });
-        menuMovimentacoes.add(subMenuCaixa);
+        menuFinanceiro.add(subMenuCaixa);
 
-        menuSuperior.add(menuMovimentacoes);
+        menuSuperior.add(menuFinanceiro);
 
         menuRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/report.png"))); // NOI18N
         menuRelatorio.setText("Relatórios");
 
         menuRelClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
-        menuRelClientes.setText("Clientes");
+        menuRelClientes.setText("Relatório de Clientes");
 
         subMenuRelatorioClientesFisicosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
-        subMenuRelatorioClientesFisicosAtivos.setText("Clientes Físicos");
+        subMenuRelatorioClientesFisicosAtivos.setText("Relatório de Clientes Físicos");
         subMenuRelatorioClientesFisicosAtivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioClientesFisicosAtivosActionPerformed(evt);
@@ -419,7 +402,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelClientes.add(subMenuRelatorioClientesFisicosAtivos);
 
         subMenuRelatorioClientesJuridicosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_green.png"))); // NOI18N
-        subMenuRelatorioClientesJuridicosAtivos.setText("Clientes Jurídicos");
+        subMenuRelatorioClientesJuridicosAtivos.setText("Relatório de Clientes Jurídicos");
         subMenuRelatorioClientesJuridicosAtivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioClientesJuridicosAtivosActionPerformed(evt);
@@ -430,7 +413,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(menuRelClientes);
 
         subMenuRelatorioFuncionariosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_suit.png"))); // NOI18N
-        subMenuRelatorioFuncionariosAtivos.setText("Funcionários");
+        subMenuRelatorioFuncionariosAtivos.setText("Relatório de Funcionários");
         subMenuRelatorioFuncionariosAtivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioFuncionariosAtivosActionPerformed(evt);
@@ -439,7 +422,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(subMenuRelatorioFuncionariosAtivos);
 
         subMenuRelatoriosFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_gray.png"))); // NOI18N
-        subMenuRelatoriosFornecedores.setText("Fornecedores");
+        subMenuRelatoriosFornecedores.setText("Relatório de Fornecedores");
         subMenuRelatoriosFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatoriosFornecedoresActionPerformed(evt);
@@ -448,10 +431,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(subMenuRelatoriosFornecedores);
 
         menuRelProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
-        menuRelProdutos.setText("Produtos");
+        menuRelProdutos.setText("Relatório de Produtos");
 
         subMenuRelatorioProdutosAtivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
-        subMenuRelatorioProdutosAtivos.setText("Produtos Ativos");
+        subMenuRelatorioProdutosAtivos.setText("Relatório de Produtos Ativos");
         subMenuRelatorioProdutosAtivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioProdutosAtivosActionPerformed(evt);
@@ -460,7 +443,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelProdutos.add(subMenuRelatorioProdutosAtivos);
 
         subMenuRelatorioEstoqueProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/box.png"))); // NOI18N
-        subMenuRelatorioEstoqueProdutos.setText("Estoque de Produtos");
+        subMenuRelatorioEstoqueProdutos.setText("Relatório de Estoque de Produtos");
         subMenuRelatorioEstoqueProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioEstoqueProdutosActionPerformed(evt);
@@ -471,7 +454,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(menuRelProdutos);
 
         subMenuRelatorioVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        subMenuRelatorioVendas.setText("Vendas");
+        subMenuRelatorioVendas.setText("Relatório de Vendas");
         subMenuRelatorioVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioVendasActionPerformed(evt);
@@ -480,7 +463,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(subMenuRelatorioVendas);
 
         subMenuRelatorioCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        subMenuRelatorioCompras.setText("Compras");
+        subMenuRelatorioCompras.setText("Relatório de Compras");
         subMenuRelatorioCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioComprasActionPerformed(evt);
@@ -489,10 +472,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelatorio.add(subMenuRelatorioCompras);
 
         menuRelCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        menuRelCaixa.setText("Caixa");
+        menuRelCaixa.setText("Relatório de Caixa");
 
         subMenuRelatorioCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        subMenuRelatorioCaixa.setText("Caixa Atual");
+        subMenuRelatorioCaixa.setText("Relatório de Caixa Atual");
         subMenuRelatorioCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioCaixaActionPerformed(evt);
@@ -501,7 +484,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuRelCaixa.add(subMenuRelatorioCaixa);
 
         subMenuRelatorioFechamentosCaixas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/money.png"))); // NOI18N
-        subMenuRelatorioFechamentosCaixas.setText("Fechamentos de Caixas");
+        subMenuRelatorioFechamentosCaixas.setText("Relatório de Fechamentos de Caixas");
         subMenuRelatorioFechamentosCaixas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRelatorioFechamentosCaixasActionPerformed(evt);
@@ -513,14 +496,75 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuSuperior.add(menuRelatorio);
 
-        menuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/information.png"))); // NOI18N
-        menuSobre.setText("Sobre");
-        menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuSobreMouseClicked(evt);
+        menuOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/wrench.png"))); // NOI18N
+        menuOpcoes.setText("Sistema");
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_orange.png"))); // NOI18N
+        jMenu1.setText("Usuários");
+
+        subMenuCadastroUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+        subMenuCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/add.png"))); // NOI18N
+        subMenuCadastroUsuarios.setText("Cadastro de Usuários");
+        subMenuCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroUsuariosActionPerformed(evt);
             }
         });
-        menuSuperior.add(menuSobre);
+        jMenu1.add(subMenuCadastroUsuarios);
+
+        menuOpcoes.add(jMenu1);
+
+        menuCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building.png"))); // NOI18N
+        menuCadastros.setText("Localidades");
+
+        subMenuCadastroCidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building_add.png"))); // NOI18N
+        subMenuCadastroCidades.setText("Cadastro de Cidades");
+        subMenuCadastroCidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroCidadesActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroCidades);
+
+        subMenuCadastroEstados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/building_add.png"))); // NOI18N
+        subMenuCadastroEstados.setText("Cadastro de Estados");
+        subMenuCadastroEstados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCadastroEstadosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(subMenuCadastroEstados);
+
+        menuOpcoes.add(menuCadastros);
+
+        subMenuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/information.png"))); // NOI18N
+        subMenuSobre.setText("Sobre");
+        subMenuSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuSobreActionPerformed(evt);
+            }
+        });
+        menuOpcoes.add(subMenuSobre);
+
+        menuSuperior.add(menuOpcoes);
+
+        subMenuTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/user_go.png"))); // NOI18N
+        subMenuTrocarUsuario.setText("Trocar Usuário");
+        subMenuTrocarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subMenuTrocarUsuarioMouseClicked(evt);
+            }
+        });
+        menuSuperior.add(subMenuTrocarUsuario);
+
+        subMenuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconsUtils/door_in.png"))); // NOI18N
+        subMenuSair.setText("Sair");
+        subMenuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subMenuSairMouseClicked(evt);
+            }
+        });
+        menuSuperior.add(subMenuSair);
 
         setJMenuBar(menuSuperior);
 
@@ -623,12 +667,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FRM_CAD_TIPO_PAGAMENTO.setVisible(true);
     }//GEN-LAST:event_subMenuCadastroTiposPagamentosActionPerformed
 
-    private void menuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseClicked
-        if (INFO == null)
-            INFO = new Info();
-        INFO.setVisible(true);
-    }//GEN-LAST:event_menuSobreMouseClicked
-
     private void subMenuComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuComprasActionPerformed
         if (FRM_COMPRAS == null)
             FRM_COMPRAS = new FrmCompras();
@@ -662,7 +700,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioClientesFisicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesFisicosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-clientes-fisicos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Clientes Físicos");
             if (view == null)
                 Informacao.show("Relatório sem páginas");
             else
@@ -681,7 +719,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioClientesJuridicosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioClientesJuridicosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-clientes-juridicos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Clientes Jurídicos");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else 
@@ -694,7 +732,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioProdutosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioProdutosAtivosActionPerformed
         try {
             String src = "src/relatorios/rel-produtos-ativos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Produtos");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else 
@@ -713,7 +751,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioEstoqueProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioEstoqueProdutosActionPerformed
         try {
             String src = "src/relatorios/rel-estoque-produtos.jasper";        
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Estoque");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -732,7 +770,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             else {
                 Map parametros = new HashMap();
                 parametros.put("prDataUltimoFechamentoCaixa", caixa.getAuxFechamentoData());
-                JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros);
+                JasperViewer view = CtrlRelatorios.gerarRelatorio(src, parametros, "Relatório de Caixa");
                 if (view == null)
                     Informacao.show("Relatório sem páinas");
                 else 
@@ -746,7 +784,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioFechamentosCaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFechamentosCaixasActionPerformed
         try {
             String src = "src/relatorios/rel-fechamentos-caixas.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Fechamentos de Caixa");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -759,7 +797,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatorioFuncionariosAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatorioFuncionariosAtivosActionPerformed
         try { 
             String src = "src/relatorios/rel-funcionarios-ativos.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Funcionários");                        
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -772,7 +810,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void subMenuRelatoriosFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuRelatoriosFornecedoresActionPerformed
         try {
             String src = "src/relatorios/rel-fornecedores-ativos.jasper";
-            JasperViewer view = CtrlRelatorios.gerarRelatorio(src);
+            JasperViewer view = CtrlRelatorios.gerarRelatorio(src, "Relatório de Fornecedores");
             if (view == null)
                 Informacao.show("Relatório sem páinas");
             else
@@ -781,6 +819,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
             throw new ExcecaoGenerica(e);
         }
     }//GEN-LAST:event_subMenuRelatoriosFornecedoresActionPerformed
+
+    private void subMenuTrocarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuTrocarUsuarioMouseClicked
+        new FrmLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_subMenuTrocarUsuarioMouseClicked
+
+    private void subMenuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuSairMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_subMenuSairMouseClicked
+
+    private void subMenuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSobreActionPerformed
+        if (INFO == null)
+            INFO = new Info();
+        INFO.setVisible(true);
+    }//GEN-LAST:event_subMenuSobreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -820,19 +873,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel imgPrincipalCenter;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenu menuClientes;
     private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuFinanceiro;
+    private javax.swing.JMenu menuFornecedores;
     private javax.swing.JMenu menuFuncionarios;
     private javax.swing.JMenu menuMovimentacoes;
+    private javax.swing.JMenu menuOpcoes;
     private javax.swing.JMenu menuProdutos;
     private javax.swing.JMenu menuRelCaixa;
     private javax.swing.JMenu menuRelClientes;
     private javax.swing.JMenu menuRelProdutos;
     private javax.swing.JMenu menuRelatorio;
-    private javax.swing.JMenu menuSobre;
     private javax.swing.JMenuBar menuSuperior;
     private javax.swing.JMenu menuVendas;
     private javax.swing.JPanel panelBody;
@@ -863,6 +919,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem subMenuRelatorioProdutosAtivos;
     private javax.swing.JMenuItem subMenuRelatorioVendas;
     private javax.swing.JMenuItem subMenuRelatoriosFornecedores;
+    private javax.swing.JMenu subMenuSair;
+    private javax.swing.JMenuItem subMenuSobre;
+    private javax.swing.JMenu subMenuTrocarUsuario;
     private javax.swing.JMenuItem subMenuVendas;
     private javax.swing.JMenuItem subMenuVisualizarCompras;
     private javax.swing.JMenuItem subMenuVisualizarVendas;

@@ -8,6 +8,8 @@ package visao;
 import controllers.CtrlFuncionario;
 import controllers.CtrlVendas;
 import excecoes.ExcecaoGenerica;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
@@ -33,6 +35,10 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
     public FrmVisualizarVendas() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date hoje = new Date();
+        txtDataInicial.setText(sdf.format(Funcoes.alteraDias(-30, hoje)));
+        txtDataFinal.setText(sdf.format(hoje));
     }
 
     /**
@@ -57,7 +63,7 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
         tblDadosVendas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vendas | Visualizar");
+        setTitle("Movimentações | Visualizar Vendas");
 
         try {
             txtDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -105,13 +111,12 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
                     .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(pnlFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ckFiltroFuncionarios)
                     .addGroup(pnlFiltrosLayout.createSequentialGroup()
-                        .addComponent(ckFiltroFuncionarios)
-                        .addGap(0, 394, Short.MAX_VALUE))
-                    .addComponent(cbxFiltroFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(btnRealizarPesquisa)
-                .addContainerGap())
+                        .addComponent(cbxFiltroFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRealizarPesquisa)))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         pnlFiltrosLayout.setVerticalGroup(
             pnlFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +167,7 @@ public class FrmVisualizarVendas extends javax.swing.JFrame {
         );
         pnlDadosLayout.setVerticalGroup(
             pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -63,7 +63,7 @@ public class FrmCadCargo extends javax.swing.JFrame {
         tblCargos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Cargos");
+        setTitle("Funcionários | Cadastro de Cargos");
         setResizable(false);
 
         pnlOpcoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
