@@ -8,6 +8,10 @@ package visao;
 import controllers.CtrlFuncionario;
 import controllers.CtrlRelatorios;
 import excecoes.ExcecaoGenerica;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -28,6 +32,10 @@ public class FrmRelVendas extends javax.swing.JFrame {
     public FrmRelVendas() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");  
+        Date hoje = new Date();
+        txtDataInicial.setText(sdf.format(Funcoes.alteraDias(-30, hoje)));
+        txtDataFinal.setText(sdf.format(hoje));
     }
 
     /**

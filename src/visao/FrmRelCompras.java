@@ -9,6 +9,8 @@ package visao;
 import controllers.CtrlFornecedor;
 import controllers.CtrlRelatorios;
 import excecoes.ExcecaoGenerica;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -27,6 +29,10 @@ public class FrmRelCompras extends javax.swing.JFrame {
     public FrmRelCompras() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date hoje = new Date();
+        txtDataInicial.setText(sdf.format(Funcoes.alteraDias(-30, hoje)));
+        txtDataFinal.setText(sdf.format(hoje));
     }
 
     /** This method is called from within the constructor to
