@@ -53,7 +53,7 @@ public class FrmCadTipoPagamento extends javax.swing.JFrame {
         ButtonExcluir = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastros | Tipos de Pagamentos");
+        setTitle("Financeiro | Cadastro de Tipos de Pagamentos");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N

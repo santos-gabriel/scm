@@ -7,7 +7,7 @@ import modelo.Usuario;
 /**
  * @author Gabriel
  * @version %I%, %G%
- * @since v1.0
+ * @since v1.4.2-beta.1
  */
 public abstract class CtrlUsuario {
     
