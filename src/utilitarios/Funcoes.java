@@ -13,7 +13,9 @@ import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +23,14 @@ import java.util.logging.Logger;
 /**Classe de funções úteis 
  * @author Gabriel
  * @version %I%, %G%
- * @since v1.0
+ * @since v1.4.2-beta.1
  */
 public abstract class Funcoes {
    
     /**Método para criptografar com hash md5
      * @param pTexto texto a ser criptografado
      * @return String - hash md5 gerado do texto passado como parâmetro
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String getEncrypt (String pTexto){
         try{
@@ -44,7 +46,7 @@ public abstract class Funcoes {
     /**Método para pegar os valores das propriedades de um arquivo properties de configuração
      * @param pPath diretório onde se encontra o arquivo
      * @return Properties - propriedades do arquivo
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */  
     public static Properties getProperties(String pPath){
         Properties props = new Properties();
@@ -59,7 +61,7 @@ public abstract class Funcoes {
    
     /**Método para pegar o endereço de ip da máquina
      * @return String - endereço de ip da máquina
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String getIpHost (){
         try {
@@ -71,7 +73,7 @@ public abstract class Funcoes {
     
     /**Método para pegar o hostname da máquina
      * @return String - hostname na máquina
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String getNameHost (){
         try {
@@ -84,7 +86,7 @@ public abstract class Funcoes {
     /**Método para tratar data para que possa ser enviada para o Banco, ex.: dd/MM/yyyy passada como parâmetro será retornada como yyyy-MM-dd
      * @return String - data em yyyy-MM-dd
      * @param prData data em dd/MM/yyyy
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String trataDataParaDb(String prData) {
         try {
@@ -100,7 +102,7 @@ public abstract class Funcoes {
     /**Método para tratar data que está armazenada no banco de dados, ex.: yyyy-MM-dd passada como parâmetro será retornada como dd/MM/yyyy
      * @return String - data em dd/MM/yyyy
      * @param prData data em yyyy-MM-dd
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String trataDataDoDb(String prData) {
         try {
@@ -116,7 +118,7 @@ public abstract class Funcoes {
     /**Método para tratar data e hora que será enviada para o banco de dados
      * @return String - data e hora em YYYY-MM-dd HH:mm
      * @param prDataHora data e hora em dd/MM/yyyy HH:mm
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String trataDataHoraParaDb(String prDataHora){
         try {
@@ -134,7 +136,7 @@ public abstract class Funcoes {
     /**Método que trata data e hora do banco de dados
      * @return String - data e hora em dd/MM/yyyy HH:mm
      * @param prDataHora data e hora em yyyy-MM-dd HH:mm
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static String trataDataHoraDoDb(String prDataHora){
         try {
@@ -152,7 +154,7 @@ public abstract class Funcoes {
     /**Método que verifica se a data passada como String é válida
      * @return  boolean - true para data válida, false para data inválida
      * @param prData data para ser validada em formato dd/MM/yyyy
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static boolean validaData(String prData){
         try {
@@ -173,7 +175,7 @@ public abstract class Funcoes {
      * @return Integer - retorna valor menor que 0 caso prDataInical for menor que prDataFinal; retorna 0 caso prDataInical for igual a prDataFinal; retorna maior que 0 caso prDataInical for maior que prDataFinal
      * @param prDataInicial data inicial para comparação em formato dd/MM/yyyy
      * @param prDataFinal data final para comparação em formato dd/MM/yyyy
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static Integer comparaDatas(String prDataInicial, String prDataFinal){
         try {
@@ -199,7 +201,7 @@ public abstract class Funcoes {
     /**Método que valida cpf
      * @return boolean - true cpf para válido false para inválido
      * @param cpf String contendo cpf que será validado
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static boolean validaCpf(String cpf) {
         return Cnp.isValidCPF(cpf);
@@ -208,9 +210,24 @@ public abstract class Funcoes {
     /**Método que valida cnpj
      * @return boolean - true para cnpj válido e false para inválido
      * @param cnpj Sring contendo cnpj que será validado
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public static boolean validaCnpj(String cnpj) {
         return Cnp.isValidCNPJ(cnpj);
     }
+    
+    /**Método para decrementar ou incrementar dias de uma data
+     * @return Date - data com o novo valor
+     * @param dias Integer dias a serem alterados da data, sendo positivo para incremento e negativo para decremento
+     * @param data Date data a ser alterada
+     * @since v1.4.2-beta.1
+     */
+    public static Date alteraDias(Integer dias, Date data){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        GregorianCalendar c = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        c.add(Calendar.DAY_OF_MONTH, dias);
+        return c.getTime();
+    }
+        
 }

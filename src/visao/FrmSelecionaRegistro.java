@@ -17,7 +17,7 @@ import javax.swing.table.TableModel;
  *
  * @author Gabriel
  * @version %I%, %G%
- * @since v1.0
+ * @since v1.4.2-beta.1
  */
 public class FrmSelecionaRegistro extends javax.swing.JDialog {
 
@@ -26,7 +26,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     /**Construtor  
      * @param parent formulário parente, quando chamado de outro JForm basta passar this
      * @param modal modal do formulário passando true para modal e false para não modal
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public FrmSelecionaRegistro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -216,7 +216,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     
     /**Método responsável por preencher tabela com registros
-     * @since v1.0
+     * @since v1.4.2-beta.1
      * @param modelo modelo da tabela
      * @param tabela objeto tabela
      */
@@ -232,7 +232,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     
     
     /**Método responsável por preencher tabela com registros
-     * @since v1.0
+     * @since v1.4.2-beta.1
      * @param modelo modelo da tabela
      * @param tabela objeto tabela
      */
@@ -248,7 +248,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     
     
     /**Método responsável por pegar o valor da variável linha que poderá ou não ter valor atribuído, sendo este valor os dados  da linha selecionada pelo usuário
-     * @since v1.0
+     * @since v1.4.2-beta.1
      * @return String[]
      */
     public String[] getDadosSelecao(){
@@ -256,7 +256,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     }
     
     /**Método responsável por atribuir valor a variável linha, este valor será os dados da linha selecionada pelo usuário
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public void setDadosSelecao(){
         try {
@@ -270,7 +270,7 @@ public class FrmSelecionaRegistro extends javax.swing.JDialog {
     }
     
     /**Método responsável por limpar a jtable que contém os registros da pesquisa
-     * @since v1.0
+     * @since v1.4.2-beta.1
      */
     public void limpaTabela () {
         try {

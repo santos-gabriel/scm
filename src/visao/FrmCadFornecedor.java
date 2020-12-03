@@ -90,7 +90,7 @@ public class FrmCadFornecedor extends javax.swing.JFrame {
         txtNumero = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastros | Fornecedores");
+        setTitle("Fornecedores | Cadastro");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N

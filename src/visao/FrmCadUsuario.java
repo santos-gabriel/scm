@@ -84,7 +84,7 @@ public class FrmCadUsuario extends javax.swing.JFrame {
         tblUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Usuários");
+        setTitle("Usuários | Cadastro");
         setResizable(false);
 
         txtBuscarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {

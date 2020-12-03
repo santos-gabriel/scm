@@ -89,7 +89,7 @@ public class FrmCompras extends javax.swing.JFrame {
         txtTotalLiquido = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Stock Control Manager | Compras");
+        setTitle("Movimentações | Nova Compra");
         setResizable(false);
 
         jLabel1.setText("Código");

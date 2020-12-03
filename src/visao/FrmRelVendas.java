@@ -8,6 +8,10 @@ package visao;
 import controllers.CtrlFuncionario;
 import controllers.CtrlRelatorios;
 import excecoes.ExcecaoGenerica;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import mensagens.Erro;
@@ -28,6 +32,10 @@ public class FrmRelVendas extends javax.swing.JFrame {
     public FrmRelVendas() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");  
+        Date hoje = new Date();
+        txtDataInicial.setText(sdf.format(Funcoes.alteraDias(-30, hoje)));
+        txtDataFinal.setText(sdf.format(hoje));
     }
 
     /**
@@ -50,7 +58,7 @@ public class FrmRelVendas extends javax.swing.JFrame {
         ckRelDetalhado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Stock Control Manager | Relatório de Vendas");
+        setTitle("Relatórios | Relatório de Vendas");
         setResizable(false);
 
         jLabel1.setText("Data Inicial");
@@ -192,9 +200,9 @@ public class FrmRelVendas extends javax.swing.JFrame {
                 parametros.put("prFuncionario", "1 = 1");                
             JasperViewer jasperViewer = null;
             if (ckRelDetalhado.isSelected())
-                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas-detalhado.jasper", parametros);            
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas-detalhado.jasper", parametros, "Relatório Detalhado de Vendas");            
             else 
-                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas.jasper", parametros);        
+                jasperViewer = CtrlRelatorios.gerarRelatorio("src/relatorios/rel-vendas.jasper", parametros, "Relatório de Vendas");        
             if (jasperViewer == null)
                 Informacao.show("Relatório sem páinas");
             else

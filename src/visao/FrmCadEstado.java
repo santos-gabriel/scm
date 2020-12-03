@@ -65,7 +65,7 @@ public class FrmCadEstado extends javax.swing.JFrame {
         tblEstados = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro | Estados");
+        setTitle("Localidades | Cadastro de Estados");
         setResizable(false);
 
         pnlDadosCadastrais.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
