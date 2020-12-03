@@ -8,6 +8,8 @@ package visao;
 import controllers.CtrlCompras;
 import controllers.CtrlFornecedor;
 import excecoes.ExcecaoGenerica;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import mensagens.Erro;
@@ -31,6 +33,10 @@ public class FrmVisualizarCompras extends javax.swing.JFrame {
     public FrmVisualizarCompras() {
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date hoje = new Date();
+        txtDataInicial.setText(sdf.format(Funcoes.alteraDias(-30, hoje)));
+        txtDataFinal.setText(sdf.format(hoje));
     }
 
     /**
