@@ -1,4 +1,5 @@
-# SCM - Stock Control Manager ![logo-sistema][logo-sistema-150-75] ![logo-java][java-75-75] ![mysql-logo][mysql-150-75]
+# SCM - Stock Control Manager 
+![logo-sistema][logo-sistema-150-75] ![logo-java][java-75-75] ![mysql-logo][mysql-150-75]
 
 Sistema desenvolvido para conclusão de grau do curso superior em Análise e Desenvolvimento de Sistemas
 

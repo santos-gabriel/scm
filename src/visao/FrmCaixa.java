@@ -58,7 +58,7 @@ public class FrmCaixa extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Stock Control Manager | Caixa");
+        setTitle("Financeiro | Caixa");
         setResizable(false);
 
         jLabel1.setText("Codigo");
