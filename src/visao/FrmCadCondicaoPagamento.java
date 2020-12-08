@@ -89,7 +89,7 @@ public class FrmCadCondicaoPagamento extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblCondicoesPagamentos);
 
-        jLabel3.setText("Quantidade de Parcels");
+        jLabel3.setText("Quantidade de Parcelas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

@@ -61,11 +61,11 @@ public class FrmCaixa extends javax.swing.JFrame {
         setTitle("Financeiro | Caixa");
         setResizable(false);
 
-        jLabel1.setText("Codigo");
+        jLabel1.setText("Código");
 
         txtCodigo.setEditable(false);
 
-        jLabel2.setText("Fechamento Data");
+        jLabel2.setText("Data Fechamento");
 
         txtFechamentoData.setEditable(false);
 
