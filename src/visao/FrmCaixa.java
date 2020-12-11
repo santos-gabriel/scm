@@ -356,7 +356,7 @@ public class FrmCaixa extends javax.swing.JFrame {
     
     private void preencheDados(){
         try {
-            DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date data = new Date();
             txtFechamentoData.setText(formato.format(data));
             txtUsuario.setText(UsuariosUtil.getUsuario().getLogin());        
