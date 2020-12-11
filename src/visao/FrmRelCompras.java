@@ -187,9 +187,11 @@ public class FrmRelCompras extends javax.swing.JFrame {
             return;
         }
         try {
-            Map parametros = new HashMap();
+            Map parametros = new HashMap();            
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataFinal = Funcoes.alteraDias(1, formato.parse(txtDataFinal.getText()));            
             parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
-            parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
+            parametros.put("prDataFim", Funcoes.trataDataParaDb(formato.format(dataFinal)));
             if (ckFornecedor.isSelected()){
                 String codFornecedor = Integer.toString(((Fornecedor)cbxFornecedor.getSelectedItem()).getCod_Fornecedor());
                 parametros.put("prFornecedor", "comp.cod_fornecedor = "+codFornecedor);

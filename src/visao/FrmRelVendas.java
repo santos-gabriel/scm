@@ -191,8 +191,10 @@ public class FrmRelVendas extends javax.swing.JFrame {
         }   
         try {
             Map parametros = new HashMap();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataFinal = Funcoes.alteraDias(1, formato.parse(txtDataFinal.getText()));
             parametros.put("prDataIni", Funcoes.trataDataParaDb(txtDataInicial.getText()));
-            parametros.put("prDataFim", Funcoes.trataDataParaDb(txtDataFinal.getText()));
+            parametros.put("prDataFim", Funcoes.trataDataParaDb(formato.format(dataFinal)));
             if (ckFuncionario.isSelected()){
                 String codFuncionario = Integer.toString(((Funcionario)cbxFuncionario.getSelectedItem()).getCod_Funcionario());
                 parametros.put("prFuncionario", "vend.cod_funcionario = "+codFuncionario);

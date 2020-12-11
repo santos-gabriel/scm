@@ -169,8 +169,8 @@ public abstract class VendasDao {
                    + "  f.cod_funcionario = v.cod_funcionario "
                    + "INNER JOIN clientes c ON "
                    + "	c.cod_cliente = v.cod_cliente "
-                   + "WHERE v.data_venda >= ? "
-                   + "AND   v.data_venda <= ? ";
+                   + "WHERE CAST(v.data_venda AS DATE) >= ? "
+                   + "AND   CAST(v.data_venda AS DATE) <= ? ";
         if (!(prFuncionario == null))
             sql += "AND v.cod_funcionario = ? ";
         try {

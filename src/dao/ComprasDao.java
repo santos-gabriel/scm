@@ -130,8 +130,8 @@ public abstract class ComprasDao {
                 + "     f.cod_fornecedor = c.cod_fornecedor     "
                 + "INNER JOIN usuarios u ON                     "
                 + "     u.cod_usuario = c.cod_usuario           "
-                + "WHERE c.data >= ?                            "
-                + "AND   c.data <= ?                            ";
+                + "WHERE CAST(c.data AS DATE) >= ?                            "
+                + "AND   CAST(c.data AS DATE) <= ?                            ";
         if (prFornecedor != null)
             sql += "AND c.cod_fornecedor = ?                    ";        
         try {
